@@ -16,15 +16,33 @@ import {
   XCircle, 
   Clock3,
   ShoppingCart,
-  ChevronRight
+  ChevronRight,
+  Briefcase,
+  FileText,
+  User,
+  Calendar
 } from "lucide-react";
 
 const Index = () => {
   // Mock data for the earnings chart
   const earningData = Array.from({ length: 15 }, (_, i) => ({
     name: i + 1,
-    amount: 0.2,
+    amount: Math.random() * 2000,
   }));
+
+  // Mock data for latest offers
+  const latestOffers = [
+    { id: 1, title: "Website Development", budget: "$500", deadline: "2 days" },
+    { id: 2, title: "Logo Design", budget: "$200", deadline: "3 days" },
+    { id: 3, title: "Content Writing", budget: "$300", deadline: "1 day" }
+  ];
+
+  // Mock data for recent jobs
+  const recentJobs = [
+    { id: 1, title: "Mobile App UI", client: "John Doe", status: "In Progress" },
+    { id: 2, title: "SEO Optimization", client: "Jane Smith", status: "Completed" },
+    { id: 3, title: "Database Design", client: "Mike Johnson", status: "Review" }
+  ];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -43,22 +61,20 @@ const Index = () => {
 
         <nav className="space-y-4">
           <button className="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100 flex items-center space-x-3">
+            <Briefcase className="w-5 h-5 text-gray-500" />
             <span className="text-gray-600">Create a gig</span>
           </button>
           <button className="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100 flex items-center space-x-3">
+            <FileText className="w-5 h-5 text-gray-500" />
             <span className="text-gray-600">Insights</span>
           </button>
           <button className="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100 flex items-center space-x-3">
+            <User className="w-5 h-5 text-gray-500" />
             <span className="text-gray-600">Manage projects</span>
           </button>
           <button className="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100 flex items-center space-x-3">
+            <Calendar className="w-5 h-5 text-gray-500" />
             <span className="text-gray-600">Manage task</span>
-          </button>
-          <button className="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100 flex items-center space-x-3">
-            <span className="text-gray-600">Notifications</span>
-          </button>
-          <button className="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100 flex items-center space-x-3">
-            <span className="text-gray-600">Messages</span>
           </button>
         </nav>
 
@@ -75,8 +91,9 @@ const Index = () => {
 
       {/* Main content */}
       <div className="ml-64 p-8">
+        {/* Statistics Cards */}
         <div className="grid grid-cols-4 gap-6 mb-8">
-          <Card className="bg-white">
+          <Card>
             <CardContent className="p-6">
               <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center mb-4">
                 <Clock className="w-5 h-5 text-purple-600" />
@@ -121,6 +138,48 @@ const Index = () => {
           </Card>
         </div>
 
+        {/* Latest Offers and Recent Jobs */}
+        <div className="grid grid-cols-2 gap-6 mb-8">
+          <Card>
+            <CardContent className="p-6">
+              <h2 className="text-xl font-semibold mb-4">Latest Offers</h2>
+              <div className="space-y-4">
+                {latestOffers.map((offer) => (
+                  <div key={offer.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div>
+                      <h3 className="font-medium">{offer.title}</h3>
+                      <p className="text-sm text-gray-600">Budget: {offer.budget}</p>
+                    </div>
+                    <div className="text-sm text-gray-600">
+                      Deadline: {offer.deadline}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-6">
+              <h2 className="text-xl font-semibold mb-4">Recent Jobs</h2>
+              <div className="space-y-4">
+                {recentJobs.map((job) => (
+                  <div key={job.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div>
+                      <h3 className="font-medium">{job.title}</h3>
+                      <p className="text-sm text-gray-600">Client: {job.client}</p>
+                    </div>
+                    <div className="text-sm text-gray-600">
+                      Status: {job.status}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Project Status Cards */}
         <div className="grid grid-cols-3 gap-6 mb-8">
           <Card>
             <CardContent className="p-6">
@@ -162,6 +221,7 @@ const Index = () => {
           </Card>
         </div>
 
+        {/* Earnings Chart */}
         <Card className="mb-8">
           <CardContent className="p-6">
             <h2 className="text-xl font-semibold mb-6">Earning history</h2>
@@ -187,6 +247,7 @@ const Index = () => {
           </CardContent>
         </Card>
 
+        {/* Payouts History */}
         <Card>
           <CardContent className="p-6">
             <div className="flex justify-between items-center mb-6">
