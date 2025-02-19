@@ -48,10 +48,11 @@ const Signup = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("countries")
-        .select("*")
-        .order("name");
+        .select("code, name")
+        .order("name") as { data: Country[] | null; error: any };
+      
       if (error) throw error;
-      return data;
+      return data || [];
     },
   });
 
