@@ -19,6 +19,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/dashboard" element={<TaskerDashboard />} />
+          <Route path="/advertiser-dashboard" element={<TaskerDashboard />} /> {/* We'll create this later */}
           <Route path="/signup/:type" element={<Signup />} />
         </Routes>
       </BrowserRouter>

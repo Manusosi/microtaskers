@@ -60,17 +60,17 @@ const Index = () => {
         <h2 className="text-3xl font-bold text-center mb-12">We are Popular Everywhere</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           <div className="text-center p-8 border rounded-lg">
-            <h3 className="text-xl font-semibold mb-4">I am looking for a job and post an offer</h3>
-            <p className="text-gray-600 mb-6">Find Jobs and get Hired.</p>
-            <Link to="/signup/freelancer">
-              <Button variant="outline" className="w-full">Register as a Freelancer</Button>
+            <h3 className="text-xl font-semibold mb-4">I want to complete tasks and earn money</h3>
+            <p className="text-gray-600 mb-6">Find Tasks and get paid.</p>
+            <Link to="/signup/tasker">
+              <Button variant="outline" className="w-full">Register as a Tasker</Button>
             </Link>
           </div>
           <div className="text-center p-8 border rounded-lg">
-            <h3 className="text-xl font-semibold mb-4">I am posting a job or offer.</h3>
-            <p className="text-gray-600 mb-6">Post Jobs and Hire professionals.</p>
-            <Link to="/signup/employer">
-              <Button className="w-full bg-purple-500 hover:bg-purple-600">Register as an Employer</Button>
+            <h3 className="text-xl font-semibold mb-4">I want to post tasks and hire.</h3>
+            <p className="text-gray-600 mb-6">Post Tasks and Hire professionals.</p>
+            <Link to="/signup/advertiser">
+              <Button className="w-full bg-purple-500 hover:bg-purple-600">Register as an Advertiser</Button>
             </Link>
           </div>
         </div>
