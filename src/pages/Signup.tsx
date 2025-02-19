@@ -98,10 +98,10 @@ const Signup = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <nav className="border-b bg-white">
+      <nav className="sticky top-0 z-50 border-b bg-white">
         <div className="container mx-auto px-4 py-4">
           <Link to="/" className="flex items-center space-x-2">
-            <img src="/lovable-uploads/2a22e28a-d71d-4614-a4da-c1aafafb3bef.png" alt="Microtasks Logo" className="h-8" />
+            <img src="/lovable-uploads/6ec07fee-6c66-486f-8b0f-1f56b48602f0.png" alt="Microtaskers Logo" className="h-8" />
           </Link>
         </div>
       </nav>
@@ -200,7 +200,7 @@ const Signup = () => {
 
               <Button 
                 type="submit" 
-                className="w-full bg-purple-500 hover:bg-purple-600"
+                className="w-full bg-[#8511b4] hover:bg-[#7a0fa6]"
                 disabled={loading}
               >
                 {loading ? "Creating Account..." : "Create Account"}
@@ -208,7 +208,7 @@ const Signup = () => {
 
               <p className="text-center text-sm text-gray-600">
                 Already have an account?{" "}
-                <Link to="/login" className="text-purple-500 hover:underline">
+                <Link to="/login" className="text-[#8511b4] hover:text-[#7a0fa6]">
                   Login
                 </Link>
               </p>

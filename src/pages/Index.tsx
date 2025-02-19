@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 const Index = () => {
   return (
     <div className="min-h-screen bg-white">
-      {/* Navigation - Updated to match Paidwork style */}
-      <nav className="border-b shadow-sm">
+      {/* Navigation - Updated with sticky header */}
+      <nav className="sticky top-0 z-50 border-b shadow-sm bg-white">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center space-x-2">
-              <img src="/lovable-uploads/2a22e28a-d71d-4614-a4da-c1aafafb3bef.png" alt="Microtasks Logo" className="h-8" />
+              <img src="/lovable-uploads/6ec07fee-6c66-486f-8b0f-1f56b48602f0.png" alt="Microtaskers Logo" className="h-8" />
             </Link>
             <div className="flex items-center space-x-8">
               <Link to="/how-it-works" className="text-gray-700 hover:text-gray-900 font-medium">How it works</Link>
@@ -18,9 +18,9 @@ const Index = () => {
               <Link to="/games" className="text-gray-700 hover:text-gray-900 font-medium">Games</Link>
               <Link to="/cashback" className="text-gray-700 hover:text-gray-900 font-medium">Cashback</Link>
               <Link to="/shops" className="text-gray-700 hover:text-gray-900 font-medium">Shops</Link>
-              <Link to="/login" className="text-blue-600 hover:text-blue-700 font-semibold">Sign in</Link>
+              <Link to="/login" className="text-purple-700 hover:text-purple-800 font-semibold">Sign in</Link>
               <Link to="/signup">
-                <Button className="bg-blue-600 hover:bg-blue-700 rounded-full px-6">Get Started</Button>
+                <Button className="bg-[#8511b4] hover:bg-[#7a0fa6] rounded-full px-6">Get Started</Button>
               </Link>
             </div>
           </div>
@@ -85,7 +85,7 @@ const Index = () => {
             <h3 className="text-xl font-semibold mb-4">I want to post tasks and hire</h3>
             <p className="text-gray-600 mb-6">Post tasks and hire professionals.</p>
             <Link to="/signup/advertiser">
-              <Button className="w-full bg-blue-600 hover:bg-blue-700 rounded-full">Register as an Advertiser</Button>
+              <Button className="w-full bg-[#8511b4] hover:bg-[#7a0fa6] rounded-full">Register as an Advertiser</Button>
             </Link>
           </div>
         </div>
