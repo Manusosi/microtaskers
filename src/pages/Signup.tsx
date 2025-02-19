@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -15,6 +16,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useQuery } from "@tanstack/react-query";
+
+interface Country {
+  code: string;
+  name: string;
+}
 
 const Signup = () => {
   const { type } = useParams();
@@ -37,7 +43,7 @@ const Signup = () => {
     countryCode: "",
   });
 
-  const { data: countries } = useQuery({
+  const { data: countries } = useQuery<Country[]>({
     queryKey: ["countries"],
     queryFn: async () => {
       const { data, error } = await supabase
