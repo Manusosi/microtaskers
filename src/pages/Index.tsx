@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -20,8 +19,8 @@ const Index = () => {
               <Link to="/cashback" className="text-gray-700 hover:text-gray-900 font-medium">Cashback</Link>
               <Link to="/shops" className="text-gray-700 hover:text-gray-900 font-medium">Shops</Link>
               <Link to="/login" className="text-blue-600 hover:text-blue-700 font-semibold">Sign in</Link>
-              <Link to="/signup/tasker">
-                <Button className="bg-blue-600 hover:bg-blue-700 rounded-full px-6">Registration</Button>
+              <Link to="/signup">
+                <Button className="bg-blue-600 hover:bg-blue-700 rounded-full px-6">Get Started</Button>
               </Link>
             </div>
           </div>
@@ -38,12 +37,16 @@ const Index = () => {
           in the world. Start your journey today.
         </p>
         <div className="flex justify-center gap-6">
-          <Button className="bg-blue-600 hover:bg-blue-700 rounded-full px-8 py-6 text-lg">
-            Start Earning Now
-          </Button>
-          <Button variant="outline" className="rounded-full px-8 py-6 text-lg">
-            Learn More
-          </Button>
+          <Link to="/signup/tasker">
+            <Button className="bg-blue-600 hover:bg-blue-700 rounded-full px-8 py-6 text-lg">
+              Start as a Tasker
+            </Button>
+          </Link>
+          <Link to="/signup/advertiser">
+            <Button variant="outline" className="rounded-full px-8 py-6 text-lg">
+              Start as an Advertiser
+            </Button>
+          </Link>
         </div>
       </section>
 

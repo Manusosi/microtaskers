@@ -1,10 +1,9 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
@@ -20,6 +19,13 @@ import { useQuery } from "@tanstack/react-query";
 const Signup = () => {
   const { type } = useParams();
   const navigate = useNavigate();
+  
+  useEffect(() => {
+    if (!type || !['tasker', 'advertiser'].includes(type)) {
+      navigate('/');
+    }
+  }, [type, navigate]);
+
   const [loading, setLoading] = useState(false);
   const [phone, setPhone] = useState("");
   const [formData, setFormData] = useState({
@@ -88,7 +94,7 @@ const Signup = () => {
       <nav className="border-b bg-white">
         <div className="container mx-auto px-4 py-4">
           <Link to="/" className="flex items-center space-x-2">
-            <img src="/lovable-uploads/4aafc7f3-b959-4082-a140-77be485247da.png" alt="Microtasks Logo" className="h-8" />
+            <img src="/lovable-uploads/2a22e28a-d71d-4614-a4da-c1aafafb3bef.png" alt="Microtasks Logo" className="h-8" />
           </Link>
         </div>
       </nav>
