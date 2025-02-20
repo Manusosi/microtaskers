@@ -1,5 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const Index = () => {
   return (
@@ -19,15 +26,38 @@ const Index = () => {
               <Link to="/cashback" className="text-gray-700 hover:text-gray-900 font-medium">Cashback</Link>
               <Link to="/shops" className="text-gray-700 hover:text-gray-900 font-medium">Shops</Link>
               <Link to="/login" className="text-purple-700 hover:text-purple-800 font-semibold">Sign in</Link>
-              <Link to="/signup">
-                <Button className="bg-[#8511b4] hover:bg-[#7a0fa6] rounded-full px-6">Get Started</Button>
-              </Link>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button className="bg-[#8511b4] hover:bg-[#7a0fa6] rounded-full px-6">Get Started</Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-md">
+                  <DialogHeader>
+                    <DialogTitle>Choose Your Path</DialogTitle>
+                  </DialogHeader>
+                  <div className="grid gap-4 py-4">
+                    <Link 
+                      to="/signup/tasker" 
+                      className="w-full p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+                    >
+                      <h3 className="font-semibold mb-2">I want to complete tasks and earn money</h3>
+                      <p className="text-sm text-gray-600">Find tasks and get paid for your work.</p>
+                    </Link>
+                    <Link 
+                      to="/signup/advertiser" 
+                      className="w-full p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+                    >
+                      <h3 className="font-semibold mb-2">I want to post tasks and hire</h3>
+                      <p className="text-sm text-gray-600">Post tasks and hire professionals.</p>
+                    </Link>
+                  </div>
+                </DialogContent>
+              </Dialog>
             </div>
           </div>
         </div>
       </nav>
 
-      {/* Hero Section - Updated with new styling */}
+      {/* Hero Section */}
       <section className="container mx-auto px-6 py-24 text-center">
         <h1 className="text-5xl font-bold mb-6 tracking-tight">
           Start Earning with <span className="text-purple-500">Microtasks</span>
@@ -50,7 +80,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Features Section - Updated with modern design */}
+      {/* Features Section */}
       <section className="bg-gray-50 py-20">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -70,7 +100,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Registration Section - Updated with modern cards */}
+      {/* Registration Section */}
       <section className="container mx-auto px-6 py-20">
         <h2 className="text-3xl font-bold text-center mb-12">Choose Your Path</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -91,7 +121,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* How it works Section - Updated with modern design */}
+      {/* How it works Section */}
       <section className="bg-gray-50 py-20">
         <div className="container mx-auto px-6">
           <h2 className="text-3xl font-bold text-center mb-4">How it works</h2>
