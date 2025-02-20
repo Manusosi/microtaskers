@@ -11,9 +11,9 @@ import {
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-white">
-      {/* Navigation - Updated with sticky header */}
-      <nav className="sticky top-0 z-50 border-b shadow-sm bg-white">
+    <div className="min-h-screen bg-gradient-to-br from-white via-purple-50/50 to-purple-100/50">
+      {/* Navigation */}
+      <nav className="sticky top-0 z-50 border-b shadow-sm bg-white/80 backdrop-blur-sm">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center space-x-2">
@@ -58,42 +58,46 @@ const Index = () => {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="container mx-auto px-6 py-24 text-center">
-        <h1 className="text-5xl font-bold mb-6 tracking-tight">
-          Start Earning with <span className="text-purple-500">Microtasks</span>
-        </h1>
-        <p className="text-gray-600 text-lg max-w-2xl mx-auto mb-10">
-          Join our community of global workers completing simple tasks and earning money from anywhere
-          in the world. Start your journey today.
-        </p>
-        <div className="flex justify-center gap-6">
-          <Link to="/signup/tasker">
-            <Button className="bg-blue-600 hover:bg-blue-700 rounded-full px-8 py-6 text-lg">
-              Start as a Tasker
-            </Button>
-          </Link>
-          <Link to="/signup/advertiser">
-            <Button variant="outline" className="rounded-full px-8 py-6 text-lg">
-              Start as an Advertiser
-            </Button>
-          </Link>
+      {/* Hero Section - Updated with modern design */}
+      <section className="relative container mx-auto px-6 py-32">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_#f3e8ff_0%,_transparent_40%)] opacity-70"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_#e9d5ff_0%,_transparent_40%)] opacity-70"></div>
+        <div className="relative">
+          <h1 className="text-6xl font-bold mb-8 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-purple-950 to-purple-800">
+            Start Earning with <br/> <span className="text-[#8511b4]">Microtasks</span>
+          </h1>
+          <p className="text-gray-600 text-xl max-w-2xl mx-auto mb-12">
+            Join our community of global workers completing simple tasks and earning money from anywhere
+            in the world. Start your journey today.
+          </p>
+          <div className="flex justify-center gap-6">
+            <Link to="/signup/tasker">
+              <Button className="bg-[#8511b4] hover:bg-[#7a0fa6] rounded-full px-8 py-6 text-lg shadow-lg shadow-purple-200 transition-all hover:shadow-purple-300">
+                Start as a Tasker
+              </Button>
+            </Link>
+            <Link to="/signup/advertiser">
+              <Button variant="outline" className="rounded-full px-8 py-6 text-lg border-[#8511b4] text-[#8511b4] hover:bg-purple-50">
+                Start as an Advertiser
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="bg-gray-50 py-20">
+      <section className="bg-white/80 backdrop-blur-sm py-20">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <div className="bg-white p-8 rounded-xl shadow-sm">
+            <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
               <h3 className="text-xl font-semibold mb-4">Easy Tasks</h3>
               <p className="text-gray-600">Complete simple microtasks in minutes and earn rewards instantly</p>
             </div>
-            <div className="bg-white p-8 rounded-xl shadow-sm">
+            <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
               <h3 className="text-xl font-semibold mb-4">Quick Payments</h3>
               <p className="text-gray-600">Get paid weekly through multiple payment methods worldwide</p>
             </div>
-            <div className="bg-white p-8 rounded-xl shadow-sm">
+            <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
               <h3 className="text-xl font-semibold mb-4">Work Anywhere</h3>
               <p className="text-gray-600">Access tasks from any device, anywhere in the world</p>
             </div>
