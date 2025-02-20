@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import TaskerDashboard from "./pages/TaskerDashboard";
 import AdvertiserDashboard from "./pages/AdvertiserDashboard";
 import Signup from "./pages/Signup";
+import Login from "./pages/Login";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/dashboard" element={<TaskerDashboard />} />
           <Route path="/advertiser-dashboard" element={<AdvertiserDashboard />} />
           <Route path="/signup/:type" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
