@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import {
@@ -16,7 +17,7 @@ const Index = () => {
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center space-x-2">
-              <img src="/lovable-uploads/6ec07fee-6c66-486f-8b0f-1f56b48602f0.png" alt="Microtaskers Logo" className="h-8" />
+              <img src="/lovable-uploads/c9628198-a7de-4746-8562-b3649c93a411.png" alt="Microtaskers Logo" className="h-12" />
             </Link>
             <div className="flex items-center space-x-8">
               <Link to="/how-it-works" className="text-gray-700 hover:text-gray-900 font-medium">How it works</Link>

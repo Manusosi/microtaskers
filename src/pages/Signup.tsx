@@ -98,10 +98,10 @@ const Signup = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <nav className="sticky top-0 z-50 border-b bg-white">
-        <div className="container mx-auto px-4 py-4">
+      <nav className="sticky top-0 z-50 border-b shadow-sm bg-white">
+        <div className="container mx-auto px-6 py-4">
           <Link to="/" className="flex items-center space-x-2">
-            <img src="/lovable-uploads/6ec07fee-6c66-486f-8b0f-1f56b48602f0.png" alt="Microtaskers Logo" className="h-8" />
+            <img src="/lovable-uploads/c9628198-a7de-4746-8562-b3649c93a411.png" alt="Microtaskers Logo" className="h-12" />
           </Link>
         </div>
       </nav>
