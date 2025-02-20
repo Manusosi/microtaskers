@@ -7,6 +7,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -109,9 +116,32 @@ const Login = () => {
 
               <p className="text-center text-sm text-gray-600">
                 Don't have an account?{" "}
-                <Link to="/signup" className="text-[#8511b4] hover:text-[#7a0fa6]">
-                  Sign up
-                </Link>
+                <Dialog>
+                  <DialogTrigger className="text-[#8511b4] hover:text-[#7a0fa6] hover:underline">
+                    Sign up
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                      <DialogTitle>Choose Your Path</DialogTitle>
+                    </DialogHeader>
+                    <div className="grid gap-4 py-4">
+                      <Link 
+                        to="/signup/tasker" 
+                        className="w-full p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+                      >
+                        <h3 className="font-semibold mb-2">I want to complete tasks and earn money</h3>
+                        <p className="text-sm text-gray-600">Find tasks and get paid for your work.</p>
+                      </Link>
+                      <Link 
+                        to="/signup/advertiser" 
+                        className="w-full p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+                      >
+                        <h3 className="font-semibold mb-2">I want to post tasks and hire</h3>
+                        <p className="text-sm text-gray-600">Post tasks and hire professionals.</p>
+                      </Link>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </p>
             </form>
           </CardContent>
