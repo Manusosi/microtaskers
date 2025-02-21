@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import {
@@ -58,29 +57,52 @@ const Index = () => {
         </div>
       </nav>
 
-      {/* Hero Section - Updated with modern design */}
+      {/* Hero Section - Updated with modern design and animation */}
       <section className="relative container mx-auto px-6 py-32">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_#f3e8ff_0%,_transparent_40%)] opacity-70"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_#e9d5ff_0%,_transparent_40%)] opacity-70"></div>
         <div className="relative">
-          <h1 className="text-6xl font-bold mb-8 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-purple-950 to-purple-800">
-            Start Earning with <br/> <span className="text-[#8511b4]">Microtasks</span>
-          </h1>
-          <p className="text-gray-600 text-xl max-w-2xl mx-auto mb-12">
-            Join our community of global workers completing simple tasks and earning money from anywhere
-            in the world. Start your journey today.
-          </p>
-          <div className="flex justify-center gap-6">
-            <Link to="/signup/tasker">
-              <Button className="bg-[#8511b4] hover:bg-[#7a0fa6] rounded-full px-8 py-6 text-lg shadow-lg shadow-purple-200 transition-all hover:shadow-purple-300">
-                Start as a Tasker
-              </Button>
-            </Link>
-            <Link to="/signup/advertiser">
-              <Button variant="outline" className="rounded-full px-8 py-6 text-lg border-[#8511b4] text-[#8511b4] hover:bg-purple-50">
-                Start as an Advertiser
-              </Button>
-            </Link>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div className="relative animate-fade-in">
+              <div className="absolute -inset-4 bg-gradient-to-r from-purple-100 to-purple-50 rounded-full blur-3xl opacity-40 animate-pulse"></div>
+              <img 
+                src="/lovable-uploads/be12698a-21e4-4459-a590-8aa3b6ec273e.png" 
+                alt="Person working on laptop" 
+                className="relative w-full max-w-lg mx-auto transform hover:scale-105 transition-transform duration-700 ease-in-out animate-float"
+                style={{
+                  animation: "float 6s ease-in-out infinite"
+                }}
+              />
+              <div className="absolute -top-4 -left-4 w-8 h-8 bg-purple-200 rounded-full animate-bounce delay-100"></div>
+              <div className="absolute top-1/2 -right-4 w-6 h-6 bg-purple-300 rounded-full animate-bounce delay-300"></div>
+              <div className="absolute bottom-4 left-1/2 w-4 h-4 bg-purple-400 rounded-full animate-bounce delay-500"></div>
+            </div>
+            <div className="text-right space-y-8 animate-fade-in animation-delay-200">
+              <h1 className="text-6xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-purple-950 to-purple-800">
+                Start Earning with <br/> <span className="text-[#8511b4]">Microtasks</span>
+              </h1>
+              <p className="text-gray-600 text-xl ml-auto max-w-xl">
+                Join our community of global workers completing simple tasks and earning money from anywhere
+                in the world. Start your journey today.
+              </p>
+              <div className="flex justify-end gap-6">
+                <Link to="/signup/tasker">
+                  <Button 
+                    className="bg-[#8511b4] hover:bg-[#7a0fa6] rounded-full px-8 py-6 text-lg shadow-lg shadow-purple-200 transition-all hover:shadow-purple-300 hover:-translate-y-1"
+                  >
+                    Start as a Tasker
+                  </Button>
+                </Link>
+                <Link to="/signup/advertiser">
+                  <Button 
+                    variant="outline" 
+                    className="rounded-full px-8 py-6 text-lg border-[#8511b4] text-[#8511b4] hover:bg-purple-50 transition-all hover:-translate-y-1"
+                  >
+                    Start as an Advertiser
+                  </Button>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
