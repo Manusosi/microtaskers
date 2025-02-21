@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react";
 import { useState } from "react";
 import {
   Dialog,
@@ -209,33 +209,64 @@ const Index = () => {
         </div>
       </section>
 
-      {/* How it works Section */}
-      <section className="bg-gray-50 py-20">
+      {/* How it works Section - Enhanced with animations and better design */}
+      <section id="how-it-works" className="bg-gradient-to-br from-purple-50 to-white py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_#f3e8ff_0%,_transparent_40%)] opacity-70"></div>
         <div className="container mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center mb-4">How it works</h2>
-          <p className="text-center text-gray-600 mb-12">Complete tasks in three simple steps</p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white font-semibold">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-950 to-[#8511b4] mb-4">How it works</h2>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">Complete tasks in three simple steps and start earning money from anywhere in the world</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto relative">
+            {/* Connecting Lines (visible on desktop) */}
+            <div className="hidden md:block absolute top-1/2 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-[#8511b4] to-purple-400 transform -translate-y-1/2">
+              <div className="absolute right-0 w-3 h-3 bg-purple-400 rounded-full animate-pulse"></div>
+            </div>
+
+            {/* Step 1 */}
+            <div className="relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group animate-fade-in">
+              <div className="w-16 h-16 bg-gradient-to-br from-[#8511b4] to-purple-500 rounded-full flex items-center justify-center mx-auto mb-6 text-white font-semibold text-xl group-hover:scale-110 transition-transform duration-300">
                 1
               </div>
-              <h3 className="font-semibold">SEARCH JOBS</h3>
-              <p className="text-gray-600 mt-2">Browse available tasks</p>
+              <h3 className="text-xl font-semibold text-center mb-4">SEARCH JOBS</h3>
+              <p className="text-gray-600 text-center">Browse through our extensive list of available microtasks. Find tasks that match your skills and interests.</p>
+              <div className="absolute -bottom-3 right-4 md:block hidden">
+                <ArrowRight className="w-6 h-6 text-[#8511b4] animate-pulse" />
+              </div>
             </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white font-semibold">
+
+            {/* Step 2 */}
+            <div className="relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group animate-fade-in animation-delay-200">
+              <div className="w-16 h-16 bg-gradient-to-br from-[#8511b4] to-purple-500 rounded-full flex items-center justify-center mx-auto mb-6 text-white font-semibold text-xl group-hover:scale-110 transition-transform duration-300">
                 2
               </div>
-              <h3 className="font-semibold">APPLY</h3>
-              <p className="text-gray-600 mt-2">Select tasks you want to complete</p>
+              <h3 className="text-xl font-semibold text-center mb-4">APPLY</h3>
+              <p className="text-gray-600 text-center">Select tasks you want to complete and submit your application. Our system matches you with the best opportunities.</p>
+              <div className="absolute -bottom-3 right-4 md:block hidden">
+                <ArrowRight className="w-6 h-6 text-[#8511b4] animate-pulse" />
+              </div>
             </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white font-semibold">
+
+            {/* Step 3 */}
+            <div className="relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group animate-fade-in animation-delay-400">
+              <div className="w-16 h-16 bg-gradient-to-br from-[#8511b4] to-purple-500 rounded-full flex items-center justify-center mx-auto mb-6 text-white font-semibold text-xl group-hover:scale-110 transition-transform duration-300">
                 3
               </div>
-              <h3 className="font-semibold">GET PAID</h3>
-              <p className="text-gray-600 mt-2">Complete tasks and earn money</p>
+              <h3 className="text-xl font-semibold text-center mb-4">GET PAID</h3>
+              <p className="text-gray-600 text-center">Complete tasks successfully and receive payment directly to your account. Enjoy weekly payouts and flexible payment options.</p>
             </div>
+          </div>
+
+          {/* Call to Action */}
+          <div className="text-center mt-16">
+            <Link to="/signup/tasker">
+              <Button 
+                className="bg-[#8511b4] hover:bg-[#7a0fa6] rounded-full px-8 py-6 text-lg shadow-lg shadow-purple-200 transition-all hover:shadow-purple-300 hover:-translate-y-1"
+              >
+                Start Earning Now
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
