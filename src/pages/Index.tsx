@@ -272,91 +272,150 @@ const Index = () => {
       </section>
 
       {/* Latest Categories Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-gradient-to-br from-purple-50 via-white to-purple-50 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_#f3e8ff_0%,_transparent_40%)] opacity-70"></div>
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Find Your Jobs Easily</h2>
-            <div className="w-24 h-1 bg-red-500 mx-auto rounded-full"></div>
+            <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-950 to-[#8511b4] mb-4">Find Your Jobs Easily</h2>
+            <div className="w-24 h-1 bg-[#8511b4] mx-auto rounded-full"></div>
             <p className="text-xl text-gray-600 mt-6">Latest Categories</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {/* PPV Card */}
-            <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow p-6 text-center group animate-fade-in">
-              <div className="relative mb-4">
-                <span className="absolute -top-2 -right-2 bg-green-500 text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">4</span>
-                <img src="/lovable-uploads/436e807f-4584-43d0-9a0a-cdad4eba2023.png" alt="Pay Per View" className="w-24 h-24 mx-auto object-contain group-hover:scale-105 transition-transform" />
+            <div className="group h-64 [perspective:1000px] animate-fade-in">
+              <div className="relative h-full w-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+                {/* Front */}
+                <div className="absolute inset-0 bg-white rounded-xl shadow-md p-6 text-center [backface-visibility:hidden]">
+                  <div className="relative mb-4">
+                    <span className="absolute -top-2 -right-2 bg-[#8511b4] text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">4</span>
+                    <img src="/lovable-uploads/4aafc7f3-b959-4082-a140-77be485247da.png" alt="Pay Per View" className="w-24 h-24 mx-auto object-contain" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900">Pay Per View</h3>
+                </div>
+                {/* Back */}
+                <div className="absolute inset-0 bg-[#8511b4] text-white rounded-xl shadow-md p-6 text-center [transform:rotateY(180deg)] [backface-visibility:hidden] flex items-center justify-center">
+                  <p className="text-lg">Get paid to view articles and content online. Easy tasks with quick payments.</p>
+                </div>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900">Pay Per View</h3>
             </div>
 
             {/* Follow, Subscribe Card */}
-            <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow p-6 text-center group animate-fade-in animation-delay-100">
-              <div className="relative mb-4">
-                <span className="absolute -top-2 -right-2 bg-green-500 text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">4</span>
-                <img src="/lovable-uploads/436e807f-4584-43d0-9a0a-cdad4eba2023.png" alt="Follow, Subscribe" className="w-24 h-24 mx-auto object-contain group-hover:scale-105 transition-transform" />
+            <div className="group h-64 [perspective:1000px] animate-fade-in animation-delay-100">
+              <div className="relative h-full w-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+                <div className="absolute inset-0 bg-white rounded-xl shadow-md p-6 text-center [backface-visibility:hidden]">
+                  <div className="relative mb-4">
+                    <span className="absolute -top-2 -right-2 bg-[#8511b4] text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">4</span>
+                    <img src="/lovable-uploads/6ec07fee-6c66-486f-8b0f-1f56b48602f0.png" alt="Follow Subscribe" className="w-24 h-24 mx-auto object-contain" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900">Follow, Subscribe</h3>
+                </div>
+                <div className="absolute inset-0 bg-[#8511b4] text-white rounded-xl shadow-md p-6 text-center [transform:rotateY(180deg)] [backface-visibility:hidden] flex items-center justify-center">
+                  <p className="text-lg">Earn by following and subscribing to various social media channels and content creators.</p>
+                </div>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900">Follow, Subscribe</h3>
             </div>
 
             {/* Create Account Card */}
-            <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow p-6 text-center group animate-fade-in animation-delay-200">
-              <div className="relative mb-4">
-                <span className="absolute -top-2 -right-2 bg-green-500 text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">2</span>
-                <img src="/lovable-uploads/436e807f-4584-43d0-9a0a-cdad4eba2023.png" alt="Create Account" className="w-24 h-24 mx-auto object-contain group-hover:scale-105 transition-transform" />
+            <div className="group h-64 [perspective:1000px] animate-fade-in animation-delay-200">
+              <div className="relative h-full w-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+                <div className="absolute inset-0 bg-white rounded-xl shadow-md p-6 text-center [backface-visibility:hidden]">
+                  <div className="relative mb-4">
+                    <span className="absolute -top-2 -right-2 bg-[#8511b4] text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">2</span>
+                    <img src="/lovable-uploads/2a22e28a-d71d-4614-a4da-c1aafafb3bef.png" alt="Create Account" className="w-24 h-24 mx-auto object-contain" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900">Create Account</h3>
+                </div>
+                <div className="absolute inset-0 bg-[#8511b4] text-white rounded-xl shadow-md p-6 text-center [transform:rotateY(180deg)] [backface-visibility:hidden] flex items-center justify-center">
+                  <p className="text-lg">Make money by creating accounts on various platforms and completing basic setup tasks.</p>
+                </div>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900">Create Account</h3>
             </div>
 
             {/* Google Review Card */}
-            <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow p-6 text-center group animate-fade-in animation-delay-300">
-              <div className="relative mb-4">
-                <span className="absolute -top-2 -right-2 bg-green-500 text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">2</span>
-                <img src="/lovable-uploads/436e807f-4584-43d0-9a0a-cdad4eba2023.png" alt="Google Review" className="w-24 h-24 mx-auto object-contain group-hover:scale-105 transition-transform" />
+            <div className="group h-64 [perspective:1000px] animate-fade-in animation-delay-300">
+              <div className="relative h-full w-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+                <div className="absolute inset-0 bg-white rounded-xl shadow-md p-6 text-center [backface-visibility:hidden]">
+                  <div className="relative mb-4">
+                    <span className="absolute -top-2 -right-2 bg-[#8511b4] text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">2</span>
+                    <img src="/lovable-uploads/436e807f-4584-43d0-9a0a-cdad4eba2023.png" alt="Google Review" className="w-24 h-24 mx-auto object-contain" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900">Google Review</h3>
+                </div>
+                <div className="absolute inset-0 bg-[#8511b4] text-white rounded-xl shadow-md p-6 text-center [transform:rotateY(180deg)] [backface-visibility:hidden] flex items-center justify-center">
+                  <p className="text-lg">Share your honest experience and get paid for writing Google reviews for businesses.</p>
+                </div>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900">Google Review</h3>
             </div>
 
             {/* Facebook Card */}
-            <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow p-6 text-center group animate-fade-in animation-delay-400">
-              <div className="relative mb-4">
-                <span className="absolute -top-2 -right-2 bg-green-500 text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">1</span>
-                <img src="/lovable-uploads/436e807f-4584-43d0-9a0a-cdad4eba2023.png" alt="Facebook" className="w-24 h-24 mx-auto object-contain group-hover:scale-105 transition-transform" />
+            <div className="group h-64 [perspective:1000px] animate-fade-in animation-delay-400">
+              <div className="relative h-full w-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+                <div className="absolute inset-0 bg-white rounded-xl shadow-md p-6 text-center [backface-visibility:hidden]">
+                  <div className="relative mb-4">
+                    <span className="absolute -top-2 -right-2 bg-[#8511b4] text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">1</span>
+                    <img src="/lovable-uploads/436e807f-4584-43d0-9a0a-cdad4eba2023.png" alt="Facebook" className="w-24 h-24 mx-auto object-contain" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900">Facebook</h3>
+                </div>
+                <div className="absolute inset-0 bg-[#8511b4] text-white rounded-xl shadow-md p-6 text-center [transform:rotateY(180deg)] [backface-visibility:hidden] flex items-center justify-center">
+                  <p className="text-lg">Earn by engaging with Facebook content, pages, and communities.</p>
+                </div>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900">Facebook</h3>
             </div>
 
             {/* Instagram Card */}
-            <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow p-6 text-center group animate-fade-in animation-delay-500">
-              <div className="relative mb-4">
-                <span className="absolute -top-2 -right-2 bg-green-500 text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">0</span>
-                <img src="/lovable-uploads/436e807f-4584-43d0-9a0a-cdad4eba2023.png" alt="Instagram" className="w-24 h-24 mx-auto object-contain group-hover:scale-105 transition-transform" />
+            <div className="group h-64 [perspective:1000px] animate-fade-in animation-delay-500">
+              <div className="relative h-full w-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+                <div className="absolute inset-0 bg-white rounded-xl shadow-md p-6 text-center [backface-visibility:hidden]">
+                  <div className="relative mb-4">
+                    <span className="absolute -top-2 -right-2 bg-[#8511b4] text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">0</span>
+                    <img src="/lovable-uploads/436e807f-4584-43d0-9a0a-cdad4eba2023.png" alt="Instagram" className="w-24 h-24 mx-auto object-contain" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900">Instagram</h3>
+                </div>
+                <div className="absolute inset-0 bg-[#8511b4] text-white rounded-xl shadow-md p-6 text-center [transform:rotateY(180deg)] [backface-visibility:hidden] flex items-center justify-center">
+                  <p className="text-lg">Get paid to engage with Instagram posts, stories, and content.</p>
+                </div>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900">Instagram</h3>
             </div>
 
             {/* Pay Per Lead Card */}
-            <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow p-6 text-center group animate-fade-in animation-delay-600">
-              <div className="relative mb-4">
-                <span className="absolute -top-2 -right-2 bg-green-500 text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">0</span>
-                <img src="/lovable-uploads/436e807f-4584-43d0-9a0a-cdad4eba2023.png" alt="Pay Per Lead" className="w-24 h-24 mx-auto object-contain group-hover:scale-105 transition-transform" />
+            <div className="group h-64 [perspective:1000px] animate-fade-in animation-delay-600">
+              <div className="relative h-full w-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+                <div className="absolute inset-0 bg-white rounded-xl shadow-md p-6 text-center [backface-visibility:hidden]">
+                  <div className="relative mb-4">
+                    <span className="absolute -top-2 -right-2 bg-[#8511b4] text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">0</span>
+                    <img src="/lovable-uploads/436e807f-4584-43d0-9a0a-cdad4eba2023.png" alt="Pay Per Lead" className="w-24 h-24 mx-auto object-contain" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900">Pay Per Lead</h3>
+                </div>
+                <div className="absolute inset-0 bg-[#8511b4] text-white rounded-xl shadow-md p-6 text-center [transform:rotateY(180deg)] [backface-visibility:hidden] flex items-center justify-center">
+                  <p className="text-lg">Earn commission by referring potential customers to businesses.</p>
+                </div>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900">Pay Per Lead</h3>
             </div>
 
             {/* TikTok Card */}
-            <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow p-6 text-center group animate-fade-in animation-delay-700">
-              <div className="relative mb-4">
-                <span className="absolute -top-2 -right-2 bg-green-500 text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">0</span>
-                <img src="/lovable-uploads/436e807f-4584-43d0-9a0a-cdad4eba2023.png" alt="TikTok" className="w-24 h-24 mx-auto object-contain group-hover:scale-105 transition-transform" />
+            <div className="group h-64 [perspective:1000px] animate-fade-in animation-delay-700">
+              <div className="relative h-full w-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+                <div className="absolute inset-0 bg-white rounded-xl shadow-md p-6 text-center [backface-visibility:hidden]">
+                  <div className="relative mb-4">
+                    <span className="absolute -top-2 -right-2 bg-[#8511b4] text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">0</span>
+                    <img src="/lovable-uploads/436e807f-4584-43d0-9a0a-cdad4eba2023.png" alt="TikTok" className="w-24 h-24 mx-auto object-contain" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900">Tiktok</h3>
+                </div>
+                <div className="absolute inset-0 bg-[#8511b4] text-white rounded-xl shadow-md p-6 text-center [transform:rotateY(180deg)] [backface-visibility:hidden] flex items-center justify-center">
+                  <p className="text-lg">Make money by engaging with TikTok content and creating simple videos.</p>
+                </div>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900">Tiktok</h3>
             </div>
           </div>
 
           <div className="text-center">
             <Link to="/jobs">
-              <Button className="bg-[#22c55e] hover:bg-[#16a34a] text-white rounded-full px-8 py-3 text-lg font-semibold transition-all hover:-translate-y-1">
+              <Button className="bg-[#8511b4] hover:bg-[#7a0fa6] text-white rounded-full px-8 py-3 text-lg font-semibold transition-all hover:-translate-y-1">
                 View All
               </Button>
             </Link>
