@@ -272,7 +272,7 @@ const Index = () => {
       </section>
 
       {/* Latest Categories Section */}
-      <section className="py-20 bg-gradient-to-br from-purple-50 via-white to-purple-50 relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-br from-purple-50 to-purple-50 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_#f3e8ff_0%,_transparent_40%)] opacity-70"></div>
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
@@ -285,15 +285,13 @@ const Index = () => {
             {/* PPV Card */}
             <div className="group h-64 [perspective:1000px] animate-fade-in">
               <div className="relative h-full w-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-                {/* Front */}
                 <div className="absolute inset-0 bg-white rounded-xl shadow-md p-6 text-center [backface-visibility:hidden]">
                   <div className="relative mb-4">
                     <span className="absolute -top-2 -right-2 bg-[#8511b4] text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">4</span>
-                    <img src="/lovable-uploads/4aafc7f3-b959-4082-a140-77be485247da.png" alt="Pay Per View" className="w-24 h-24 mx-auto object-contain" />
+                    <img src="/lovable-uploads/b461bd74-8623-43b9-b1fb-3d3b5cc027f1.png" alt="Pay Per View" className="w-24 h-24 mx-auto object-contain" />
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900">Pay Per View</h3>
                 </div>
-                {/* Back */}
                 <div className="absolute inset-0 bg-[#8511b4] text-white rounded-xl shadow-md p-6 text-center [transform:rotateY(180deg)] [backface-visibility:hidden] flex items-center justify-center">
                   <p className="text-lg">Get paid to view articles and content online. Easy tasks with quick payments.</p>
                 </div>
@@ -306,7 +304,7 @@ const Index = () => {
                 <div className="absolute inset-0 bg-white rounded-xl shadow-md p-6 text-center [backface-visibility:hidden]">
                   <div className="relative mb-4">
                     <span className="absolute -top-2 -right-2 bg-[#8511b4] text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">4</span>
-                    <img src="/lovable-uploads/6ec07fee-6c66-486f-8b0f-1f56b48602f0.png" alt="Follow Subscribe" className="w-24 h-24 mx-auto object-contain" />
+                    <img src="/lovable-uploads/c1303b64-1aa3-4000-be21-705f91cba43b.png" alt="Youtube Subscribe" className="w-36 h-24 mx-auto object-contain" />
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900">Follow, Subscribe</h3>
                 </div>
@@ -322,7 +320,7 @@ const Index = () => {
                 <div className="absolute inset-0 bg-white rounded-xl shadow-md p-6 text-center [backface-visibility:hidden]">
                   <div className="relative mb-4">
                     <span className="absolute -top-2 -right-2 bg-[#8511b4] text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">2</span>
-                    <img src="/lovable-uploads/2a22e28a-d71d-4614-a4da-c1aafafb3bef.png" alt="Create Account" className="w-24 h-24 mx-auto object-contain" />
+                    <img src="/lovable-uploads/b0bfd66e-cfcf-47b7-9ce9-68dda7d7b542.png" alt="Create Account" className="w-24 h-24 mx-auto object-contain" />
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900">Create Account</h3>
                 </div>
@@ -338,7 +336,7 @@ const Index = () => {
                 <div className="absolute inset-0 bg-white rounded-xl shadow-md p-6 text-center [backface-visibility:hidden]">
                   <div className="relative mb-4">
                     <span className="absolute -top-2 -right-2 bg-[#8511b4] text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">2</span>
-                    <img src="/lovable-uploads/436e807f-4584-43d0-9a0a-cdad4eba2023.png" alt="Google Review" className="w-24 h-24 mx-auto object-contain" />
+                    <img src="/lovable-uploads/c52530cf-29b3-46cf-bbdc-2853cd6fb608.png" alt="Google Review" className="w-36 h-24 mx-auto object-contain" />
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900">Google Review</h3>
                 </div>
@@ -354,7 +352,7 @@ const Index = () => {
                 <div className="absolute inset-0 bg-white rounded-xl shadow-md p-6 text-center [backface-visibility:hidden]">
                   <div className="relative mb-4">
                     <span className="absolute -top-2 -right-2 bg-[#8511b4] text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">1</span>
-                    <img src="/lovable-uploads/436e807f-4584-43d0-9a0a-cdad4eba2023.png" alt="Facebook" className="w-24 h-24 mx-auto object-contain" />
+                    <img src="/lovable-uploads/526eabc7-4308-4d23-814f-b7735205a7b6.png" alt="Facebook" className="w-24 h-24 mx-auto object-contain" />
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900">Facebook</h3>
                 </div>
@@ -370,7 +368,7 @@ const Index = () => {
                 <div className="absolute inset-0 bg-white rounded-xl shadow-md p-6 text-center [backface-visibility:hidden]">
                   <div className="relative mb-4">
                     <span className="absolute -top-2 -right-2 bg-[#8511b4] text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">0</span>
-                    <img src="/lovable-uploads/436e807f-4584-43d0-9a0a-cdad4eba2023.png" alt="Instagram" className="w-24 h-24 mx-auto object-contain" />
+                    <img src="/lovable-uploads/8787b530-b72e-45ce-a0b1-68bfedd16ec6.png" alt="Instagram" className="w-24 h-24 mx-auto object-contain" />
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900">Instagram</h3>
                 </div>
@@ -386,7 +384,7 @@ const Index = () => {
                 <div className="absolute inset-0 bg-white rounded-xl shadow-md p-6 text-center [backface-visibility:hidden]">
                   <div className="relative mb-4">
                     <span className="absolute -top-2 -right-2 bg-[#8511b4] text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">0</span>
-                    <img src="/lovable-uploads/436e807f-4584-43d0-9a0a-cdad4eba2023.png" alt="Pay Per Lead" className="w-24 h-24 mx-auto object-contain" />
+                    <img src="/lovable-uploads/da7d2f0c-d766-4666-a581-355263ac9092.png" alt="Pay Per Lead" className="w-24 h-24 mx-auto object-contain" />
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900">Pay Per Lead</h3>
                 </div>
@@ -402,7 +400,7 @@ const Index = () => {
                 <div className="absolute inset-0 bg-white rounded-xl shadow-md p-6 text-center [backface-visibility:hidden]">
                   <div className="relative mb-4">
                     <span className="absolute -top-2 -right-2 bg-[#8511b4] text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">0</span>
-                    <img src="/lovable-uploads/436e807f-4584-43d0-9a0a-cdad4eba2023.png" alt="TikTok" className="w-24 h-24 mx-auto object-contain" />
+                    <img src="/lovable-uploads/2013a180-d04f-4ed1-9413-dfdc43180709.png" alt="TikTok" className="w-24 h-24 mx-auto object-contain" />
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900">Tiktok</h3>
                 </div>
