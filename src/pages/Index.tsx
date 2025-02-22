@@ -270,6 +270,99 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Latest Categories Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Find Your Jobs Easily</h2>
+            <div className="w-24 h-1 bg-red-500 mx-auto rounded-full"></div>
+            <p className="text-xl text-gray-600 mt-6">Latest Categories</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            {/* PPV Card */}
+            <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow p-6 text-center group animate-fade-in">
+              <div className="relative mb-4">
+                <span className="absolute -top-2 -right-2 bg-green-500 text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">4</span>
+                <img src="/lovable-uploads/436e807f-4584-43d0-9a0a-cdad4eba2023.png" alt="Pay Per View" className="w-24 h-24 mx-auto object-contain group-hover:scale-105 transition-transform" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900">Pay Per View</h3>
+            </div>
+
+            {/* Follow, Subscribe Card */}
+            <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow p-6 text-center group animate-fade-in animation-delay-100">
+              <div className="relative mb-4">
+                <span className="absolute -top-2 -right-2 bg-green-500 text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">4</span>
+                <img src="/lovable-uploads/436e807f-4584-43d0-9a0a-cdad4eba2023.png" alt="Follow, Subscribe" className="w-24 h-24 mx-auto object-contain group-hover:scale-105 transition-transform" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900">Follow, Subscribe</h3>
+            </div>
+
+            {/* Create Account Card */}
+            <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow p-6 text-center group animate-fade-in animation-delay-200">
+              <div className="relative mb-4">
+                <span className="absolute -top-2 -right-2 bg-green-500 text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">2</span>
+                <img src="/lovable-uploads/436e807f-4584-43d0-9a0a-cdad4eba2023.png" alt="Create Account" className="w-24 h-24 mx-auto object-contain group-hover:scale-105 transition-transform" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900">Create Account</h3>
+            </div>
+
+            {/* Google Review Card */}
+            <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow p-6 text-center group animate-fade-in animation-delay-300">
+              <div className="relative mb-4">
+                <span className="absolute -top-2 -right-2 bg-green-500 text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">2</span>
+                <img src="/lovable-uploads/436e807f-4584-43d0-9a0a-cdad4eba2023.png" alt="Google Review" className="w-24 h-24 mx-auto object-contain group-hover:scale-105 transition-transform" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900">Google Review</h3>
+            </div>
+
+            {/* Facebook Card */}
+            <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow p-6 text-center group animate-fade-in animation-delay-400">
+              <div className="relative mb-4">
+                <span className="absolute -top-2 -right-2 bg-green-500 text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">1</span>
+                <img src="/lovable-uploads/436e807f-4584-43d0-9a0a-cdad4eba2023.png" alt="Facebook" className="w-24 h-24 mx-auto object-contain group-hover:scale-105 transition-transform" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900">Facebook</h3>
+            </div>
+
+            {/* Instagram Card */}
+            <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow p-6 text-center group animate-fade-in animation-delay-500">
+              <div className="relative mb-4">
+                <span className="absolute -top-2 -right-2 bg-green-500 text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">0</span>
+                <img src="/lovable-uploads/436e807f-4584-43d0-9a0a-cdad4eba2023.png" alt="Instagram" className="w-24 h-24 mx-auto object-contain group-hover:scale-105 transition-transform" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900">Instagram</h3>
+            </div>
+
+            {/* Pay Per Lead Card */}
+            <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow p-6 text-center group animate-fade-in animation-delay-600">
+              <div className="relative mb-4">
+                <span className="absolute -top-2 -right-2 bg-green-500 text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">0</span>
+                <img src="/lovable-uploads/436e807f-4584-43d0-9a0a-cdad4eba2023.png" alt="Pay Per Lead" className="w-24 h-24 mx-auto object-contain group-hover:scale-105 transition-transform" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900">Pay Per Lead</h3>
+            </div>
+
+            {/* TikTok Card */}
+            <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow p-6 text-center group animate-fade-in animation-delay-700">
+              <div className="relative mb-4">
+                <span className="absolute -top-2 -right-2 bg-green-500 text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">0</span>
+                <img src="/lovable-uploads/436e807f-4584-43d0-9a0a-cdad4eba2023.png" alt="TikTok" className="w-24 h-24 mx-auto object-contain group-hover:scale-105 transition-transform" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900">Tiktok</h3>
+            </div>
+          </div>
+
+          <div className="text-center">
+            <Link to="/jobs">
+              <Button className="bg-[#22c55e] hover:bg-[#16a34a] text-white rounded-full px-8 py-3 text-lg font-semibold transition-all hover:-translate-y-1">
+                View All
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
