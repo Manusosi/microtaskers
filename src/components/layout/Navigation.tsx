@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
@@ -10,6 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import AdvertiserOptionsDialog from "@/components/dialogs/AdvertiserOptionsDialog";
 
 const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -51,13 +51,14 @@ const Navigation = () => {
                     <h3 className="font-semibold mb-2">I want to complete tasks and earn money</h3>
                     <p className="text-sm text-gray-600">Find tasks and get paid for your work.</p>
                   </Link>
-                  <Link 
-                    to="/signup/advertiser" 
-                    className="w-full p-4 border rounded-lg hover:bg-gray-50 transition-colors"
-                  >
-                    <h3 className="font-semibold mb-2">I want to post tasks and hire</h3>
-                    <p className="text-sm text-gray-600">Post tasks and hire professionals.</p>
-                  </Link>
+                  <AdvertiserOptionsDialog 
+                    trigger={
+                      <div className="w-full p-4 border rounded-lg hover:bg-gray-50 transition-colors cursor-pointer">
+                        <h3 className="font-semibold mb-2">I want to post tasks and hire</h3>
+                        <p className="text-sm text-gray-600">Post tasks and hire professionals.</p>
+                      </div>
+                    }
+                  />
                 </div>
               </DialogContent>
             </Dialog>
@@ -98,13 +99,14 @@ const Navigation = () => {
                     <h3 className="font-semibold mb-2">I want to complete tasks and earn money</h3>
                     <p className="text-sm text-gray-600">Find tasks and get paid for your work.</p>
                   </Link>
-                  <Link 
-                    to="/signup/advertiser" 
-                    className="w-full p-4 border rounded-lg hover:bg-gray-50 transition-colors"
-                  >
-                    <h3 className="font-semibold mb-2">I want to post tasks and hire</h3>
-                    <p className="text-sm text-gray-600">Post tasks and hire professionals.</p>
-                  </Link>
+                  <AdvertiserOptionsDialog 
+                    trigger={
+                      <div className="w-full p-4 border rounded-lg hover:bg-gray-50 transition-colors cursor-pointer">
+                        <h3 className="font-semibold mb-2">I want to post tasks and hire</h3>
+                        <p className="text-sm text-gray-600">Post tasks and hire professionals.</p>
+                      </div>
+                    }
+                  />
                 </div>
               </DialogContent>
             </Dialog>

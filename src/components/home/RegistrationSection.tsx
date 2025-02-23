@@ -1,6 +1,6 @@
-
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import AdvertiserOptionsDialog from "@/components/dialogs/AdvertiserOptionsDialog";
 
 const RegistrationSection = () => {
   return (
@@ -17,9 +17,11 @@ const RegistrationSection = () => {
         <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
           <h3 className="text-xl font-semibold mb-4">I want to post tasks and hire</h3>
           <p className="text-gray-600 mb-6">Post tasks and hire professionals.</p>
-          <Link to="/signup/advertiser">
-            <Button className="w-full bg-[#8511b4] hover:bg-[#7a0fa6] rounded-full">Register as an Advertiser</Button>
-          </Link>
+          <AdvertiserOptionsDialog 
+            trigger={
+              <Button className="w-full bg-[#8511b4] hover:bg-[#7a0fa6] rounded-full">Register as an Advertiser</Button>
+            }
+          />
         </div>
       </div>
     </section>
