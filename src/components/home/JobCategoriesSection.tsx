@@ -72,4 +72,45 @@ const categories: CategoryCard[] = [
 const JobCategoriesSection = () => {
   return (
     <section className="py-20 bg-gradient-to-br from-purple-50 to-purple-50 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_#f3e8ff_0%,_transparent_40%)] opacity-70"></div>
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-950 to-[#8511b4] mb-4">Find Your Jobs Easily</h2>
+          <div className="w-24 h-1 bg-[#8511b4] mx-auto rounded-full"></div>
+          <p className="text-xl text-gray-600 mt-6">Latest Categories</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          {categories.map((category, index) => (
+            <div key={category.title} className={`group h-64 [perspective:1000px] animate-fade-in animation-delay-${category.delay}`}>
+              <div className="relative h-full w-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+                <div className="absolute inset-0 bg-white rounded-xl shadow-md p-6 text-center [backface-visibility:hidden]">
+                  <div className="relative mb-4">
+                    <span className="absolute -top-2 -right-2 bg-[#8511b4] text-white text-sm font-semibold w-8 h-8 rounded-full flex items-center justify-center">
+                      {category.count}
+                    </span>
+                    <img src={category.image} alt={category.title} className="w-24 h-24 mx-auto object-contain" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900">{category.title}</h3>
+                </div>
+                <div className="absolute inset-0 bg-[#8511b4] text-white rounded-xl shadow-md p-6 text-center [transform:rotateY(180deg)] [backface-visibility:hidden] flex items-center justify-center">
+                  <p className="text-lg">{category.description}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="text-center">
+          <Link to="/jobs">
+            <Button className="bg-[#8511b4] hover:bg-[#7a0fa6] text-white rounded-full px-8 py-3 text-lg font-semibold transition-all hover:-translate-y-1">
+              View All
+            </Button>
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default JobCategoriesSection;
