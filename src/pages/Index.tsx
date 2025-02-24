@@ -18,6 +18,12 @@ const Index = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const scrollToHowItWorks = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const section = document.getElementById('how-it-works');
+    section?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-purple-50/50 to-purple-100/50">
       <nav className="sticky top-0 z-50 border-b shadow-sm bg-white/80 backdrop-blur-sm">
@@ -28,7 +34,7 @@ const Index = () => {
             </Link>
 
             <div className="hidden md:flex items-center space-x-8">
-              <Link to="/how-it-works" className="text-gray-700 hover:text-gray-900 font-medium">How it works</Link>
+              <a href="#how-it-works" onClick={scrollToHowItWorks} className="text-gray-700 hover:text-gray-900 font-medium">How it works</a>
               <Link to="/resources" className="text-gray-700 hover:text-gray-900 font-medium">Resources</Link>
               <Link to="/jobs" className="text-gray-700 hover:text-gray-900 font-medium">Jobs</Link>
               <Link to="/games" className="text-gray-700 hover:text-gray-900 font-medium">Games</Link>
@@ -74,7 +80,7 @@ const Index = () => {
 
           {isMobileMenuOpen && (
             <div className="md:hidden py-4 space-y-4 animate-fade-in">
-              <Link to="/how-it-works" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">How it works</Link>
+              <a href="#how-it-works" onClick={scrollToHowItWorks} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">How it works</a>
               <Link to="/resources" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">Resources</Link>
               <Link to="/jobs" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">Jobs</Link>
               <Link to="/games" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">Games</Link>
