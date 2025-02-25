@@ -69,6 +69,7 @@ const MenuItem = ({ icon: Icon, label, count, id, isActive, onClick }: MenuItemP
 
 const TaskerDashboard = () => {
   const [activeMenu, setActiveMenu] = useState("dashboard");
+  const [isLoggedIn, setIsLoggedIn] = useState(true); // You can connect this to your auth state
 
   // Mock data for the activity chart
   const activityData = [
@@ -80,6 +81,11 @@ const TaskerDashboard = () => {
     { date: "14/10", clicks: 10, earnings: 0.10 },
     { date: "13/10", clicks: 6, earnings: 0.06 },
   ];
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    // Add your logout logic here
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -94,7 +100,12 @@ const TaskerDashboard = () => {
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="w-64 p-0">
-                <SidebarContent activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
+                <SidebarContent 
+                  activeMenu={activeMenu} 
+                  setActiveMenu={setActiveMenu}
+                  onLogout={handleLogout}
+                  isLoggedIn={isLoggedIn}
+                />
               </SheetContent>
             </Sheet>
             <Link to="/">
@@ -106,20 +117,38 @@ const TaskerDashboard = () => {
             </Link>
           </div>
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="icon">
-              <BellDot className="h-5 w-5" />
-            </Button>
-            <div className="flex items-center space-x-2">
-              <span className="text-sm font-medium text-gray-700">Balance:</span>
-              <span className="text-sm font-bold text-purple-900">US$33.20</span>
-            </div>
+            {isLoggedIn ? (
+              <>
+                <Button variant="ghost" size="icon">
+                  <BellDot className="h-5 w-5" />
+                </Button>
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm font-medium text-gray-700">Balance:</span>
+                  <span className="text-sm font-bold text-purple-900">US$33.20</span>
+                </div>
+              </>
+            ) : (
+              <div className="flex items-center space-x-4">
+                <Link to="/login">
+                  <Button variant="ghost">Sign in</Button>
+                </Link>
+                <Link to="/signup/tasker">
+                  <Button>Get Started</Button>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>
 
       {/* Sidebar */}
       <div className="fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 border-r bg-white hidden lg:block">
-        <SidebarContent activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
+        <SidebarContent 
+          activeMenu={activeMenu} 
+          setActiveMenu={setActiveMenu} 
+          onLogout={handleLogout}
+          isLoggedIn={isLoggedIn}
+        />
       </div>
 
       {/* Main Content */}
@@ -209,13 +238,14 @@ const TaskerDashboard = () => {
 interface SidebarContentProps {
   activeMenu: string;
   setActiveMenu: (id: string) => void;
+  onLogout: () => void;
+  isLoggedIn: boolean;
 }
 
-const SidebarContent = ({ activeMenu, setActiveMenu }: SidebarContentProps) => {
+const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn }: SidebarContentProps) => {
   const menuItems = [
     { icon: Home, label: "Dashboard", id: "dashboard", count: 0 },
     { icon: Mail, label: "Inbox", id: "inbox", count: 2 },
-    { icon: Settings, label: "Settings", id: "settings", count: 1 },
     { icon: Gift, label: "Bonuses", id: "bonuses", count: 0 },
     { icon: CreditCard, label: "Payout", id: "payout", count: 0 },
     { icon: RefreshCcw, label: "Internal Transfer", id: "transfer", count: 0 },
@@ -238,8 +268,24 @@ const SidebarContent = ({ activeMenu, setActiveMenu }: SidebarContentProps) => {
           ))}
         </nav>
       </div>
-      <div className="p-4 border-t">
-        <Button variant="ghost" className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50">
+      <div className="p-4 border-t space-y-2">
+        <button
+          onClick={() => setActiveMenu("settings")}
+          className={cn(
+            "w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors",
+            activeMenu === "settings"
+              ? "bg-purple-100 text-purple-900"
+              : "hover:bg-gray-100 text-gray-700"
+          )}
+        >
+          <Settings className="w-5 h-5" />
+          <span className="flex-1 text-left">Settings</span>
+        </button>
+        <Button 
+          variant="ghost" 
+          className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50"
+          onClick={onLogout}
+        >
           <LogOut className="w-5 h-5 mr-3" />
           Sign out
         </Button>
