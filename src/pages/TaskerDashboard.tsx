@@ -37,6 +37,36 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 
+// Define MenuItem component at the file level so it's accessible to all components
+interface MenuItemProps {
+  icon: React.ElementType;
+  label: string;
+  count: number;
+  id: string;
+  isActive?: boolean;
+  onClick: (id: string) => void;
+}
+
+const MenuItem = ({ icon: Icon, label, count, id, isActive, onClick }: MenuItemProps) => (
+  <button
+    onClick={() => onClick(id)}
+    className={cn(
+      "w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors",
+      isActive
+        ? "bg-purple-100 text-purple-900"
+        : "hover:bg-gray-100 text-gray-700"
+    )}
+  >
+    <Icon className="w-5 h-5" />
+    <span className="flex-1 text-left">{label}</span>
+    {count > 0 && (
+      <span className="bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+        {count}
+      </span>
+    )}
+  </button>
+);
+
 const TaskerDashboard = () => {
   const [activeMenu, setActiveMenu] = useState("dashboard");
 
@@ -51,38 +81,6 @@ const TaskerDashboard = () => {
     { date: "13/10", clicks: 6, earnings: 0.06 },
   ];
 
-  const menuItems = [
-    { icon: Home, label: "Dashboard", id: "dashboard", count: 0 },
-    { icon: Mail, label: "Inbox", id: "inbox", count: 2 },
-    { icon: Settings, label: "Settings", id: "settings", count: 1 },
-    { icon: Gift, label: "Bonuses", id: "bonuses", count: 0 },
-    { icon: CreditCard, label: "Payout", id: "payout", count: 0 },
-    { icon: RefreshCcw, label: "Internal Transfer", id: "transfer", count: 0 },
-    { icon: Headphones, label: "Support", id: "support", count: 0 },
-    { icon: Crown, label: "Upgrade", id: "upgrade", count: 0 },
-    { icon: Users, label: "Top Members", id: "members", count: 0 },
-  ];
-
-  const MenuItem = ({ icon: Icon, label, count, id }: any) => (
-    <button
-      onClick={() => setActiveMenu(id)}
-      className={cn(
-        "w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors",
-        activeMenu === id
-          ? "bg-purple-100 text-purple-900"
-          : "hover:bg-gray-100 text-gray-700"
-      )}
-    >
-      <Icon className="w-5 h-5" />
-      <span className="flex-1 text-left">{label}</span>
-      {count > 0 && (
-        <span className="bg-red-500 text-white text-xs px-2 py-1 rounded-full">
-          {count}
-        </span>
-      )}
-    </button>
-  );
-
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Top Navigation */}
@@ -96,7 +94,7 @@ const TaskerDashboard = () => {
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="w-64 p-0">
-                <SidebarContent />
+                <SidebarContent activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
               </SheetContent>
             </Sheet>
             <Link to="/">
@@ -121,7 +119,7 @@ const TaskerDashboard = () => {
 
       {/* Sidebar */}
       <div className="fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 border-r bg-white hidden lg:block">
-        <SidebarContent />
+        <SidebarContent activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
       </div>
 
       {/* Main Content */}
@@ -208,7 +206,12 @@ const TaskerDashboard = () => {
 };
 
 // Sidebar Content Component
-const SidebarContent = () => {
+interface SidebarContentProps {
+  activeMenu: string;
+  setActiveMenu: (id: string) => void;
+}
+
+const SidebarContent = ({ activeMenu, setActiveMenu }: SidebarContentProps) => {
   const menuItems = [
     { icon: Home, label: "Dashboard", id: "dashboard", count: 0 },
     { icon: Mail, label: "Inbox", id: "inbox", count: 2 },
@@ -226,7 +229,12 @@ const SidebarContent = () => {
       <div className="flex-1 py-6 px-4">
         <nav className="space-y-1">
           {menuItems.map((item) => (
-            <MenuItem key={item.id} {...item} />
+            <MenuItem
+              key={item.id}
+              {...item}
+              isActive={activeMenu === item.id}
+              onClick={setActiveMenu}
+            />
           ))}
         </nav>
       </div>
