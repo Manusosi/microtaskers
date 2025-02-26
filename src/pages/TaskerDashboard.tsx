@@ -15,6 +15,16 @@ const TaskerDashboard = () => {
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
 
+  const activityData = [
+    { date: "19/10", clicks: 5, earnings: 0.05 },
+    { date: "18/10", clicks: 8, earnings: 0.08 },
+    { date: "17/10", clicks: 12, earnings: 0.12 },
+    { date: "16/10", clicks: 3, earnings: 0.03 },
+    { date: "15/10", clicks: 7, earnings: 0.07 },
+    { date: "14/10", clicks: 10, earnings: 0.10 },
+    { date: "13/10", clicks: 6, earnings: 0.06 },
+  ];
+
   useEffect(() => {
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
