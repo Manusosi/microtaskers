@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BellDot, Menu } from "lucide-react";
@@ -44,7 +43,7 @@ const TaskerDashboard = () => {
         setUsername(session?.user.user_metadata.username || session?.user.email || '');
       } else if (event === 'SIGNED_OUT') {
         setIsLoggedIn(false);
-        navigate('/login');
+        navigate('/');
       }
     });
 
@@ -55,7 +54,6 @@ const TaskerDashboard = () => {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    setIsLoggedIn(false);
     navigate('/');
   };
 

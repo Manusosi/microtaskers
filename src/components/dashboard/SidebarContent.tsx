@@ -32,6 +32,7 @@ export const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn
     { icon: Headphones, label: "Support", id: "support", count: 0 },
     { icon: Crown, label: "Upgrade", id: "upgrade", count: 0 },
     { icon: Users, label: "Top Members", id: "members", count: 0 },
+    { icon: Settings, label: "Settings", id: "settings", count: 0 },
   ];
 
   return (
@@ -48,19 +49,7 @@ export const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn
           ))}
         </nav>
       </div>
-      <div className="p-4 border-t space-y-2">
-        <button
-          onClick={() => setActiveMenu("settings")}
-          className={cn(
-            "w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors",
-            activeMenu === "settings"
-              ? "bg-purple-100 text-purple-900"
-              : "hover:bg-gray-100 text-gray-700"
-          )}
-        >
-          <Settings className="w-5 h-5" />
-          <span className="flex-1 text-left">Settings</span>
-        </button>
+      <div className="p-4 border-t">
         <Button 
           variant="ghost" 
           className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50"
