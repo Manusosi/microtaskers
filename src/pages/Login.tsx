@@ -20,7 +20,7 @@ const Login = () => {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    email: "",
+    identifier: "", // This will hold either email or username
     password: "",
   });
 
@@ -36,8 +36,11 @@ const Login = () => {
     setLoading(true);
 
     try {
+      // Check if the identifier is an email
+      const isEmail = formData.identifier.includes('@');
+      
       const { data, error } = await supabase.auth.signInWithPassword({
-        email: formData.email,
+        email: isEmail ? formData.identifier : `${formData.identifier}@placeholder.com`,
         password: formData.password,
       });
 
@@ -51,7 +54,6 @@ const Login = () => {
       }
 
       if (data.user) {
-        // Check user role from metadata and redirect accordingly
         const role = data.user.user_metadata.role;
         navigate(role === "tasker" ? "/dashboard" : "/advertiser-dashboard");
       }
@@ -86,11 +88,11 @@ const Login = () => {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="identifier">Email or Username</Label>
               <Input
-                id="email"
-                type="email"
-                placeholder="Enter your email"
+                id="identifier"
+                type="text"
+                placeholder="Enter your email or username"
                 onChange={handleChange}
                 required
               />

@@ -1,16 +1,52 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BellDot, Menu } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Link } from "react-router-dom";
 import { SidebarContent } from "@/components/dashboard/SidebarContent";
 import { ActivityTable } from "@/components/dashboard/ActivityTable";
+import { supabase } from "@/integrations/supabase/client";
 
 const TaskerDashboard = () => {
   const [activeMenu, setActiveMenu] = useState("dashboard");
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        setIsLoggedIn(true);
+        setUsername(session.user.user_metadata.username || session.user.email);
+      } else {
+        navigate('/login');
+      }
+    };
+
+    checkSession();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN') {
+        setIsLoggedIn(true);
+        setUsername(session?.user.user_metadata.username || session?.user.email || '');
+      } else if (event === 'SIGNED_OUT') {
+        setIsLoggedIn(false);
+        navigate('/login');
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [navigate]);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setIsLoggedIn(false);
+    navigate('/');
+  };
 
   const activityData = [
     { date: "19/10", clicks: 5, earnings: 0.05 },
@@ -21,10 +57,6 @@ const TaskerDashboard = () => {
     { date: "14/10", clicks: 10, earnings: 0.10 },
     { date: "13/10", clicks: 6, earnings: 0.06 },
   ];
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -58,6 +90,9 @@ const TaskerDashboard = () => {
           <div className="flex items-center space-x-4">
             {isLoggedIn ? (
               <>
+                <span className="text-sm font-medium text-gray-700">
+                  Hello, {username}!
+                </span>
                 <Button variant="ghost" size="icon">
                   <BellDot className="h-5 w-5" />
                 </Button>
