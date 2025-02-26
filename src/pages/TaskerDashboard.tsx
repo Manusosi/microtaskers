@@ -1,9 +1,10 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BellDot, Menu } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SidebarContent } from "@/components/dashboard/SidebarContent";
 import { ActivityTable } from "@/components/dashboard/ActivityTable";
 import { supabase } from "@/integrations/supabase/client";
@@ -47,16 +48,6 @@ const TaskerDashboard = () => {
     setIsLoggedIn(false);
     navigate('/');
   };
-
-  const activityData = [
-    { date: "19/10", clicks: 5, earnings: 0.05 },
-    { date: "18/10", clicks: 8, earnings: 0.08 },
-    { date: "17/10", clicks: 12, earnings: 0.12 },
-    { date: "16/10", clicks: 3, earnings: 0.03 },
-    { date: "15/10", clicks: 7, earnings: 0.07 },
-    { date: "14/10", clicks: 10, earnings: 0.10 },
-    { date: "13/10", clicks: 6, earnings: 0.06 },
-  ];
 
   return (
     <div className="min-h-screen bg-gray-50">
