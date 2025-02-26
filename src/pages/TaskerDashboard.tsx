@@ -1,77 +1,17 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableHeader,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-} from "@/components/ui/table";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
-import {
-  Home,
-  Mail,
-  Settings,
-  Gift,
-  CreditCard,
-  RefreshCcw,
-  Headphones,
-  Crown,
-  Users,
-  Menu,
-  BellDot,
-  LogOut,
-} from "lucide-react";
+import { BellDot, Menu } from "lucide-react";
 import { useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
-
-// Define MenuItem component at the file level so it's accessible to all components
-interface MenuItemProps {
-  icon: React.ElementType;
-  label: string;
-  count: number;
-  id: string;
-  isActive?: boolean;
-  onClick: (id: string) => void;
-}
-
-const MenuItem = ({ icon: Icon, label, count, id, isActive, onClick }: MenuItemProps) => (
-  <button
-    onClick={() => onClick(id)}
-    className={cn(
-      "w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors",
-      isActive
-        ? "bg-purple-100 text-purple-900"
-        : "hover:bg-gray-100 text-gray-700"
-    )}
-  >
-    <Icon className="w-5 h-5" />
-    <span className="flex-1 text-left">{label}</span>
-    {count > 0 && (
-      <span className="bg-red-500 text-white text-xs px-2 py-1 rounded-full">
-        {count}
-      </span>
-    )}
-  </button>
-);
+import { SidebarContent } from "@/components/dashboard/SidebarContent";
+import { ActivityTable } from "@/components/dashboard/ActivityTable";
 
 const TaskerDashboard = () => {
   const [activeMenu, setActiveMenu] = useState("dashboard");
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // You can connect this to your auth state
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
-  // Mock data for the activity chart
   const activityData = [
     { date: "19/10", clicks: 5, earnings: 0.05 },
     { date: "18/10", clicks: 8, earnings: 0.08 },
@@ -84,7 +24,6 @@ const TaskerDashboard = () => {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    // Add your logout logic here
   };
 
   return (
@@ -192,103 +131,8 @@ const TaskerDashboard = () => {
           </Card>
 
           {/* Activity Table */}
-          <Card>
-            <CardContent className="p-6">
-              <h3 className="text-xl font-semibold text-gray-900 mb-6">Last 7 days activity</h3>
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Reference</TableHead>
-                      <TableHead>Clicks</TableHead>
-                      <TableHead>Earning</TableHead>
-                      <TableHead>Progress</TableHead>
-                      <TableHead>Date</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {activityData.map((activity, index) => (
-                      <TableRow key={index}>
-                        <TableCell>{71398658 + index}</TableCell>
-                        <TableCell>{activity.clicks}</TableCell>
-                        <TableCell>${activity.earnings.toFixed(2)}</TableCell>
-                        <TableCell>
-                          <div className="w-full bg-gray-200 rounded-full h-2.5">
-                            <div
-                              className="bg-purple-600 h-2.5 rounded-full"
-                              style={{ width: `${(activity.clicks / 15) * 100}%` }}
-                            ></div>
-                          </div>
-                        </TableCell>
-                        <TableCell>{activity.date}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
-            </CardContent>
-          </Card>
+          <ActivityTable activityData={activityData} />
         </div>
-      </div>
-    </div>
-  );
-};
-
-// Sidebar Content Component
-interface SidebarContentProps {
-  activeMenu: string;
-  setActiveMenu: (id: string) => void;
-  onLogout: () => void;
-  isLoggedIn: boolean;
-}
-
-const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn }: SidebarContentProps) => {
-  const menuItems = [
-    { icon: Home, label: "Dashboard", id: "dashboard", count: 0 },
-    { icon: Mail, label: "Inbox", id: "inbox", count: 2 },
-    { icon: Gift, label: "Bonuses", id: "bonuses", count: 0 },
-    { icon: CreditCard, label: "Payout", id: "payout", count: 0 },
-    { icon: RefreshCcw, label: "Internal Transfer", id: "transfer", count: 0 },
-    { icon: Headphones, label: "Support", id: "support", count: 0 },
-    { icon: Crown, label: "Upgrade", id: "upgrade", count: 0 },
-    { icon: Users, label: "Top Members", id: "members", count: 0 },
-  ];
-
-  return (
-    <div className="flex flex-col h-full bg-white">
-      <div className="flex-1 py-6 px-4">
-        <nav className="space-y-1">
-          {menuItems.map((item) => (
-            <MenuItem
-              key={item.id}
-              {...item}
-              isActive={activeMenu === item.id}
-              onClick={setActiveMenu}
-            />
-          ))}
-        </nav>
-      </div>
-      <div className="p-4 border-t space-y-2">
-        <button
-          onClick={() => setActiveMenu("settings")}
-          className={cn(
-            "w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors",
-            activeMenu === "settings"
-              ? "bg-purple-100 text-purple-900"
-              : "hover:bg-gray-100 text-gray-700"
-          )}
-        >
-          <Settings className="w-5 h-5" />
-          <span className="flex-1 text-left">Settings</span>
-        </button>
-        <Button 
-          variant="ghost" 
-          className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50"
-          onClick={onLogout}
-        >
-          <LogOut className="w-5 h-5 mr-3" />
-          Sign out
-        </Button>
       </div>
     </div>
   );
