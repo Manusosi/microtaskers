@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, X, ArrowRight } from "lucide-react";
@@ -476,3 +477,244 @@ const Index = () => {
                     <img src="/lovable-uploads/2013a180-d04f-4ed1-9413-dfdc43180709.png" alt="TikTok" className="w-24 h-24 mx-auto object-contain" />
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900">Tiktok</h3>
+                </div>
+                <div className="absolute inset-0 bg-[#8511b4] text-white rounded-xl shadow-md p-6 text-center [transform:rotateY(180deg)] [backface-visibility:hidden] flex items-center justify-center">
+                  <p className="text-lg">Get paid to engage with TikTok content and accounts.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Referral Section with Brand Colors */}
+      <section className="py-20 relative overflow-hidden">
+        {/* Background elements */}
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-50 via-white to-purple-50"></div>
+        <div className="absolute top-0 left-0 w-full h-full opacity-30">
+          <div className="absolute top-10 left-10 w-32 h-32 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl"></div>
+          <div className="absolute bottom-10 right-10 w-32 h-32 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl"></div>
+          <div className="absolute top-1/2 left-1/3 w-40 h-40 bg-purple-100 rounded-full mix-blend-multiply filter blur-xl"></div>
+        </div>
+        
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-2">
+              {/* Image Column with decorative elements */}
+              <div className="relative bg-gradient-to-br from-purple-100 to-purple-50 p-6 md:p-0 flex items-center justify-center">
+                <div className="absolute top-0 right-0 w-20 h-20 bg-purple-100 rounded-full opacity-70 -mr-10 -mt-10"></div>
+                <div className="absolute bottom-0 left-0 w-16 h-16 bg-purple-200 rounded-full opacity-70 -ml-8 -mb-8"></div>
+                
+                {/* Animated percentage bubbles */}
+                <div className="absolute top-1/4 right-1/4 flex items-center justify-center w-12 h-12 bg-[#8511b4] bg-opacity-90 rounded-full text-white font-bold animate-bounce shadow-lg">
+                  5%
+                </div>
+                <div className="absolute bottom-1/4 left-1/3 flex items-center justify-center w-10 h-10 bg-[#6E59A5] bg-opacity-90 rounded-full text-white font-bold animate-pulse delay-300 shadow-lg">
+                  $
+                </div>
+                
+                <img 
+                  src="/lovable-uploads/c9db11a6-bd97-44ba-9970-d990ce279b56.png" 
+                  alt="Excited young man with a big smile" 
+                  className="relative z-10 max-w-full md:max-h-[400px] object-cover rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              
+              {/* Content Column */}
+              <div className="p-8 md:p-12 flex flex-col justify-center">
+                <div className="mb-8">
+                  <div className="inline-block px-4 py-1 bg-purple-100 text-purple-800 text-sm font-medium rounded-full mb-4">
+                    REFERRAL PROGRAM
+                  </div>
+                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+                    Earn <span className="text-[#8511b4]">5% Commission</span> on Every Referral
+                  </h2>
+                  <div className="w-16 h-1 bg-[#7E69AB] rounded-full mb-6"></div>
+                  <p className="text-gray-600 text-lg leading-relaxed">
+                    Share your unique referral link across social media, blogs, websites, or forums. When new users sign up through your link, you'll automatically earn a 5% commission on all their earnings.
+                  </p>
+                </div>
+                
+                <div className="space-y-6">
+                  <div className="flex items-start space-x-3">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-[#6E59A5]" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <p className="text-gray-700">Get paid for both advertisers and taskers you refer</p>
+                  </div>
+                  
+                  <div className="flex items-start space-x-3">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-[#6E59A5]" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <p className="text-gray-700">Commissions automatically added to your account</p>
+                  </div>
+                  
+                  <div className="flex items-start space-x-3">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-[#6E59A5]" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <p className="text-gray-700">No limit on how many people you can refer</p>
+                  </div>
+                </div>
+                
+                <div className="mt-8">
+                  <Link to="/signup/tasker">
+                    <Button 
+                      className="bg-gradient-to-r from-[#8511b4] to-[#6E59A5] hover:from-[#7a0fa6] hover:to-[#5d4992] text-white rounded-full px-8 py-4 text-lg font-medium shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 w-full md:w-auto"
+                    >
+                      GET YOUR REFERRAL LINK NOW
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 bg-gradient-to-br from-white to-purple-50 relative">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_#f3e8ff_0%,_transparent_40%)] opacity-70"></div>
+        <div className="container mx-auto px-6">
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-950 to-[#8511b4] mb-4">Frequently Asked Questions</h2>
+              <p className="text-gray-600">Everything you need to know about Microtaskers</p>
+            </div>
+            
+            <div className="space-y-6">
+              {/* FAQ Item 1 */}
+              <div className="bg-white rounded-xl shadow-sm border border-purple-100 overflow-hidden">
+                <details className="group">
+                  <summary className="flex items-center justify-between p-6 cursor-pointer">
+                    <h3 className="text-lg font-semibold text-gray-900">What is Microtaskers?</h3>
+                    <span className="relative ml-4 flex-shrink-0 rounded-full bg-purple-50 p-1.5 text-[#8511b4] sm:p-2 group-open:bg-purple-100">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-open:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                      </svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="hidden h-5 w-5 group-open:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 12H6" />
+                      </svg>
+                    </span>
+                  </summary>
+                  <div className="px-6 pb-6 pt-2 text-gray-600">
+                    <p>Microtaskers is a global platform that connects people looking to earn money by completing simple online tasks with businesses and individuals who need these tasks done. Our platform specializes in micro-jobs that can be completed quickly and easily from anywhere in the world.</p>
+                  </div>
+                </details>
+              </div>
+              
+              {/* FAQ Item 2 */}
+              <div className="bg-white rounded-xl shadow-sm border border-purple-100 overflow-hidden">
+                <details className="group">
+                  <summary className="flex items-center justify-between p-6 cursor-pointer">
+                    <h3 className="text-lg font-semibold text-gray-900">How do I get paid for completing tasks?</h3>
+                    <span className="relative ml-4 flex-shrink-0 rounded-full bg-purple-50 p-1.5 text-[#8511b4] sm:p-2 group-open:bg-purple-100">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-open:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                      </svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="hidden h-5 w-5 group-open:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 12H6" />
+                      </svg>
+                    </span>
+                  </summary>
+                  <div className="px-6 pb-6 pt-2 text-gray-600">
+                    <p>We process payments weekly. Once you've completed tasks and they've been approved, the payment is added to your balance. You can request a withdrawal through various payment methods, including PayPal, bank transfer, and cryptocurrency. The minimum withdrawal amount is $10, and there are no withdrawal fees.</p>
+                  </div>
+                </details>
+              </div>
+              
+              {/* FAQ Item 3 */}
+              <div className="bg-white rounded-xl shadow-sm border border-purple-100 overflow-hidden">
+                <details className="group">
+                  <summary className="flex items-center justify-between p-6 cursor-pointer">
+                    <h3 className="text-lg font-semibold text-gray-900">What types of tasks can I complete?</h3>
+                    <span className="relative ml-4 flex-shrink-0 rounded-full bg-purple-50 p-1.5 text-[#8511b4] sm:p-2 group-open:bg-purple-100">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-open:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                      </svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="hidden h-5 w-5 group-open:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 12H6" />
+                      </svg>
+                    </span>
+                  </summary>
+                  <div className="px-6 pb-6 pt-2 text-gray-600">
+                    <p>Tasks vary widely but typically include social media engagement (likes, follows, subscribes), writing reviews, creating accounts, testing websites, watching videos, completing surveys, data entry, and more. New task categories are added regularly, and you can filter tasks based on your interests and skills.</p>
+                  </div>
+                </details>
+              </div>
+              
+              {/* FAQ Item 4 */}
+              <div className="bg-white rounded-xl shadow-sm border border-purple-100 overflow-hidden">
+                <details className="group">
+                  <summary className="flex items-center justify-between p-6 cursor-pointer">
+                    <h3 className="text-lg font-semibold text-gray-900">How does the referral program work?</h3>
+                    <span className="relative ml-4 flex-shrink-0 rounded-full bg-purple-50 p-1.5 text-[#8511b4] sm:p-2 group-open:bg-purple-100">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-open:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                      </svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="hidden h-5 w-5 group-open:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 12H6" />
+                      </svg>
+                    </span>
+                  </summary>
+                  <div className="px-6 pb-6 pt-2 text-gray-600">
+                    <p>When you register, you receive a unique referral link. Share this link with friends, on social media, or on your website. When someone signs up using your link, they become your referral. You earn a 5% commission on all their earnings for as long as they use our platform. There's no limit to how many people you can refer or how much you can earn.</p>
+                  </div>
+                </details>
+              </div>
+              
+              {/* FAQ Item 5 */}
+              <div className="bg-white rounded-xl shadow-sm border border-purple-100 overflow-hidden">
+                <details className="group">
+                  <summary className="flex items-center justify-between p-6 cursor-pointer">
+                    <h3 className="text-lg font-semibold text-gray-900">How do I post tasks as an advertiser?</h3>
+                    <span className="relative ml-4 flex-shrink-0 rounded-full bg-purple-50 p-1.5 text-[#8511b4] sm:p-2 group-open:bg-purple-100">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-open:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                      </svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="hidden h-5 w-5 group-open:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 12H6" />
+                      </svg>
+                    </span>
+                  </summary>
+                  <div className="px-6 pb-6 pt-2 text-gray-600">
+                    <p>Register as an advertiser, then access your dashboard to create tasks. Specify task details, requirements, and payment amount. Set your budget and the number of taskers needed. Our platform will help match your tasks with qualified taskers. You only pay for successfully completed tasks that meet your requirements.</p>
+                  </div>
+                </details>
+              </div>
+              
+              {/* FAQ Item 6 */}
+              <div className="bg-white rounded-xl shadow-sm border border-purple-100 overflow-hidden">
+                <details className="group">
+                  <summary className="flex items-center justify-between p-6 cursor-pointer">
+                    <h3 className="text-lg font-semibold text-gray-900">Is Microtaskers available worldwide?</h3>
+                    <span className="relative ml-4 flex-shrink-0 rounded-full bg-purple-50 p-1.5 text-[#8511b4] sm:p-2 group-open:bg-purple-100">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-open:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                      </svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="hidden h-5 w-5 group-open:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 12H6" />
+                      </svg>
+                    </span>
+                  </summary>
+                  <div className="px-6 pb-6 pt-2 text-gray-600">
+                    <p>Yes, Microtaskers is available worldwide. We have taskers and advertisers from over 190 countries. The platform is designed to be accessible from any device with an internet connection, allowing you to work or hire from anywhere in the world.</p>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default Index;
