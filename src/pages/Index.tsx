@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, X, ArrowRight } from "lucide-react";
@@ -491,6 +490,57 @@ const Index = () => {
                 View All
               </Button>
             </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-gradient-to-br from-white to-purple-50/30 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_#f3e8ff_0%,_transparent_40%)] opacity-70"></div>
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div className="relative">
+              <div className="absolute -inset-4 bg-gradient-to-r from-purple-100 to-purple-50 rounded-full blur-3xl opacity-40 animate-pulse"></div>
+              <img 
+                src="/lovable-uploads/88ea48d2-b835-4f9b-8cd6-37e91489e132.png" 
+                alt="Person in professional attire thinking" 
+                className="relative w-full max-w-lg mx-auto rounded-lg shadow-xl transform hover:scale-105 transition-transform duration-700 ease-in-out"
+              />
+              <div className="absolute -top-4 -right-4 w-8 h-8 bg-purple-200 rounded-full animate-bounce delay-100"></div>
+              <div className="absolute bottom-4 -left-4 w-6 h-6 bg-purple-300 rounded-full animate-bounce delay-300"></div>
+            </div>
+            
+            <div className="space-y-6 animate-fade-in md:text-left text-center">
+              <div className="inline-flex items-center space-x-2">
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900">Want to get</h2>
+                <div className="relative">
+                  <span className="text-4xl md:text-5xl font-bold text-gray-900">5%</span>
+                  <div className="absolute -top-1 -right-3 w-full h-full">
+                    <svg className="w-full h-full text-[#8511b4]" viewBox="0 0 70 36">
+                      <path 
+                        d="M6.2,35.9s58.2-31.9,61.6-34.3c0.5-0.4,1.5,0.2,1.1,1.4c-2.7,7.3-6.1,18.9-6.2,19.1c-0.1,0.3-0.5,0.5-0.7,0.6c-0.3,0.1-11.5,4.8-11.5,4.8" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="2.5" 
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900">referral fee?</h2>
+              </div>
+              
+              <p className="text-lg text-gray-600 max-w-xl">
+                Place referral links in social media channels - blogs, websites, forums, etc., or write a review on SproutGigs. Refer new clients or freelancers and get a referral fee for everyone.
+              </p>
+              
+              <Link to="/signup/tasker">
+                <Button 
+                  className="bg-[#31B24A] hover:bg-[#2a9940] rounded-full px-8 py-6 text-lg shadow-lg shadow-green-200 transition-all hover:shadow-green-300 hover:-translate-y-1"
+                >
+                  SIGN UP TO GET LINK
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
