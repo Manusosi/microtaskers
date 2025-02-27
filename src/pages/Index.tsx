@@ -494,52 +494,88 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="py-20 bg-gradient-to-br from-white to-purple-50/30 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_#f3e8ff_0%,_transparent_40%)] opacity-70"></div>
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-purple-100 to-purple-50 rounded-full blur-3xl opacity-40 animate-pulse"></div>
-              <img 
-                src="/lovable-uploads/88ea48d2-b835-4f9b-8cd6-37e91489e132.png" 
-                alt="Person in professional attire thinking" 
-                className="relative w-full max-w-lg mx-auto rounded-lg shadow-xl transform hover:scale-105 transition-transform duration-700 ease-in-out"
-              />
-              <div className="absolute -top-4 -right-4 w-8 h-8 bg-purple-200 rounded-full animate-bounce delay-100"></div>
-              <div className="absolute bottom-4 -left-4 w-6 h-6 bg-purple-300 rounded-full animate-bounce delay-300"></div>
-            </div>
-            
-            <div className="space-y-6 animate-fade-in md:text-left text-center">
-              <div className="inline-flex items-center space-x-2">
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900">Want to get</h2>
-                <div className="relative">
-                  <span className="text-4xl md:text-5xl font-bold text-gray-900">5%</span>
-                  <div className="absolute -top-1 -right-3 w-full h-full">
-                    <svg className="w-full h-full text-[#8511b4]" viewBox="0 0 70 36">
-                      <path 
-                        d="M6.2,35.9s58.2-31.9,61.6-34.3c0.5-0.4,1.5,0.2,1.1,1.4c-2.7,7.3-6.1,18.9-6.2,19.1c-0.1,0.3-0.5,0.5-0.7,0.6c-0.3,0.1-11.5,4.8-11.5,4.8" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        strokeWidth="2.5" 
-                        strokeLinecap="round"
-                      />
-                    </svg>
-                  </div>
+      <section className="py-20 bg-gradient-to-br from-purple-50 to-purple-50 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-50 via-white to-purple-50"></div>
+        <div className="absolute top-0 left-0 w-full h-full opacity-30">
+          <div className="absolute top-10 left-10 w-32 h-32 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl"></div>
+          <div className="absolute bottom-10 right-10 w-32 h-32 bg-green-200 rounded-full mix-blend-multiply filter blur-xl"></div>
+          <div className="absolute top-1/2 left-1/3 w-40 h-40 bg-yellow-100 rounded-full mix-blend-multiply filter blur-xl"></div>
+        </div>
+        
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-2">
+              <div className="relative bg-gradient-to-br from-purple-100 to-purple-50 p-6 md:p-0 flex items-center justify-center">
+                <div className="absolute top-0 right-0 w-20 h-20 bg-green-100 rounded-full opacity-70 -mr-10 -mt-10"></div>
+                <div className="absolute bottom-0 left-0 w-16 h-16 bg-purple-200 rounded-full opacity-70 -ml-8 -mb-8"></div>
+                
+                <div className="absolute top-1/4 right-1/4 flex items-center justify-center w-12 h-12 bg-[#8511b4] bg-opacity-90 rounded-full text-white font-bold animate-bounce shadow-lg">
+                  5%
                 </div>
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900">referral fee?</h2>
+                <div className="absolute bottom-1/4 left-1/3 flex items-center justify-center w-10 h-10 bg-green-500 bg-opacity-90 rounded-full text-white font-bold animate-pulse delay-300 shadow-lg">
+                  $
+                </div>
+                
+                <img 
+                  src="/lovable-uploads/c9db11a6-bd97-44ba-9970-d990ce279b56.png" 
+                  alt="Excited young man with a big smile" 
+                  className="relative z-10 max-w-full md:max-h-[400px] object-cover rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-500"
+                />
               </div>
               
-              <p className="text-lg text-gray-600 max-w-xl">
-                Place referral links in social media channels - blogs, websites, forums, etc., or write a review on SproutGigs. Refer new clients or freelancers and get a referral fee for everyone.
-              </p>
-              
-              <Link to="/signup/tasker">
-                <Button 
-                  className="bg-[#31B24A] hover:bg-[#2a9940] rounded-full px-8 py-6 text-lg shadow-lg shadow-green-200 transition-all hover:shadow-green-300 hover:-translate-y-1"
-                >
-                  SIGN UP TO GET LINK
-                </Button>
-              </Link>
+              <div className="p-8 md:p-12 flex flex-col justify-center">
+                <div className="mb-8">
+                  <div className="inline-block px-4 py-1 bg-purple-100 text-purple-800 text-sm font-medium rounded-full mb-4">
+                    REFERRAL PROGRAM
+                  </div>
+                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+                    Earn <span className="text-[#8511b4]">5% Commission</span> on Every Referral
+                  </h2>
+                  <div className="w-16 h-1 bg-green-500 rounded-full mb-6"></div>
+                  <p className="text-gray-600 text-lg leading-relaxed">
+                    Share your unique referral link across social media, blogs, websites, or forums. When new users sign up through your link, you'll automatically earn a 5% commission on all their earnings.
+                  </p>
+                </div>
+                
+                <div className="space-y-6">
+                  <div className="flex items-start space-x-3">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <p className="text-gray-700">Get paid for both advertisers and taskers you refer</p>
+                  </div>
+                  
+                  <div className="flex items-start space-x-3">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <p className="text-gray-700">Commissions automatically added to your account</p>
+                  </div>
+                  
+                  <div className="flex items-start space-x-3">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <p className="text-gray-700">No limit on how many people you can refer</p>
+                  </div>
+                </div>
+                
+                <div className="mt-8">
+                  <Link to="/signup/tasker">
+                    <Button 
+                      className="bg-gradient-to-r from-[#31B24A] to-[#2a9940] hover:from-[#2a9940] hover:to-[#248035] text-white rounded-full px-8 py-4 text-lg font-medium shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 w-full md:w-auto"
+                    >
+                      GET YOUR REFERRAL LINK NOW
+                    </Button>
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>
