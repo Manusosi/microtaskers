@@ -507,6 +507,44 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Referral Section - Restored */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-12">
+            <div className="order-2 md:order-1">
+              <img 
+                src="/lovable-uploads/1605810230434-7631ac76ec81.png" 
+                alt="Refer friends and earn" 
+                className="w-full max-w-lg mx-auto rounded-lg shadow-lg"
+              />
+            </div>
+            <div className="order-1 md:order-2 space-y-6">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Refer Friends & Earn More</h2>
+              <div className="w-20 h-1 bg-[#8511b4] rounded-full"></div>
+              <p className="text-lg text-gray-600">
+                Share Microtaskers with your friends and earn 5% of their earnings for life! 
+                The more friends you invite, the more passive income you generate.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+                <div className="bg-purple-50 p-6 rounded-lg">
+                  <h3 className="text-xl font-semibold text-purple-900 mb-2">$5 Sign-up Bonus</h3>
+                  <p className="text-gray-600">For every friend who joins using your referral link</p>
+                </div>
+                <div className="bg-purple-50 p-6 rounded-lg">
+                  <h3 className="text-xl font-semibold text-purple-900 mb-2">5% Lifetime</h3>
+                  <p className="text-gray-600">Commission on all your referrals' earnings forever</p>
+                </div>
+              </div>
+              <Button 
+                className="bg-[#8511b4] hover:bg-[#7a0fa6] rounded-full px-8 py-3 text-white font-medium"
+              >
+                Get Your Referral Link
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* FAQ Section */}
       <section id="faq" className="py-20 bg-white relative">
         <div className="container mx-auto px-6">
