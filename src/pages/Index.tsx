@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Menu, X, ArrowRight } from "lucide-react";
+import { Menu, X, ArrowRight, Plus, Minus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -32,13 +32,42 @@ interface Task {
   reward: number;
 }
 
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
 const Index = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState<string | null>(null);
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  const faqItems: FaqItem[] = [
+    {
+      question: "What is Microtaskers?",
+      answer: "Microtaskers is a platform that connects people who want to earn money by completing simple tasks with businesses that need help with small online jobs. You can work from anywhere in the world at your own pace."
+    },
+    {
+      question: "How much can I earn?",
+      answer: "Earnings vary based on the type and complexity of tasks. Most microtasks pay between $0.10 to $5 per task. Active users typically earn $200-$500 per month working part-time, but earnings can be higher depending on your dedication and the tasks you choose."
+    },
+    {
+      question: "How do I get paid?",
+      answer: "We offer multiple payment methods including PayPal, direct bank transfer, cryptocurrency, and gift cards. Payments are processed weekly for all completed and approved tasks. The minimum payout threshold is $10."
+    },
+    {
+      question: "What types of tasks can I do?",
+      answer: "Tasks include social media engagement, writing reviews, account creation, data entry, content moderation, surveys, app testing, and many more. New task categories are added regularly based on demand."
+    },
+    {
+      question: "Is this available worldwide?",
+      answer: "Yes! Microtaskers is available globally. We have tasks for workers from all countries, though some tasks may be region-specific. We support multiple languages and payment methods that work internationally."
+    }
+  ];
 
   useEffect(() => {
     // Fetch tasks from the API
@@ -103,6 +132,14 @@ const Index = () => {
     section?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const toggleFaq = (index: number) => {
+    if (openFaqIndex === index) {
+      setOpenFaqIndex(null);
+    } else {
+      setOpenFaqIndex(index);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-purple-50/50 to-purple-100/50">
       <nav className="sticky top-0 z-50 border-b shadow-sm bg-white/80 backdrop-blur-sm">
@@ -114,6 +151,7 @@ const Index = () => {
 
             <div className="hidden md:flex items-center space-x-8">
               <a href="#how-it-works" onClick={scrollToHowItWorks} className="text-gray-700 hover:text-gray-900 font-medium">How it works</a>
+              <a href="#faq" className="text-gray-700 hover:text-gray-900 font-medium">FAQ</a>
               <Link to="/resources" className="text-gray-700 hover:text-gray-900 font-medium">Resources</Link>
               <Link to="/jobs" className="text-gray-700 hover:text-gray-900 font-medium">Jobs</Link>
               <Link to="/games" className="text-gray-700 hover:text-gray-900 font-medium">Games</Link>
@@ -182,6 +220,7 @@ const Index = () => {
           {isMobileMenuOpen && (
             <div className="md:hidden py-4 space-y-4 animate-fade-in">
               <a href="#how-it-works" onClick={scrollToHowItWorks} className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">How it works</a>
+              <a href="#faq" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">FAQ</a>
               <Link to="/resources" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">Resources</Link>
               <Link to="/jobs" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">Jobs</Link>
               <Link to="/games" className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">Games</Link>
@@ -391,7 +430,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Jobs section with card flips */}
       <section className="py-20 bg-gradient-to-br from-purple-50 to-purple-50 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_#f3e8ff_0%,_transparent_40%)] opacity-70"></div>
         <div className="container mx-auto px-6">
@@ -469,6 +507,57 @@ const Index = () => {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section id="faq" className="py-20 bg-white relative">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-950 to-[#8511b4] mb-4">Frequently Asked Questions</h2>
+            <div className="w-24 h-1 bg-[#8511b4] mx-auto rounded-full"></div>
+            <p className="text-xl text-gray-600 mt-6">Everything you need to know about Microtaskers</p>
+          </div>
+
+          <div className="max-w-3xl mx-auto">
+            {faqItems.map((item, index) => (
+              <div 
+                key={index}
+                className="border-b border-gray-200 last:border-0"
+              >
+                <button
+                  className="flex justify-between items-center w-full py-6 text-left"
+                  onClick={() => toggleFaq(index)}
+                >
+                  <h3 className="text-xl font-medium text-gray-900">{item.question}</h3>
+                  <div className="text-purple-700">
+                    {openFaqIndex === index ? (
+                      <Minus className="h-5 w-5" />
+                    ) : (
+                      <Plus className="h-5 w-5" />
+                    )}
+                  </div>
+                </button>
+                <div 
+                  className={`overflow-hidden transition-all duration-300 ${
+                    openFaqIndex === index ? "max-h-96 opacity-100 pb-6" : "max-h-0 opacity-0"
+                  }`}
+                >
+                  <p className="text-gray-600">{item.answer}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <Link to="/signup/tasker">
+              <Button 
+                className="bg-[#8511b4] hover:bg-[#7a0fa6] rounded-full px-8 py-3 text-lg shadow-md shadow-purple-100 transition-all hover:shadow-purple-200"
+              >
+                Start Earning Today
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Footer with white background and faded brand color gradient */}
       <footer className="bg-gradient-to-b from-white to-purple-50 py-16">
         <div className="container mx-auto px-6">
@@ -532,6 +621,9 @@ const Index = () => {
                 </li>
                 <li>
                   <a href="#how-it-works" className="text-gray-600 hover:text-purple-800 transition-colors">How It Works</a>
+                </li>
+                <li>
+                  <a href="#faq" className="text-gray-600 hover:text-purple-800 transition-colors">FAQ</a>
                 </li>
                 <li>
                   <Link to="/jobs" className="text-gray-600 hover:text-purple-800 transition-colors">Browse Jobs</Link>
