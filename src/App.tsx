@@ -10,6 +10,7 @@ import AdvertiserDashboard from "./pages/AdvertiserDashboard";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import AboutUs from "./pages/AboutUs";
+import ContactUs from "./pages/ContactUs";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/signup/:type" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/contact" element={<ContactUs />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>

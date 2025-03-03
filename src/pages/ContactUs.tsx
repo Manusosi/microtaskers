@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,18 +17,15 @@ import {
   Phone, 
   MapPin, 
   Send, 
-  Check, 
-  Users, 
-  Trophy,
-  Globe,
-  Zap
+  Check 
 } from "lucide-react";
 
-const AboutUs = () => {
+const ContactUs = () => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    subject: "",
     message: ""
   });
 
@@ -54,6 +52,7 @@ const AboutUs = () => {
     setFormData({
       name: "",
       email: "",
+      subject: "",
       message: ""
     });
   };
@@ -61,117 +60,22 @@ const AboutUs = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-purple-50/50 to-purple-100/50">
       {/* Hero Section */}
-      <section className="relative py-20 md:py-28 overflow-hidden">
+      <section className="relative py-16 md:py-24 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_#f3e8ff_0%,_transparent_40%)] opacity-70"></div>
         <div className="container mx-auto px-6">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-purple-950 to-purple-800 mb-6">
-              About Microtaskers
+              Contact Us
             </h1>
             <p className="text-lg md:text-xl text-gray-600 mb-10">
-              Connecting global talent with micro-opportunities for a more accessible future of work
+              Have questions or need assistance? We're here to help you every step of the way.
             </p>
-            <div className="flex justify-center">
-              <img 
-                src="/lovable-uploads/c9628198-a7de-4746-8562-b3649c93a411.png" 
-                alt="Microtaskers Logo"
-                className="h-20 md:h-28"
-              />
-            </div>
           </div>
         </div>
       </section>
 
-      {/* Our Mission Section */}
-      <section className="py-16 bg-white/80 backdrop-blur-sm">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="relative">
-                <div className="absolute -inset-4 bg-gradient-to-r from-purple-100 to-purple-50 rounded-2xl blur-3xl opacity-40"></div>
-                <img 
-                  src="/lovable-uploads/be12698a-21e4-4459-a590-8aa3b6ec273e.png" 
-                  alt="Our Mission" 
-                  className="relative rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300"
-                />
-              </div>
-            </div>
-            <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-gray-900">Our Mission</h2>
-              <p className="text-gray-600 leading-relaxed">
-                At Microtaskers, we're revolutionizing the gig economy by breaking down barriers to entry 
-                and creating accessible income opportunities for everyone, everywhere. We believe that everyone 
-                should have the chance to earn income, regardless of location, background, or specialized skills.
-              </p>
-              <p className="text-gray-600 leading-relaxed">
-                Our platform connects people with simple, quick-to-complete tasks that can be done from anywhere, 
-                allowing them to earn money on their own schedule. We're creating a future where financial 
-                inclusion is the norm, not the exception.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Key Features */}
-      <section className="py-16">
-        <div className="container mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center mb-12">Why Choose Microtaskers</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <Card className="bg-white hover:shadow-md transition-shadow">
-              <CardHeader className="text-center pb-2">
-                <div className="mx-auto bg-purple-100 p-3 rounded-full w-16 h-16 flex items-center justify-center mb-4">
-                  <Globe className="w-8 h-8 text-[#8511b4]" />
-                </div>
-                <CardTitle className="text-xl">Global Access</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center text-gray-600">
-                Work from anywhere in the world with just an internet connection.
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-white hover:shadow-md transition-shadow">
-              <CardHeader className="text-center pb-2">
-                <div className="mx-auto bg-purple-100 p-3 rounded-full w-16 h-16 flex items-center justify-center mb-4">
-                  <Zap className="w-8 h-8 text-[#8511b4]" />
-                </div>
-                <CardTitle className="text-xl">Quick Payments</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center text-gray-600">
-                Weekly payouts with multiple payment options available worldwide.
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-white hover:shadow-md transition-shadow">
-              <CardHeader className="text-center pb-2">
-                <div className="mx-auto bg-purple-100 p-3 rounded-full w-16 h-16 flex items-center justify-center mb-4">
-                  <Users className="w-8 h-8 text-[#8511b4]" />
-                </div>
-                <CardTitle className="text-xl">Community Support</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center text-gray-600">
-                Join thousands of workers and businesses in our thriving community.
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-white hover:shadow-md transition-shadow">
-              <CardHeader className="text-center pb-2">
-                <div className="mx-auto bg-purple-100 p-3 rounded-full w-16 h-16 flex items-center justify-center mb-4">
-                  <Trophy className="w-8 h-8 text-[#8511b4]" />
-                </div>
-                <CardTitle className="text-xl">Reward System</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center text-gray-600">
-                Earn bonuses and unlock higher-paying tasks as you build your reputation.
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact & Referral Section */}
-      <section className="py-16 bg-gradient-to-br from-purple-50 to-white">
+      {/* Contact Section */}
+      <section className="py-12 bg-gradient-to-br from-purple-50 to-white">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Form */}
@@ -209,6 +113,18 @@ const AboutUs = () => {
                     </div>
                     
                     <div className="space-y-2">
+                      <Label htmlFor="subject">Subject</Label>
+                      <Input 
+                        id="subject" 
+                        name="subject"
+                        value={formData.subject}
+                        onChange={handleChange}
+                        placeholder="What is this about?" 
+                        required 
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
                       <Label htmlFor="message">Message</Label>
                       <textarea 
                         id="message" 
@@ -230,7 +146,7 @@ const AboutUs = () => {
               </Card>
             </div>
             
-            {/* Contact Info & Referral Program */}
+            {/* Contact Info & Map */}
             <div className="space-y-8">
               <div>
                 <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
@@ -277,7 +193,23 @@ const AboutUs = () => {
                 </div>
               </div>
               
-              {/* Referral Program */}
+              {/* Map Section */}
+              <div className="bg-white p-4 rounded-xl shadow-md">
+                <h3 className="text-xl font-bold mb-4">Find Us</h3>
+                <div className="rounded-xl overflow-hidden h-80 bg-gray-200">
+                  <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3462.9913322847!2d-95.8252!3d29.7866!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640db3afdbb6c97%3A0x2b1d33a9087a222!2sKaty%2C%20TX%2077494!5e0!3m2!1sen!2sus!4v1651582976427!5m2!1sen!2sus" 
+                    width="100%" 
+                    height="100%" 
+                    style={{ border: 0 }} 
+                    allowFullScreen={false} 
+                    loading="lazy" 
+                    referrerPolicy="no-referrer-when-downgrade"
+                  ></iframe>
+                </div>
+              </div>
+              
+              {/* Refer a Friend */}
               <div className="bg-gradient-to-br from-purple-100 to-purple-50 p-6 rounded-xl">
                 <div className="flex flex-col sm:flex-row items-center gap-6">
                   <img 
@@ -302,8 +234,43 @@ const AboutUs = () => {
           </div>
         </div>
       </section>
+
+      {/* FAQ Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-6">
+          <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+          <div className="max-w-3xl mx-auto space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-xl">How quickly will I receive a response?</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600">We typically respond to all inquiries within 24-48 business hours. For urgent matters, please contact us by phone.</p>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-xl">Can I visit your office in person?</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600">Yes, we welcome visitors during our regular office hours. However, we recommend scheduling an appointment beforehand to ensure someone is available to assist you.</p>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-xl">Do you offer customer support on weekends?</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600">While our office is closed on weekends, we monitor emails for urgent issues. For immediate weekend assistance, please use our live chat feature on the dashboard.</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
 
-export default AboutUs;
+export default ContactUs;
