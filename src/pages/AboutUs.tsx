@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,6 +11,7 @@ import {
   CardTitle 
 } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
+import { Link, useNavigate } from "react-router-dom";
 import { 
   Building, 
   Mail, 
@@ -22,13 +24,31 @@ import {
   Globe,
   Zap
 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import Navigation from "@/components/layout/Navigation";
 
 const AboutUs = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userRole, setUserRole] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: ""
+  });
+
+  // Check auth state on component mount
+  useState(() => {
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        setIsLoggedIn(true);
+        setUserRole(session.user.user_metadata.role);
+      }
+    };
+    
+    checkSession();
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -58,8 +78,24 @@ const AboutUs = () => {
     });
   };
 
+  const handleReferralClick = () => {
+    if (isLoggedIn) {
+      // Redirect to the appropriate dashboard based on user role
+      if (userRole === 'tasker') {
+        navigate('/dashboard');
+      } else {
+        navigate('/advertiser-dashboard');
+      }
+    } else {
+      // Redirect to signup page if not logged in
+      navigate('/signup/tasker');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-purple-50/50 to-purple-100/50">
+      <Navigation />
+      
       {/* Hero Section */}
       <section className="relative py-20 md:py-28 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_#f3e8ff_0%,_transparent_40%)] opacity-70"></div>
@@ -261,7 +297,7 @@ const AboutUs = () => {
                     </div>
                     <div>
                       <p className="text-sm text-gray-500">Address</p>
-                      <p className="font-medium">9607 Lavender Mis Labe, Katy TX, 77494</p>
+                      <p className="font-medium">9607 Lavender Mis Lane, Katy TX, 77494</p>
                     </div>
                   </div>
                   
@@ -291,7 +327,10 @@ const AboutUs = () => {
                       Invite your friends to join Microtaskers! When they sign up using your referral link, 
                       you'll get a $5 bonus and 5% lifetime commission on their earnings.
                     </p>
-                    <Button className="bg-[#8511b4] hover:bg-[#7a0fa6]">
+                    <Button 
+                      className="bg-[#8511b4] hover:bg-[#7a0fa6]"
+                      onClick={handleReferralClick}
+                    >
                       <Check className="w-4 h-4 mr-2" />
                       Get Your Referral Link
                     </Button>
