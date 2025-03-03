@@ -19,6 +19,7 @@ import {
   Send, 
   Check 
 } from "lucide-react";
+import Navigation from "@/components/layout/Navigation";
 
 const ContactUs = () => {
   const { toast } = useToast();
@@ -59,6 +60,8 @@ const ContactUs = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-purple-50/50 to-purple-100/50">
+      <Navigation />
+      
       {/* Hero Section */}
       <section className="relative py-16 md:py-24 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_#f3e8ff_0%,_transparent_40%)] opacity-70"></div>
