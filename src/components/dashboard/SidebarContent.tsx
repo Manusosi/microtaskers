@@ -26,6 +26,7 @@ import {
 import { MenuItem } from "./MenuItem";
 import { useState } from "react";
 import { DepositFundsDialog } from "./DepositFundsDialog";
+import { WithdrawFundsDialog } from "./WithdrawFundsDialog";
 
 export interface SidebarContentProps {
   activeMenu: string;
@@ -36,6 +37,7 @@ export interface SidebarContentProps {
 
 export const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn }: SidebarContentProps) => {
   const [depositDialogOpen, setDepositDialogOpen] = useState(false);
+  const [withdrawDialogOpen, setWithdrawDialogOpen] = useState(false);
 
   const menuItems = [
     { icon: LayoutDashboard, label: "Dashboard", id: "dashboard", count: 0 },
@@ -63,6 +65,7 @@ export const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn
               isActive={activeMenu === item.id}
               onClick={setActiveMenu}
               onDepositClick={item.id === 'deposit' ? () => setDepositDialogOpen(true) : undefined}
+              onWithdrawClick={item.id === 'withdraw' ? () => setWithdrawDialogOpen(true) : undefined}
             />
           ))}
         </nav>
@@ -82,6 +85,12 @@ export const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn
       <DepositFundsDialog 
         open={depositDialogOpen} 
         onOpenChange={setDepositDialogOpen} 
+      />
+
+      {/* Withdraw Funds Dialog */}
+      <WithdrawFundsDialog 
+        open={withdrawDialogOpen} 
+        onOpenChange={setWithdrawDialogOpen} 
       />
     </div>
   );

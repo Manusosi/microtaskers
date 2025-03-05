@@ -24,6 +24,7 @@ import { SidebarContent } from "@/components/dashboard/SidebarContent";
 import { CompletedJobsTable } from "@/components/dashboard/CompletedJobsTable";
 import { AccountSummary } from "@/components/dashboard/AccountSummary";
 import { DepositFundsDialog } from "@/components/dashboard/DepositFundsDialog";
+import { WithdrawFundsDialog } from "@/components/dashboard/WithdrawFundsDialog";
 
 const TaskerDashboard = () => {
   const [activeMenu, setActiveMenu] = useState("dashboard");
@@ -31,6 +32,7 @@ const TaskerDashboard = () => {
   const [username, setUsername] = useState("");
   const [lastLogin, setLastLogin] = useState("");
   const [depositDialogOpen, setDepositDialogOpen] = useState(false);
+  const [withdrawDialogOpen, setWithdrawDialogOpen] = useState(false);
   const navigate = useNavigate();
 
   const activityData = [
@@ -267,6 +269,12 @@ const TaskerDashboard = () => {
       <DepositFundsDialog
         open={depositDialogOpen}
         onOpenChange={setDepositDialogOpen}
+      />
+      
+      {/* Withdraw Funds Dialog */}
+      <WithdrawFundsDialog
+        open={withdrawDialogOpen}
+        onOpenChange={setWithdrawDialogOpen}
       />
     </div>
   );

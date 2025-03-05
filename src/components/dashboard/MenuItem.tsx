@@ -12,6 +12,7 @@ export interface MenuItemProps {
   isActive?: boolean;
   onClick: (id: string) => void;
   onDepositClick?: () => void;
+  onWithdrawClick?: () => void;
 }
 
 export const MenuItem = ({ 
@@ -21,7 +22,8 @@ export const MenuItem = ({
   id, 
   isActive, 
   onClick,
-  onDepositClick
+  onDepositClick,
+  onWithdrawClick
 }: MenuItemProps) => {
   const navigate = useNavigate();
   
@@ -29,6 +31,13 @@ export const MenuItem = ({
     // Special handling for deposit funds
     if (id === 'deposit' && onDepositClick) {
       onDepositClick();
+      onClick(id);
+      return;
+    }
+    
+    // Special handling for withdraw funds
+    if (id === 'withdraw' && onWithdrawClick) {
+      onWithdrawClick();
       onClick(id);
       return;
     }
@@ -41,9 +50,6 @@ export const MenuItem = ({
         navigate('/dashboard');
         break;
       case 'payments':
-        navigate('/payments');
-        break;
-      case 'withdraw':
         navigate('/payments');
         break;
       // Add other navigation cases as needed

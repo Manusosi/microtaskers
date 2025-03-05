@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,12 +14,14 @@ import { SidebarContent } from "@/components/dashboard/SidebarContent";
 import { PaymentHistory } from "@/components/dashboard/PaymentHistory";
 import { PaymentSummary } from "@/components/dashboard/PaymentSummary";
 import { DepositFundsDialog } from "@/components/dashboard/DepositFundsDialog";
+import { WithdrawFundsDialog } from "@/components/dashboard/WithdrawFundsDialog";
 
 const PaymentsPage = () => {
   const [activeMenu, setActiveMenu] = useState("payments");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
   const [depositDialogOpen, setDepositDialogOpen] = useState(false);
+  const [withdrawDialogOpen, setWithdrawDialogOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -56,7 +57,6 @@ const PaymentsPage = () => {
     navigate('/');
   };
 
-  // Sample payment data
   const paymentData = [
     { 
       id: 1, 
@@ -90,7 +90,6 @@ const PaymentsPage = () => {
     }
   ];
 
-  // Payment summary
   const paymentSummary = {
     accountBalance: 1239.00,
     totalDeposit: 67,
@@ -99,7 +98,6 @@ const PaymentsPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      {/* Top Navigation */}
       <div className="sticky top-0 left-0 right-0 h-16 bg-white border-b z-40 px-4 shadow-sm">
         <div className="h-full flex items-center justify-between max-w-screen-2xl mx-auto">
           <div className="flex items-center space-x-4">
@@ -168,7 +166,6 @@ const PaymentsPage = () => {
       </div>
 
       <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar - Desktop */}
         <div className="hidden lg:block w-64 border-r bg-white overflow-y-auto">
           <SidebarContent 
             activeMenu={activeMenu} 
@@ -178,7 +175,6 @@ const PaymentsPage = () => {
           />
         </div>
 
-        {/* Main Content */}
         <div className="flex-1 overflow-y-auto">
           <div className="container mx-auto p-6">
             <div className="space-y-6">
@@ -196,7 +192,10 @@ const PaymentsPage = () => {
                   >
                     <Upload className="mr-1 h-4 w-4" /> Deposit Funds
                   </Button>
-                  <Button className="bg-blue-500 hover:bg-blue-600">
+                  <Button 
+                    className="bg-blue-500 hover:bg-blue-600"
+                    onClick={() => setWithdrawDialogOpen(true)}
+                  >
                     <Download className="mr-1 h-4 w-4" /> Withdraw Funds
                   </Button>
                 </div>
@@ -209,10 +208,14 @@ const PaymentsPage = () => {
         </div>
       </div>
 
-      {/* Deposit Funds Dialog */}
       <DepositFundsDialog
         open={depositDialogOpen}
         onOpenChange={setDepositDialogOpen}
+      />
+
+      <WithdrawFundsDialog
+        open={withdrawDialogOpen}
+        onOpenChange={setWithdrawDialogOpen}
       />
     </div>
   );
