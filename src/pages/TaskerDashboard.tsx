@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Link, useNavigate } from "react-router-dom";
@@ -24,12 +23,14 @@ import { DashboardStats } from "@/components/dashboard/DashboardStats";
 import { SidebarContent } from "@/components/dashboard/SidebarContent";
 import { CompletedJobsTable } from "@/components/dashboard/CompletedJobsTable";
 import { AccountSummary } from "@/components/dashboard/AccountSummary";
+import { DepositFundsDialog } from "@/components/dashboard/DepositFundsDialog";
 
 const TaskerDashboard = () => {
   const [activeMenu, setActiveMenu] = useState("dashboard");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
   const [lastLogin, setLastLogin] = useState("");
+  const [depositDialogOpen, setDepositDialogOpen] = useState(false);
   const navigate = useNavigate();
 
   const activityData = [
@@ -130,8 +131,8 @@ const TaskerDashboard = () => {
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="w-64 p-0">
-                <SidebarContent 
-                  activeMenu={activeMenu} 
+                <SidebarContent
+                  activeMenu={activeMenu}
                   setActiveMenu={setActiveMenu}
                   onLogout={handleLogout}
                   isLoggedIn={isLoggedIn}
@@ -190,9 +191,9 @@ const TaskerDashboard = () => {
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar - Desktop */}
         <div className="hidden lg:block w-64 border-r bg-white overflow-y-auto">
-          <SidebarContent 
-            activeMenu={activeMenu} 
-            setActiveMenu={setActiveMenu} 
+          <SidebarContent
+            activeMenu={activeMenu}
+            setActiveMenu={setActiveMenu}
             onLogout={handleLogout}
             isLoggedIn={isLoggedIn}
           />
@@ -261,6 +262,12 @@ const TaskerDashboard = () => {
           </div>
         </div>
       </div>
+
+      {/* Deposit Funds Dialog */}
+      <DepositFundsDialog
+        open={depositDialogOpen}
+        onOpenChange={setDepositDialogOpen}
+      />
     </div>
   );
 };

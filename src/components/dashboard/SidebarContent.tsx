@@ -24,6 +24,8 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { MenuItem } from "./MenuItem";
+import { useState } from "react";
+import { DepositFundsDialog } from "./DepositFundsDialog";
 
 export interface SidebarContentProps {
   activeMenu: string;
@@ -33,6 +35,8 @@ export interface SidebarContentProps {
 }
 
 export const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn }: SidebarContentProps) => {
+  const [depositDialogOpen, setDepositDialogOpen] = useState(false);
+
   const menuItems = [
     { icon: LayoutDashboard, label: "Dashboard", id: "dashboard", count: 0 },
     { icon: DollarSign, label: "My Payments", id: "payments", count: 0 },
@@ -58,6 +62,7 @@ export const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn
               {...item}
               isActive={activeMenu === item.id}
               onClick={setActiveMenu}
+              onDepositClick={item.id === 'deposit' ? () => setDepositDialogOpen(true) : undefined}
             />
           ))}
         </nav>
@@ -72,6 +77,12 @@ export const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn
           Sign out
         </Button>
       </div>
+      
+      {/* Deposit Funds Dialog */}
+      <DepositFundsDialog 
+        open={depositDialogOpen} 
+        onOpenChange={setDepositDialogOpen} 
+      />
     </div>
   );
 };

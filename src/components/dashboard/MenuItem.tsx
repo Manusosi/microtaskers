@@ -11,12 +11,28 @@ export interface MenuItemProps {
   id: string;
   isActive?: boolean;
   onClick: (id: string) => void;
+  onDepositClick?: () => void;
 }
 
-export const MenuItem = ({ icon: Icon, label, count, id, isActive, onClick }: MenuItemProps) => {
+export const MenuItem = ({ 
+  icon: Icon, 
+  label, 
+  count, 
+  id, 
+  isActive, 
+  onClick,
+  onDepositClick
+}: MenuItemProps) => {
   const navigate = useNavigate();
   
   const handleClick = () => {
+    // Special handling for deposit funds
+    if (id === 'deposit' && onDepositClick) {
+      onDepositClick();
+      onClick(id);
+      return;
+    }
+    
     onClick(id);
     
     // Navigate based on menu item
@@ -25,9 +41,6 @@ export const MenuItem = ({ icon: Icon, label, count, id, isActive, onClick }: Me
         navigate('/dashboard');
         break;
       case 'payments':
-        navigate('/payments');
-        break;
-      case 'deposit':
         navigate('/payments');
         break;
       case 'withdraw':
