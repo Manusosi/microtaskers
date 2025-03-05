@@ -14,11 +14,13 @@ import { Button } from "@/components/ui/button";
 import { SidebarContent } from "@/components/dashboard/SidebarContent";
 import { PaymentHistory } from "@/components/dashboard/PaymentHistory";
 import { PaymentSummary } from "@/components/dashboard/PaymentSummary";
+import { DepositFundsDialog } from "@/components/dashboard/DepositFundsDialog";
 
 const PaymentsPage = () => {
   const [activeMenu, setActiveMenu] = useState("payments");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
+  const [depositDialogOpen, setDepositDialogOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -188,7 +190,10 @@ const PaymentsPage = () => {
                   <h1 className="text-2xl font-bold text-gray-800">Payment History</h1>
                 </div>
                 <div className="flex space-x-3">
-                  <Button className="bg-green-500 hover:bg-green-600">
+                  <Button 
+                    className="bg-green-500 hover:bg-green-600"
+                    onClick={() => setDepositDialogOpen(true)}
+                  >
                     <Upload className="mr-1 h-4 w-4" /> Deposit Funds
                   </Button>
                   <Button className="bg-blue-500 hover:bg-blue-600">
@@ -203,6 +208,12 @@ const PaymentsPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Deposit Funds Dialog */}
+      <DepositFundsDialog
+        open={depositDialogOpen}
+        onOpenChange={setDepositDialogOpen}
+      />
     </div>
   );
 };
