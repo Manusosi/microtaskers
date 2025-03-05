@@ -12,6 +12,16 @@ import {
   Crown,
   Users,
   LogOut,
+  DollarSign,
+  Upload,
+  Download,
+  UserCog,
+  CheckSquare,
+  MessageSquare,
+  List,
+  LayoutDashboard,
+  Briefcase,
+  ExternalLink,
 } from "lucide-react";
 import { MenuItem } from "./MenuItem";
 
@@ -24,14 +34,17 @@ export interface SidebarContentProps {
 
 export const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn }: SidebarContentProps) => {
   const menuItems = [
-    { icon: Home, label: "Dashboard", id: "dashboard", count: 0 },
-    { icon: Mail, label: "Inbox", id: "inbox", count: 2 },
-    { icon: Gift, label: "Bonuses", id: "bonuses", count: 0 },
-    { icon: CreditCard, label: "Payout", id: "payout", count: 0 },
-    { icon: RefreshCcw, label: "Internal Transfer", id: "transfer", count: 0 },
+    { icon: LayoutDashboard, label: "Dashboard", id: "dashboard", count: 0 },
+    { icon: DollarSign, label: "My Payments", id: "payments", count: 0 },
+    { icon: Upload, label: "Deposit Funds", id: "deposit", count: 0 },
+    { icon: Download, label: "Withdraw Funds", id: "withdraw", count: 0 },
     { icon: Headphones, label: "Support", id: "support", count: 0 },
-    { icon: Crown, label: "Upgrade", id: "upgrade", count: 0 },
-    { icon: Users, label: "Top Members", id: "members", count: 0 },
+    { icon: Users, label: "Refer a Friend", id: "refer", count: 0 },
+    { icon: UserCog, label: "Edit Profile", id: "profile", count: 0 },
+    { icon: Gift, label: "My Offers", id: "offers", count: 0 },
+    { icon: Briefcase, label: "Available Jobs", id: "available-jobs", count: 0 },
+    { icon: CheckSquare, label: "Finished Jobs", id: "finished-jobs", count: 0 },
+    { icon: MessageSquare, label: "Job Invitations", id: "invitations", count: 2 },
     { icon: Settings, label: "Settings", id: "settings", count: 0 },
   ];
 
