@@ -64,7 +64,7 @@ const SupportPage = () => {
     toast({
       title: "Support ticket created",
       description: "We'll get back to you shortly.",
-      variant: "success",
+      variant: "default",
     });
   };
 
