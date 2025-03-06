@@ -11,7 +11,7 @@ import {
   PlusCircle
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import SidebarContent from "@/components/dashboard/SidebarContent";
+import { SidebarContent } from "@/components/dashboard/SidebarContent";
 import { SupportConversations } from "@/components/support/SupportConversations";
 import { SupportTickets } from "@/components/support/SupportTickets";
 import { CreateTicketDialog } from "@/components/support/CreateTicketDialog";

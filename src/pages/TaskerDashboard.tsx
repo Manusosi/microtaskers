@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Link, useNavigate } from "react-router-dom";
@@ -21,7 +20,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
 import { DashboardStats } from "@/components/dashboard/DashboardStats";
-import SidebarContent from "@/components/dashboard/SidebarContent";
+import { SidebarContent } from "@/components/dashboard/SidebarContent";
 import { CompletedJobsTable } from "@/components/dashboard/CompletedJobsTable";
 import { AccountSummary } from "@/components/dashboard/AccountSummary";
 import { DepositFundsDialog } from "@/components/dashboard/DepositFundsDialog";

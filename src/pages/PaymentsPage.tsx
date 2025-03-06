@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Link, useNavigate } from "react-router-dom";
@@ -11,7 +10,7 @@ import {
   DollarSign
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import SidebarContent from "@/components/dashboard/SidebarContent";
+import { SidebarContent } from "@/components/dashboard/SidebarContent";
 import { PaymentHistory } from "@/components/dashboard/PaymentHistory";
 import { PaymentSummary } from "@/components/dashboard/PaymentSummary";
 import { DepositFundsDialog } from "@/components/dashboard/DepositFundsDialog";
