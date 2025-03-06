@@ -20,11 +20,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
 import { DashboardStats } from "@/components/dashboard/DashboardStats";
-import { SidebarContent } from "@/components/dashboard/SidebarContent";
+import SidebarContent from "@/components/dashboard/SidebarContent";
 import { CompletedJobsTable } from "@/components/dashboard/CompletedJobsTable";
 import { AccountSummary } from "@/components/dashboard/AccountSummary";
 import { DepositFundsDialog } from "@/components/dashboard/DepositFundsDialog";
 import { WithdrawFundsDialog } from "@/components/dashboard/WithdrawFundsDialog";
+import { ReferFriend } from "@/components/dashboard/ReferFriend";
 
 const TaskerDashboard = () => {
   const [activeMenu, setActiveMenu] = useState("dashboard");
@@ -204,63 +205,67 @@ const TaskerDashboard = () => {
         {/* Main Content */}
         <div className="flex-1 overflow-y-auto">
           <div className="container mx-auto p-6">
-            <div className="grid grid-cols-12 gap-6">
-              {/* Main Column */}
-              <div className="col-span-12 lg:col-span-8 space-y-6">
-                <DashboardHeader 
-                  username={username} 
-                  lastLogin={lastLogin} 
-                />
-                
-                <DashboardStats stats={stats} />
-                
-                {/* Task Call to Action */}
-                <div className="bg-white border rounded-lg shadow-sm p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">FINISH YOUR TASKS TODAY</h3>
-                  <p className="text-gray-600 mb-4">
-                    Exciting update! Ads are now accessible, and you receive $0.01 for every click.
-                  </p>
-                  <Button className="bg-purple-600 hover:bg-purple-700">
-                    BEGIN WORKING
-                  </Button>
-                </div>
-                
-                <CompletedJobsTable jobs={jobsData} />
-              </div>
-
-              {/* Side Column */}
-              <div className="col-span-12 lg:col-span-4 space-y-6">
-                <AccountSummary balance={33.20} accountType="Standard" />
-                
-                {/* Activity Summary */}
-                <div className="bg-white border rounded-lg shadow-sm p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h3>
-                  <div className="space-y-4">
-                    {activityData.slice(0, 3).map((activity, index) => (
-                      <div key={index} className="flex justify-between items-center">
-                        <div className="flex items-center">
-                          <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center mr-3">
-                            <FileCheck className="h-4 w-4 text-purple-600" />
-                          </div>
-                          <div>
-                            <p className="text-sm font-medium">{activity.clicks} clicks</p>
-                            <p className="text-xs text-gray-500">{activity.date}</p>
-                          </div>
-                        </div>
-                        <span className="text-sm font-medium text-green-600">+${activity.earnings.toFixed(2)}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-4 pt-4 border-t">
-                    <Button variant="ghost" size="sm" className="text-purple-600 w-full" asChild>
-                      <Link to="#" className="flex items-center justify-center">
-                        View all activity <ArrowUpRight className="ml-1 h-4 w-4" />
-                      </Link>
+            {activeMenu === "refer" ? (
+              <ReferFriend />
+            ) : (
+              <div className="grid grid-cols-12 gap-6">
+                {/* Main Column */}
+                <div className="col-span-12 lg:col-span-8 space-y-6">
+                  <DashboardHeader 
+                    username={username} 
+                    lastLogin={lastLogin} 
+                  />
+                  
+                  <DashboardStats stats={stats} />
+                  
+                  {/* Task Call to Action */}
+                  <div className="bg-white border rounded-lg shadow-sm p-6">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">FINISH YOUR TASKS TODAY</h3>
+                    <p className="text-gray-600 mb-4">
+                      Exciting update! Ads are now accessible, and you receive $0.01 for every click.
+                    </p>
+                    <Button className="bg-purple-600 hover:bg-purple-700">
+                      BEGIN WORKING
                     </Button>
                   </div>
+                  
+                  <CompletedJobsTable jobs={jobsData} />
+                </div>
+
+                {/* Side Column */}
+                <div className="col-span-12 lg:col-span-4 space-y-6">
+                  <AccountSummary balance={33.20} accountType="Standard" />
+                  
+                  {/* Activity Summary */}
+                  <div className="bg-white border rounded-lg shadow-sm p-6">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h3>
+                    <div className="space-y-4">
+                      {activityData.slice(0, 3).map((activity, index) => (
+                        <div key={index} className="flex justify-between items-center">
+                          <div className="flex items-center">
+                            <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center mr-3">
+                              <FileCheck className="h-4 w-4 text-purple-600" />
+                            </div>
+                            <div>
+                              <p className="text-sm font-medium">{activity.clicks} clicks</p>
+                              <p className="text-xs text-gray-500">{activity.date}</p>
+                            </div>
+                          </div>
+                          <span className="text-sm font-medium text-green-600">+${activity.earnings.toFixed(2)}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-4 pt-4 border-t">
+                      <Button variant="ghost" size="sm" className="text-purple-600 w-full" asChild>
+                        <Link to="#" className="flex items-center justify-center">
+                          View all activity <ArrowUpRight className="ml-1 h-4 w-4" />
+                        </Link>
+                      </Button>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

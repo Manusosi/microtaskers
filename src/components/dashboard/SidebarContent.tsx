@@ -22,6 +22,7 @@ import {
   LayoutDashboard,
   Briefcase,
   ExternalLink,
+  UserPlus,
 } from "lucide-react";
 import { MenuItem } from "./MenuItem";
 import { useState } from "react";
@@ -35,7 +36,7 @@ export interface SidebarContentProps {
   isLoggedIn: boolean;
 }
 
-export const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn }: SidebarContentProps) => {
+const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn }: SidebarContentProps) => {
   const [depositDialogOpen, setDepositDialogOpen] = useState(false);
   const [withdrawDialogOpen, setWithdrawDialogOpen] = useState(false);
 
@@ -45,7 +46,7 @@ export const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn
     { icon: Upload, label: "Deposit Funds", id: "deposit", count: 0 },
     { icon: Download, label: "Withdraw Funds", id: "withdraw", count: 0 },
     { icon: Headphones, label: "Support", id: "support", count: 0 },
-    { icon: Users, label: "Refer a Friend", id: "refer", count: 0 },
+    { icon: UserPlus, label: "Refer a Friend", id: "refer", count: 0 },
     { icon: UserCog, label: "Edit Profile", id: "profile", count: 0 },
     { icon: Gift, label: "My Offers", id: "offers", count: 0 },
     { icon: Briefcase, label: "Available Jobs", id: "available-jobs", count: 0 },
@@ -95,3 +96,5 @@ export const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn
     </div>
   );
 };
+
+export default SidebarContent;
