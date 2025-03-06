@@ -52,6 +52,9 @@ export const MenuItem = ({
       case 'payments':
         navigate('/payments');
         break;
+      case 'support':
+        navigate('/support');
+        break;
       // Add other navigation cases as needed
       default:
         // For items without specific pages yet
