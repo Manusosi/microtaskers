@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { SidebarContent } from "@/components/dashboard/SidebarContent";
+import SidebarContent from "@/components/dashboard/SidebarContent";
 import { useToast } from "@/hooks/use-toast";
 
 const ReferFriendPage = () => {
