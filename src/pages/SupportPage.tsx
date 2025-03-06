@@ -15,6 +15,7 @@ import SidebarContent from "@/components/dashboard/SidebarContent";
 import { SupportConversations } from "@/components/support/SupportConversations";
 import { SupportTickets } from "@/components/support/SupportTickets";
 import { CreateTicketDialog } from "@/components/support/CreateTicketDialog";
+import { ReferFriend } from "@/components/dashboard/ReferFriend";
 import { useToast } from "@/hooks/use-toast";
 
 const SupportPage = () => {
@@ -69,6 +70,33 @@ const SupportPage = () => {
   };
 
   const accountBalance = 33.20;
+
+  // Determine what content to show based on active menu
+  const renderContent = () => {
+    switch (activeMenu) {
+      case "refer":
+        return <ReferFriend />;
+      case "support":
+      default:
+        return (
+          <div className="space-y-8">
+            {/* Conversations Section */}
+            <SupportConversations />
+            
+            {/* Support Tickets Section */}
+            <div className="flex items-center justify-between mb-4">
+              <SupportTickets />
+              <Button 
+                className="bg-blue-500 hover:bg-blue-600"
+                onClick={() => setCreateTicketOpen(true)}
+              >
+                <PlusCircle className="mr-2 h-4 w-4" /> Create Support Ticket
+              </Button>
+            </div>
+          </div>
+        );
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -154,21 +182,7 @@ const SupportPage = () => {
         {/* Main Content */}
         <div className="flex-1 overflow-y-auto">
           <div className="container mx-auto p-6">
-            <div className="space-y-8">
-              {/* Conversations Section */}
-              <SupportConversations />
-              
-              {/* Support Tickets Section */}
-              <div className="flex items-center justify-between mb-4">
-                <SupportTickets />
-                <Button 
-                  className="bg-blue-500 hover:bg-blue-600"
-                  onClick={() => setCreateTicketOpen(true)}
-                >
-                  <PlusCircle className="mr-2 h-4 w-4" /> Create Support Ticket
-                </Button>
-              </div>
-            </div>
+            {renderContent()}
           </div>
         </div>
       </div>
