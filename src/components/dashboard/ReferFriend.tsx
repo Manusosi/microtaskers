@@ -63,16 +63,16 @@ export const ReferFriend = () => {
     <div className="space-y-8">
       {/* Header with intro text */}
       <div className="flex items-center gap-3">
-        <div className="bg-blue-500 w-10 h-10 rounded-full flex items-center justify-center">
+        <div className="bg-purple-600 w-10 h-10 rounded-full flex items-center justify-center">
           <UserPlus className="text-white" size={20} />
         </div>
         <h2 className="text-2xl font-semibold text-gray-700">Refer a Friend</h2>
       </div>
       
       {/* Intro card */}
-      <div className="bg-gray-100 p-4 rounded-md border border-gray-200">
+      <div className="bg-purple-50 p-4 rounded-md border border-purple-100">
         <p className="text-gray-700">
-          Tell your friends about Microtaskers Ads. We'll credit your account with a <span className="font-bold text-green-600">$1.00</span> bonus once your friend's 
+          Tell your friends about Microtaskers Ads. We'll credit your account with a <span className="font-bold text-purple-600">$1.00</span> bonus once your friend's 
           account balance reaches <span className="font-bold text-gray-700">$20.00</span>. Use your unique referral link to refer your friends.
         </p>
       </div>
@@ -81,15 +81,16 @@ export const ReferFriend = () => {
       <div>
         <h3 className="text-lg font-medium mb-2 text-gray-700">Your referral link:</h3>
         <div className="flex items-center gap-2 mb-4">
-          <div className="flex-1 bg-gray-100 border border-gray-200 p-3 rounded-md">
-            <code>{referralLink}</code>
+          <div className="flex-1 bg-purple-50 border border-purple-100 p-3 rounded-md">
+            <code className="text-purple-700">{referralLink}</code>
           </div>
           <Button 
             variant="outline"
             size="icon"
+            className="border-purple-200 hover:bg-purple-50"
             onClick={() => copyToClipboard(referralLink, "Referral link")}
           >
-            <Copy className="w-4 h-4" />
+            <Copy className="w-4 h-4 text-purple-600" />
           </Button>
         </div>
         
@@ -117,15 +118,16 @@ export const ReferFriend = () => {
         <div>
           <h3 className="text-lg font-medium mb-2 text-gray-700">BBCode for forums:</h3>
           <div className="flex items-center gap-2">
-            <div className="flex-1 bg-gray-100 border border-gray-200 p-3 rounded-md">
-              <code>{bbCode}</code>
+            <div className="flex-1 bg-purple-50 border border-purple-100 p-3 rounded-md">
+              <code className="text-purple-700">{bbCode}</code>
             </div>
             <Button 
               variant="outline"
               size="icon"
+              className="border-purple-200 hover:bg-purple-50"
               onClick={() => copyToClipboard(bbCode, "BBCode")}
             >
-              <Copy className="w-4 h-4" />
+              <Copy className="w-4 h-4 text-purple-600" />
             </Button>
           </div>
         </div>
@@ -133,15 +135,16 @@ export const ReferFriend = () => {
         <div>
           <h3 className="text-lg font-medium mb-2 text-gray-700">HTML for websites:</h3>
           <div className="flex items-center gap-2">
-            <div className="flex-1 bg-gray-100 border border-gray-200 p-3 rounded-md">
-              <code>{htmlCode}</code>
+            <div className="flex-1 bg-purple-50 border border-purple-100 p-3 rounded-md">
+              <code className="text-purple-700">{htmlCode}</code>
             </div>
             <Button 
               variant="outline"
               size="icon"
+              className="border-purple-200 hover:bg-purple-50"
               onClick={() => copyToClipboard(htmlCode, "HTML")}
             >
-              <Copy className="w-4 h-4" />
+              <Copy className="w-4 h-4 text-purple-600" />
             </Button>
           </div>
         </div>
@@ -149,33 +152,33 @@ export const ReferFriend = () => {
       
       {/* Stats cards */}
       <div className="grid grid-cols-4 gap-4">
-        <div className="bg-gray-200 p-4 rounded-md flex flex-col items-center">
-          <span className="text-2xl font-bold">0</span>
+        <div className="bg-purple-50 p-4 rounded-md flex flex-col items-center">
+          <span className="text-2xl font-bold text-purple-700">0</span>
           <div className="flex items-center text-sm text-gray-600">
-            <Link className="w-4 h-4 mr-1" />
+            <Link className="w-4 h-4 mr-1 text-purple-600" />
             referral link clicks
           </div>
         </div>
         
-        <div className="bg-blue-100 p-4 rounded-md flex flex-col items-center">
-          <span className="text-2xl font-bold">0</span>
+        <div className="bg-purple-100 p-4 rounded-md flex flex-col items-center">
+          <span className="text-2xl font-bold text-purple-700">0</span>
           <div className="flex items-center text-sm text-gray-600">
-            <Users className="w-4 h-4 mr-1" />
+            <Users className="w-4 h-4 mr-1 text-purple-600" />
             referrals
           </div>
         </div>
         
-        <div className="bg-amber-100 p-4 rounded-md flex flex-col items-center">
-          <span className="text-2xl font-bold">$0.00</span>
+        <div className="bg-purple-100 p-4 rounded-md flex flex-col items-center">
+          <span className="text-2xl font-bold text-purple-700">$0.00</span>
           <div className="flex items-center text-sm text-gray-600">
-            <DollarSign className="w-4 h-4 mr-1" />
+            <DollarSign className="w-4 h-4 mr-1 text-purple-600" />
             referrals pending
           </div>
         </div>
         
-        <div className="bg-blue-100 p-4 rounded-md flex flex-col items-center">
-          <span className="text-2xl font-bold">$0.00</span>
-          <div className="flex items-center text-sm text-gray-600">
+        <div className="bg-gradient-to-br from-purple-600 to-purple-700 p-4 rounded-md flex flex-col items-center">
+          <span className="text-2xl font-bold text-white">$0.00</span>
+          <div className="flex items-center text-sm text-white">
             <DollarSign className="w-4 h-4 mr-1" />
             referrals paid
           </div>
@@ -185,13 +188,13 @@ export const ReferFriend = () => {
       {/* Send Invitations section */}
       <div className="pt-4">
         <div className="flex items-center justify-center gap-3 mb-4">
-          <Send className="text-gray-600" size={24} />
+          <Send className="text-purple-600" size={24} />
           <h2 className="text-2xl font-semibold text-gray-700">Send Invitations</h2>
         </div>
         
         <p className="text-center mb-6">
-          Refer your friends and get <span className="font-bold text-green-600">$1.00</span>! It's easy. Enter up to 5 email addresses of your friends. 
-          Each friend will receive a link to join us and you will receive <span className="font-bold text-green-600">$1.00</span> per each referred member.
+          Refer your friends and get <span className="font-bold text-purple-600">$1.00</span>! It's easy. Enter up to 5 email addresses of your friends. 
+          Each friend will receive a link to join us and you will receive <span className="font-bold text-purple-600">$1.00</span> per each referred member.
         </p>
         
         <div className="space-y-4">
@@ -207,6 +210,7 @@ export const ReferFriend = () => {
                   value={friend.firstName}
                   onChange={(e) => handleFriendChange(index, "firstName", e.target.value)}
                   required={index === 0}
+                  className="border-purple-200 focus-visible:ring-purple-400"
                 />
               </div>
               <div>
@@ -220,6 +224,7 @@ export const ReferFriend = () => {
                   value={friend.email}
                   onChange={(e) => handleFriendChange(index, "email", e.target.value)}
                   required={index === 0}
+                  className="border-purple-200 focus-visible:ring-purple-400"
                 />
               </div>
             </div>
@@ -228,7 +233,7 @@ export const ReferFriend = () => {
         
         <div className="flex justify-center mt-6">
           <Button
-            className="bg-green-600 hover:bg-green-700"
+            className="bg-purple-600 hover:bg-purple-700"
             onClick={handleSendInvitations}
           >
             <Send className="w-4 h-4 mr-2" />
@@ -240,14 +245,14 @@ export const ReferFriend = () => {
       {/* My Referrals section */}
       <div className="pt-4">
         <div className="flex items-center gap-3 mb-4">
-          <div className="bg-blue-500 w-8 h-8 rounded-full flex items-center justify-center">
+          <div className="bg-purple-600 w-8 h-8 rounded-full flex items-center justify-center">
             <Users className="text-white" size={16} />
           </div>
           <h2 className="text-xl font-semibold text-gray-700">My Referrals</h2>
         </div>
         
-        <div className="bg-blue-50 p-4 rounded-md border border-blue-100 text-center">
-          <p className="text-blue-600">
+        <div className="bg-purple-50 p-4 rounded-md border border-purple-100 text-center">
+          <p className="text-purple-600">
             You have not received any referrals at this time.
           </p>
         </div>
@@ -255,3 +260,4 @@ export const ReferFriend = () => {
     </div>
   );
 };
+
