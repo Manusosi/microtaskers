@@ -1,6 +1,5 @@
 
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import {
   Home,
   Mail,
@@ -28,6 +27,7 @@ import { MenuItem } from "./MenuItem";
 import { useState } from "react";
 import { DepositFundsDialog } from "./DepositFundsDialog";
 import { WithdrawFundsDialog } from "./WithdrawFundsDialog";
+import { useNavigate } from "react-router-dom";
 
 export interface SidebarContentProps {
   activeMenu: string;
@@ -39,6 +39,7 @@ export interface SidebarContentProps {
 const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn }: SidebarContentProps) => {
   const [depositDialogOpen, setDepositDialogOpen] = useState(false);
   const [withdrawDialogOpen, setWithdrawDialogOpen] = useState(false);
+  const navigate = useNavigate();
 
   const menuItems = [
     { icon: LayoutDashboard, label: "Dashboard", id: "dashboard", count: 0 },
@@ -55,6 +56,31 @@ const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn }: Sid
     { icon: Settings, label: "Settings", id: "settings", count: 0 },
   ];
 
+  const handleMenuClick = (menuId: string) => {
+    setActiveMenu(menuId);
+    
+    // Handle special navigation cases
+    if (menuId === 'settings') {
+      navigate('/settings');
+      return;
+    } else if (menuId === 'profile') {
+      navigate('/profile/edit');
+      return;
+    } else if (menuId === 'dashboard') {
+      // Determine which dashboard to navigate to based on user role
+      // For simplicity, we'll just navigate to the tasker dashboard for now
+      navigate('/');
+      return;
+    }
+    
+    // Handle deposit/withdraw dialogs
+    if (menuId === 'deposit') {
+      setDepositDialogOpen(true);
+    } else if (menuId === 'withdraw') {
+      setWithdrawDialogOpen(true);
+    }
+  };
+
   return (
     <div className="flex flex-col h-full bg-white">
       <div className="flex-1 py-6 px-4">
@@ -64,7 +90,7 @@ const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn }: Sid
               key={item.id}
               {...item}
               isActive={activeMenu === item.id}
-              onClick={setActiveMenu}
+              onClick={handleMenuClick}
               onDepositClick={item.id === 'deposit' ? () => setDepositDialogOpen(true) : undefined}
               onWithdrawClick={item.id === 'withdraw' ? () => setWithdrawDialogOpen(true) : undefined}
             />
