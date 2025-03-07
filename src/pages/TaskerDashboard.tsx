@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Link, useNavigate } from "react-router-dom";
@@ -26,6 +27,7 @@ import { AccountSummary } from "@/components/dashboard/AccountSummary";
 import { DepositFundsDialog } from "@/components/dashboard/DepositFundsDialog";
 import { WithdrawFundsDialog } from "@/components/dashboard/WithdrawFundsDialog";
 import { ReferFriend } from "@/components/dashboard/ReferFriend";
+import { EditProfile } from "@/components/dashboard/EditProfile";
 
 const TaskerDashboard = () => {
   const [activeMenu, setActiveMenu] = useState("dashboard");
@@ -207,6 +209,8 @@ const TaskerDashboard = () => {
           <div className="container mx-auto p-6">
             {activeMenu === "refer" ? (
               <ReferFriend />
+            ) : activeMenu === "profile" ? (
+              <EditProfile />
             ) : (
               <div className="grid grid-cols-12 gap-6">
                 {/* Main Column */}
