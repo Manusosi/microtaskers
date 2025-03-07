@@ -24,6 +24,41 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
+// Country data with codes
+const countries = [
+  { code: "US", name: "United States", phoneCode: "+1", flag: "🇺🇸" },
+  { code: "GB", name: "United Kingdom", phoneCode: "+44", flag: "🇬🇧" },
+  { code: "CA", name: "Canada", phoneCode: "+1", flag: "🇨🇦" },
+  { code: "AU", name: "Australia", phoneCode: "+61", flag: "🇦🇺" },
+  { code: "DE", name: "Germany", phoneCode: "+49", flag: "🇩🇪" },
+  { code: "FR", name: "France", phoneCode: "+33", flag: "🇫🇷" },
+  { code: "JP", name: "Japan", phoneCode: "+81", flag: "🇯🇵" },
+  { code: "CN", name: "China", phoneCode: "+86", flag: "🇨🇳" },
+  { code: "IN", name: "India", phoneCode: "+91", flag: "🇮🇳" },
+  { code: "BR", name: "Brazil", phoneCode: "+55", flag: "🇧🇷" },
+  { code: "RU", name: "Russia", phoneCode: "+7", flag: "🇷🇺" },
+  { code: "ZA", name: "South Africa", phoneCode: "+27", flag: "🇿🇦" },
+  { code: "MX", name: "Mexico", phoneCode: "+52", flag: "🇲🇽" },
+  { code: "KR", name: "South Korea", phoneCode: "+82", flag: "🇰🇷" },
+  { code: "IT", name: "Italy", phoneCode: "+39", flag: "🇮🇹" },
+  { code: "ES", name: "Spain", phoneCode: "+34", flag: "🇪🇸" },
+  { code: "NL", name: "Netherlands", phoneCode: "+31", flag: "🇳🇱" },
+  { code: "SE", name: "Sweden", phoneCode: "+46", flag: "🇸🇪" },
+  { code: "CH", name: "Switzerland", phoneCode: "+41", flag: "🇨🇭" },
+  { code: "KE", name: "Kenya", phoneCode: "+254", flag: "🇰🇪" },
+  { code: "NG", name: "Nigeria", phoneCode: "+234", flag: "🇳🇬" },
+  { code: "EG", name: "Egypt", phoneCode: "+20", flag: "🇪🇬" },
+  { code: "SG", name: "Singapore", phoneCode: "+65", flag: "🇸🇬" },
+  { code: "MY", name: "Malaysia", phoneCode: "+60", flag: "🇲🇾" },
+  { code: "TH", name: "Thailand", phoneCode: "+66", flag: "🇹🇭" },
+  { code: "ID", name: "Indonesia", phoneCode: "+62", flag: "🇮🇩" },
+  { code: "PH", name: "Philippines", phoneCode: "+63", flag: "🇵🇭" },
+  { code: "AE", name: "United Arab Emirates", phoneCode: "+971", flag: "🇦🇪" },
+  { code: "SA", name: "Saudi Arabia", phoneCode: "+966", flag: "🇸🇦" },
+  { code: "TR", name: "Turkey", phoneCode: "+90", flag: "🇹🇷" },
+  // Can be expanded with more countries as needed
+];
+
 export const EditProfile = () => {
   const { toast } = useToast();
   
@@ -34,6 +69,8 @@ export const EditProfile = () => {
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState<string | null>(null);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const [phonePrefix, setPhonePrefix] = useState<string>("+1");
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
   
   const [formData, setFormData] = useState({
     username: "",
@@ -106,6 +143,8 @@ export const EditProfile = () => {
           const { user } = session;
           setUserId(user.id);
           
+          console.log("User metadata:", user.user_metadata);
+          
           // Set email from auth
           setFormData(prev => ({
             ...prev,
@@ -113,9 +152,32 @@ export const EditProfile = () => {
             username: user.user_metadata?.username || user.email?.split('@')[0] || "",
             firstName: user.user_metadata?.first_name || "",
             lastName: user.user_metadata?.last_name || "",
-            phone: user.phone || user.user_metadata?.phone || "",
+            company: user.user_metadata?.company || "",
+            addressLine1: user.user_metadata?.address_line1 || "",
+            addressLine2: user.user_metadata?.address_line2 || "",
+            city: user.user_metadata?.city || "",
+            state: user.user_metadata?.state || "",
+            zipCode: user.user_metadata?.zip_code || "",
             country: user.user_metadata?.country || "United States",
+            phone: user.phone || user.user_metadata?.phone || "",
+            minJobPrice: user.user_metadata?.min_job_price || "5.00",
           }));
+          
+          // Find the country in our list
+          const countryData = countries.find(c => 
+            c.name === (user.user_metadata?.country || "United States")
+          );
+          
+          if (countryData) {
+            setPhonePrefix(countryData.phoneCode);
+          }
+          
+          // Extract phone number without country code if available
+          if (user.phone || user.user_metadata?.phone) {
+            const phoneWithoutPrefix = (user.phone || user.user_metadata?.phone || "")
+              .replace(/^\+\d+\s*/, '');
+            setPhoneNumber(phoneWithoutPrefix);
+          }
           
           // Check if the user has an avatar
           if (user.user_metadata?.avatar_url) {
@@ -129,6 +191,24 @@ export const EditProfile = () => {
               bio: user.user_metadata.bio
             }));
             setBioCharCount(user.user_metadata.bio.length);
+          }
+          
+          // Set skills if available
+          if (user.user_metadata?.skills && Array.isArray(user.user_metadata.skills)) {
+            const userSkills = user.user_metadata.skills;
+            setSkills(skills.map(skill => ({
+              ...skill,
+              checked: userSkills.includes(skill.id)
+            })));
+          }
+          
+          // Set notification preferences if available
+          if (user.user_metadata?.notifications) {
+            const userNotifications = user.user_metadata.notifications;
+            setNotifications(notifications.map(notification => ({
+              ...notification,
+              checked: userNotifications[notification.id] || notification.id === "newsletter"
+            })));
           }
         }
       } catch (error) {
@@ -194,7 +274,29 @@ export const EditProfile = () => {
   
   // Handle select change
   const handleSelectChange = (name: string, value: string) => {
+    if (name === "country") {
+      // Find the corresponding country data
+      const countryData = countries.find(c => c.name === value);
+      if (countryData) {
+        // Update phone prefix based on country
+        setPhonePrefix(countryData.phoneCode);
+      }
+    }
+    
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+  
+  // Handle phone prefix and number change
+  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const numberOnly = e.target.value.replace(/\D/g, '');
+    setPhoneNumber(numberOnly);
+    
+    // Update full phone in formData
+    const fullPhone = numberOnly ? `${phonePrefix} ${numberOnly}` : "";
+    setFormData(prev => ({
+      ...prev,
+      phone: fullPhone.trim()
+    }));
   };
   
   // Handle password change
@@ -283,24 +385,32 @@ export const EditProfile = () => {
     if (!avatar || !userId) return null;
     
     try {
-      // Create a unique file name
+      // Create a unique file name with user ID as folder name
       const fileExt = avatar.name.split('.').pop();
-      const fileName = `${userId}-${Math.random().toString(36).substring(2)}.${fileExt}`;
-      const filePath = `avatars/${fileName}`;
+      const fileName = `${userId}/${Math.random().toString(36).substring(2)}.${fileExt}`;
       
       // Upload the file
-      const { error: uploadError } = await supabase.storage
+      const { error: uploadError, data } = await supabase.storage
         .from('avatars')
-        .upload(filePath, avatar);
+        .upload(fileName, avatar, {
+          upsert: true,
+          contentType: avatar.type
+        });
       
-      if (uploadError) throw uploadError;
+      if (uploadError) {
+        console.error("Upload error details:", uploadError);
+        throw uploadError;
+      }
+      
+      console.log("Upload successful:", data);
       
       // Get the public URL
-      const { data } = supabase.storage
+      const { data: urlData } = supabase.storage
         .from('avatars')
-        .getPublicUrl(filePath);
+        .getPublicUrl(fileName);
       
-      return data.publicUrl;
+      console.log("Public URL:", urlData.publicUrl);
+      return urlData.publicUrl;
     } catch (error) {
       console.error("Error uploading avatar:", error);
       throw error;
@@ -319,8 +429,18 @@ export const EditProfile = () => {
       let avatarPublicUrl = avatarUrl;
       
       if (avatar) {
-        avatarPublicUrl = await uploadAvatar();
-        avatarUpdated = true;
+        try {
+          avatarPublicUrl = await uploadAvatar();
+          avatarUpdated = true;
+          console.log("Avatar uploaded successfully:", avatarPublicUrl);
+        } catch (error) {
+          console.error("Avatar upload failed:", error);
+          toast({
+            title: "Avatar Upload Failed",
+            description: "Could not upload your avatar, but we'll continue updating your profile.",
+            variant: "destructive",
+          });
+        }
       }
       
       // Collect the selected skills
@@ -802,31 +922,15 @@ export const EditProfile = () => {
                   <SelectTrigger className="border-purple-200 focus:ring-purple-400">
                     <SelectValue placeholder="Select a country" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="United States">
-                      <div className="flex items-center">
-                        <span className="mr-2">🇺🇸</span>
-                        United States
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="Canada">
-                      <div className="flex items-center">
-                        <span className="mr-2">🇨🇦</span>
-                        Canada
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="United Kingdom">
-                      <div className="flex items-center">
-                        <span className="mr-2">🇬🇧</span>
-                        United Kingdom
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="Australia">
-                      <div className="flex items-center">
-                        <span className="mr-2">🇦🇺</span>
-                        Australia
-                      </div>
-                    </SelectItem>
+                  <SelectContent className="max-h-80">
+                    {countries.map(country => (
+                      <SelectItem key={country.code} value={country.name}>
+                        <div className="flex items-center">
+                          <span className="mr-2">{country.flag}</span>
+                          {country.name} ({country.phoneCode})
+                        </div>
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -835,13 +939,18 @@ export const EditProfile = () => {
                 <Label htmlFor="phone" className="text-sm text-gray-600">
                   Phone
                 </Label>
-                <Input 
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  className="border-purple-200 focus-visible:ring-purple-400"
-                />
+                <div className="flex">
+                  <div className="bg-gray-100 flex items-center px-3 border border-r-0 border-gray-200 rounded-l-md text-gray-600">
+                    {phonePrefix}
+                  </div>
+                  <Input 
+                    id="phone"
+                    name="phoneNumber"
+                    value={phoneNumber}
+                    onChange={handlePhoneNumberChange}
+                    className="border-purple-200 focus-visible:ring-purple-400 rounded-l-none"
+                  />
+                </div>
               </div>
               
               <div className="flex items-end gap-2">
