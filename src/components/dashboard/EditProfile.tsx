@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -18,9 +18,11 @@ import {
   SaveIcon,
   X,
   Check,
+  Eye,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 export const EditProfile = () => {
   const { toast } = useToast();
@@ -28,12 +30,17 @@ export const EditProfile = () => {
   // Profile information state
   const [avatar, setAvatar] = useState<File | null>(null);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  
   const [formData, setFormData] = useState({
-    username: "demoworker",
-    accountType: "Premium Account",
-    firstName: "Demo",
-    lastName: "Worker",
-    email: "demoworker@demo.com",
+    username: "",
+    accountType: "Standard Account",
+    firstName: "",
+    lastName: "",
+    email: "",
     company: "",
     addressLine1: "",
     addressLine2: "",
@@ -53,7 +60,7 @@ export const EditProfile = () => {
     confirmPassword: "",
   });
   
-  // Skills state with initial data based on the example
+  // Skills state with initial data
   const [skills, setSkills] = useState([
     { id: "signup", label: "Sign up", checked: false },
     { id: "clickSearch", label: "Click or Search", checked: false },
@@ -83,11 +90,77 @@ export const EditProfile = () => {
     { id: "taskCompleted", label: "Notify me for task completed", checked: false },
     { id: "newOrder", label: "Notify me for new order by email", checked: false },
   ]);
+
+  // Character count state
+  const [bioCharCount, setBioCharCount] = useState(0);
+  const maxBioChars = 400;
+  
+  // Fetch user data
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        setLoading(true);
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (session) {
+          const { user } = session;
+          setUserId(user.id);
+          
+          // Set email from auth
+          setFormData(prev => ({
+            ...prev,
+            email: user.email || "",
+            username: user.user_metadata?.username || user.email?.split('@')[0] || "",
+            firstName: user.user_metadata?.first_name || "",
+            lastName: user.user_metadata?.last_name || "",
+            phone: user.phone || user.user_metadata?.phone || "",
+            country: user.user_metadata?.country || "United States",
+          }));
+          
+          // Check if the user has an avatar
+          if (user.user_metadata?.avatar_url) {
+            setAvatarUrl(user.user_metadata.avatar_url);
+          }
+          
+          // Set bio character count
+          if (user.user_metadata?.bio) {
+            setFormData(prev => ({
+              ...prev,
+              bio: user.user_metadata.bio
+            }));
+            setBioCharCount(user.user_metadata.bio.length);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+        toast({
+          title: "Error",
+          description: "Failed to load your profile information",
+          variant: "destructive",
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchUserProfile();
+  }, [toast]);
   
   // Handle avatar change
   const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
+      
+      // Check file size (maximum 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        toast({
+          title: "File too large",
+          description: "Image must be less than 5MB",
+          variant: "destructive",
+        });
+        return;
+      }
+      
       setAvatar(file);
       
       // Create preview
@@ -98,8 +171,8 @@ export const EditProfile = () => {
       reader.readAsDataURL(file);
       
       toast({
-        title: "Avatar updated",
-        description: "Your avatar will be changed after saving changes.",
+        title: "Avatar ready",
+        description: "Your avatar will be changed after saving changes",
       });
     }
   };
@@ -107,7 +180,16 @@ export const EditProfile = () => {
   // Handle form data change
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    
+    if (name === "bio") {
+      // Limit bio to maxBioChars characters
+      if (value.length <= maxBioChars) {
+        setFormData((prev) => ({ ...prev, [name]: value }));
+        setBioCharCount(value.length);
+      }
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
   
   // Handle select change
@@ -136,14 +218,14 @@ export const EditProfile = () => {
   };
   
   // Submit password change
-  const handlePasswordSubmit = () => {
+  const handlePasswordSubmit = async () => {
     const { currentPassword, newPassword, confirmPassword } = passwordData;
     
     // Validation
     if (!currentPassword || !newPassword || !confirmPassword) {
       toast({
         title: "Error",
-        description: "All password fields are required.",
+        description: "All password fields are required",
         variant: "destructive",
       });
       return;
@@ -152,36 +234,239 @@ export const EditProfile = () => {
     if (newPassword !== confirmPassword) {
       toast({
         title: "Error",
-        description: "New passwords do not match.",
+        description: "New passwords do not match",
         variant: "destructive",
       });
       return;
     }
     
-    // In a real app, this would make an API request to change the password
-    toast({
-      title: "Password updated",
-      description: "Your password has been changed successfully.",
-    });
+    if (newPassword.length < 8) {
+      toast({
+        title: "Error",
+        description: "Password must be at least 8 characters long",
+        variant: "destructive",
+      });
+      return;
+    }
     
-    // Reset password fields
-    setPasswordData({
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: "",
-    });
+    try {
+      // Update password
+      const { error } = await supabase.auth.updateUser({
+        password: newPassword,
+      });
+      
+      if (error) throw error;
+      
+      toast({
+        title: "Password updated",
+        description: "Your password has been changed successfully",
+      });
+      
+      // Reset password fields
+      setPasswordData({
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+      });
+    } catch (error: any) {
+      console.error("Error updating password:", error);
+      toast({
+        title: "Error",
+        description: error.message || "Failed to update password",
+        variant: "destructive",
+      });
+    }
+  };
+  
+  // Upload avatar to storage
+  const uploadAvatar = async (): Promise<string | null> => {
+    if (!avatar || !userId) return null;
+    
+    try {
+      // Create a unique file name
+      const fileExt = avatar.name.split('.').pop();
+      const fileName = `${userId}-${Math.random().toString(36).substring(2)}.${fileExt}`;
+      const filePath = `avatars/${fileName}`;
+      
+      // Upload the file
+      const { error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(filePath, avatar);
+      
+      if (uploadError) throw uploadError;
+      
+      // Get the public URL
+      const { data } = supabase.storage
+        .from('avatars')
+        .getPublicUrl(filePath);
+      
+      return data.publicUrl;
+    } catch (error) {
+      console.error("Error uploading avatar:", error);
+      throw error;
+    }
   };
   
   // Submit profile changes
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // In a real app, this would make an API request to update the user profile
-    toast({
-      title: "Profile updated",
-      description: "Your profile has been updated successfully.",
-    });
+    try {
+      setLoading(true);
+      
+      // Upload avatar if changed
+      let avatarUpdated = false;
+      let avatarPublicUrl = avatarUrl;
+      
+      if (avatar) {
+        avatarPublicUrl = await uploadAvatar();
+        avatarUpdated = true;
+      }
+      
+      // Collect the selected skills
+      const selectedSkills = skills
+        .filter(skill => skill.checked)
+        .map(skill => skill.id);
+      
+      // Collect notification preferences
+      const notificationPreferences = Object.fromEntries(
+        notifications.map(notification => [notification.id, notification.checked])
+      );
+      
+      // Update user metadata
+      const { error } = await supabase.auth.updateUser({
+        data: {
+          username: formData.username,
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          company: formData.company,
+          address_line1: formData.addressLine1,
+          address_line2: formData.addressLine2,
+          city: formData.city,
+          state: formData.state,
+          zip_code: formData.zipCode,
+          country: formData.country,
+          phone: formData.phone,
+          min_job_price: formData.minJobPrice,
+          bio: formData.bio,
+          skills: selectedSkills,
+          notifications: notificationPreferences,
+          account_type: formData.accountType,
+          ...(avatarUpdated && { avatar_url: avatarPublicUrl }),
+        },
+      });
+      
+      if (error) throw error;
+      
+      // Update local avatar state if needed
+      if (avatarUpdated && avatarPublicUrl) {
+        setAvatarUrl(avatarPublicUrl);
+        setAvatar(null);
+      }
+      
+      toast({
+        title: "Profile updated",
+        description: "Your profile has been updated successfully",
+      });
+    } catch (error: any) {
+      console.error("Error updating profile:", error);
+      toast({
+        title: "Error",
+        description: error.message || "Failed to update profile",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
+  
+  // Profile preview component
+  const ProfilePreview = () => {
+    return (
+      <div className="p-6 space-y-6">
+        <div className="text-center">
+          <div className="w-24 h-24 mx-auto rounded-full overflow-hidden border-4 border-purple-100">
+            {avatarPreview ? (
+              <img 
+                src={avatarPreview} 
+                alt="Profile" 
+                className="w-full h-full object-cover"
+              />
+            ) : avatarUrl ? (
+              <img 
+                src={avatarUrl} 
+                alt="Profile" 
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-purple-100">
+                <User className="text-purple-600 h-12 w-12" />
+              </div>
+            )}
+          </div>
+          <h2 className="mt-4 font-semibold text-xl">{formData.firstName} {formData.lastName}</h2>
+          <p className="text-gray-500">@{formData.username}</p>
+          <div className="mt-2 inline-block bg-purple-100 px-3 py-1 rounded-full text-purple-800 text-sm">
+            {formData.accountType}
+          </div>
+        </div>
+        
+        <div className="border-t pt-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <h3 className="text-sm font-medium text-gray-500">Email</h3>
+              <p>{formData.email}</p>
+            </div>
+            {formData.phone && (
+              <div>
+                <h3 className="text-sm font-medium text-gray-500">Phone</h3>
+                <p>{formData.phone}</p>
+              </div>
+            )}
+            {formData.company && (
+              <div>
+                <h3 className="text-sm font-medium text-gray-500">Company</h3>
+                <p>{formData.company}</p>
+              </div>
+            )}
+            <div>
+              <h3 className="text-sm font-medium text-gray-500">Country</h3>
+              <p>{formData.country}</p>
+            </div>
+          </div>
+        </div>
+        
+        {formData.bio && (
+          <div className="border-t pt-4">
+            <h3 className="text-sm font-medium text-gray-500 mb-2">About Me</h3>
+            <p className="text-gray-700">{formData.bio}</p>
+          </div>
+        )}
+        
+        <div className="border-t pt-4">
+          <h3 className="text-sm font-medium text-gray-500 mb-2">Skills</h3>
+          <div className="flex flex-wrap gap-2">
+            {skills.filter(skill => skill.checked).map(skill => (
+              <span key={skill.id} className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">
+                {skill.label}
+              </span>
+            ))}
+            {skills.filter(skill => skill.checked).length === 0 && (
+              <p className="text-gray-500 italic">No skills selected</p>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  };
+  
+  if (loading) {
+    return (
+      <div className="text-center py-12">
+        <p className="text-gray-500">Loading your profile...</p>
+      </div>
+    );
+  }
   
   return (
     <div className="space-y-8">
@@ -194,12 +479,20 @@ export const EditProfile = () => {
           <h2 className="text-2xl font-semibold text-gray-700">Edit Profile</h2>
         </div>
         
-        <Button variant="outline" size="sm" className="text-purple-600 border-purple-200" asChild>
-          <a href="#" className="flex items-center gap-1">
-            <ExternalLink size={14} />
-            View my profile
-          </a>
-        </Button>
+        <Dialog open={isPreviewOpen} onOpenChange={setIsPreviewOpen}>
+          <DialogTrigger asChild>
+            <Button variant="outline" size="sm" className="text-purple-600 border-purple-200">
+              <Eye size={14} className="mr-1" />
+              View my profile
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Profile Preview</DialogTitle>
+            </DialogHeader>
+            <ProfilePreview />
+          </DialogContent>
+        </Dialog>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -218,6 +511,12 @@ export const EditProfile = () => {
                   <img 
                     src={avatarPreview} 
                     alt="Avatar preview" 
+                    className="w-full h-full object-cover"
+                  />
+                ) : avatarUrl ? (
+                  <img 
+                    src={avatarUrl} 
+                    alt="Avatar" 
                     className="w-full h-full object-cover"
                   />
                 ) : (
@@ -240,6 +539,8 @@ export const EditProfile = () => {
                 <Camera size={16} />
                 Change avatar
               </Label>
+              
+              <p className="text-xs text-gray-500 mt-2">Max. file size: 5MB</p>
             </div>
           </div>
           
@@ -297,6 +598,7 @@ export const EditProfile = () => {
                 variant="outline" 
                 className="w-full border-purple-200 text-purple-600 hover:bg-purple-50 hover:text-purple-700"
                 onClick={handlePasswordSubmit}
+                disabled={loading}
               >
                 Change Password
               </Button>
@@ -360,7 +662,7 @@ export const EditProfile = () => {
               <div className="flex items-end">
                 <div className="bg-amber-100 text-amber-600 px-3 py-2 rounded-md text-sm flex items-center">
                   <Info size={14} className="mr-1" />
-                  Premium Account
+                  {formData.accountType}
                 </div>
               </div>
               
@@ -404,8 +706,10 @@ export const EditProfile = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   required
-                  className="border-purple-200 focus-visible:ring-purple-400"
+                  disabled
+                  className="border-purple-200 focus-visible:ring-purple-400 bg-gray-50"
                 />
+                <p className="text-xs text-gray-500 mt-1">Email cannot be changed</p>
               </div>
               
               <div>
@@ -568,16 +872,22 @@ export const EditProfile = () => {
               </div>
               
               <div className="md:col-span-2">
-                <Label htmlFor="bio" className="text-sm text-gray-600">
-                  Something about you
-                </Label>
+                <div className="flex justify-between items-center mb-1">
+                  <Label htmlFor="bio" className="text-sm text-gray-600">
+                    Something about you
+                  </Label>
+                  <span className={`text-xs ${bioCharCount > maxBioChars * 0.9 ? 'text-amber-600' : 'text-gray-500'}`}>
+                    {bioCharCount}/{maxBioChars} characters
+                  </span>
+                </div>
                 <Textarea 
                   id="bio"
                   name="bio"
                   value={formData.bio}
                   onChange={handleInputChange}
                   className="h-32 border-purple-200 focus-visible:ring-purple-400"
-                  placeholder="Tell us about yourself..."
+                  placeholder="Tell us about yourself... (max 400 characters)"
+                  maxLength={maxBioChars}
                 />
               </div>
               
@@ -624,9 +934,22 @@ export const EditProfile = () => {
                 <Button 
                   type="submit"
                   className="bg-purple-600 hover:bg-purple-700 text-white"
+                  disabled={loading}
                 >
-                  <Check className="w-4 h-4 mr-2" />
-                  Save Changes
+                  {loading ? (
+                    <span className="flex items-center">
+                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Saving...
+                    </span>
+                  ) : (
+                    <>
+                      <Check className="w-4 h-4 mr-2" />
+                      Save Changes
+                    </>
+                  )}
                 </Button>
               </div>
             </div>
