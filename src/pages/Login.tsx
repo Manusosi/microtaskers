@@ -55,7 +55,10 @@ const Login = () => {
 
       if (data.user) {
         const role = data.user.user_metadata.role;
-        navigate(role === "tasker" ? "/dashboard" : "/advertiser-dashboard");
+        // Store role in localStorage for use across the app
+        localStorage.setItem('userRole', role);
+        // Fixed navigation paths to match the routes in App.tsx
+        navigate(role === "tasker" ? "/dashboard/tasker" : "/dashboard/advertiser");
       }
     } catch (error) {
       console.error("Error:", error);

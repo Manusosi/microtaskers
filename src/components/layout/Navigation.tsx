@@ -54,9 +54,9 @@ export const Navigation = () => {
 
   const handleDashboardClick = () => {
     if (userRole === 'tasker') {
-      navigate('/dashboard');
+      navigate('/dashboard/tasker');
     } else {
-      navigate('/advertiser-dashboard');
+      navigate('/dashboard/advertiser');
     }
   };
 

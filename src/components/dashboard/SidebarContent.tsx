@@ -67,9 +67,9 @@ const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn }: Sid
       navigate('/profile/edit');
       return;
     } else if (menuId === 'dashboard') {
-      // Determine which dashboard to navigate to based on user role
-      // For simplicity, we'll just navigate to the tasker dashboard for now
-      navigate('/');
+      // Fixed path to use the correct dashboard route format
+      const userRole = localStorage.getItem('userRole') || 'tasker';
+      navigate(userRole === 'tasker' ? '/dashboard/tasker' : '/dashboard/advertiser');
       return;
     }
     
