@@ -1,4 +1,3 @@
-
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import React from "react";
@@ -26,6 +25,7 @@ export const MenuItem = ({
   onWithdrawClick
 }: MenuItemProps) => {
   const navigate = useNavigate();
+  const userRole = localStorage.getItem('userRole') || 'tasker';
   
   const handleClick = () => {
     // Special handling for deposit funds
@@ -47,7 +47,7 @@ export const MenuItem = ({
     // Navigate based on menu item
     switch(id) {
       case 'dashboard':
-        navigate('/dashboard');
+        navigate(`/dashboard/${userRole}`);
         break;
       case 'payments':
         navigate('/payments');
@@ -55,7 +55,12 @@ export const MenuItem = ({
       case 'support':
         navigate('/support');
         break;
-      // Add other navigation cases as needed
+      case 'profile':
+        navigate('/profile/edit');
+        break;
+      case 'settings':
+        navigate('/settings');
+        break;
       default:
         // For items without specific pages yet
         break;

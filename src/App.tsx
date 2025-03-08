@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Index from './pages/Index';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -32,6 +32,10 @@ function App() {
           <Route path="/terms" element={<Terms />} />
           <Route path="/dashboard/tasker" element={<TaskerDashboard />} />
           <Route path="/dashboard/advertiser" element={<AdvertiserDashboard />} />
+          {/* Add a redirect for the /dashboard route */}
+          <Route path="/dashboard" element={
+            <DashboardRedirect />
+          } />
           <Route path="/profile/edit" element={<EditProfile />} />
           <Route path="/payments" element={<PaymentsPage />} />
           <Route path="/support" element={<SupportPage />} />
@@ -42,5 +46,11 @@ function App() {
     </div>
   );
 }
+
+// Component to redirect to the correct dashboard based on user role
+const DashboardRedirect = () => {
+  const userRole = localStorage.getItem('userRole') || 'tasker';
+  return <Navigate to={`/dashboard/${userRole}`} replace />;
+};
 
 export default App;
