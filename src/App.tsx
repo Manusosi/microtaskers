@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Index from './pages/Index';
@@ -10,7 +11,7 @@ import FAQ from './pages/FAQ';
 import Terms from './pages/Terms';
 import TaskerDashboard from './pages/TaskerDashboard';
 import AdvertiserDashboard from './pages/AdvertiserDashboard';
-import EditProfile from './components/dashboard/EditProfile';
+import { EditProfile } from './components/dashboard/EditProfile';
 import PaymentsPage from './pages/PaymentsPage';
 import SupportPage from './pages/SupportPage';
 import SettingsPage from './pages/SettingsPage';

@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { Bell } from "lucide-react";
+import { Bell as BellIcon } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -91,7 +91,7 @@ export const NotificationSettings = () => {
   return (
     <div className="bg-white p-6 rounded-lg border shadow-sm">
       <div className="flex items-center gap-2 mb-4">
-        <Bell className="text-purple-600" size={18} />
+        <BellIcon className="text-purple-600" size={18} />
         <h3 className="font-semibold text-gray-700">Email Notifications</h3>
       </div>
       
@@ -128,23 +128,3 @@ export const NotificationSettings = () => {
     </div>
   );
 };
-
-function Bell(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
-      <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
-    </svg>
-  );
-}
