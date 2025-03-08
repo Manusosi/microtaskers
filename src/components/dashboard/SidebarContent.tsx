@@ -24,10 +24,11 @@ import {
   UserPlus,
 } from "lucide-react";
 import { MenuItem } from "./MenuItem";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DepositFundsDialog } from "./DepositFundsDialog";
 import { WithdrawFundsDialog } from "./WithdrawFundsDialog";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
 export interface SidebarContentProps {
   activeMenu: string;
@@ -39,7 +40,22 @@ export interface SidebarContentProps {
 const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn }: SidebarContentProps) => {
   const [depositDialogOpen, setDepositDialogOpen] = useState(false);
   const [withdrawDialogOpen, setWithdrawDialogOpen] = useState(false);
+  const [userRole, setUserRole] = useState<string | null>(null);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const checkUserRole = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        const role = session.user.user_metadata.role || 'tasker';
+        setUserRole(role);
+        localStorage.setItem('userRole', role);
+      }
+    };
+    
+    checkUserRole();
+  }, []);
 
   const menuItems = [
     { icon: LayoutDashboard, label: "Dashboard", id: "dashboard", count: 0 },
@@ -67,9 +83,14 @@ const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn }: Sid
       navigate('/profile/edit');
       return;
     } else if (menuId === 'dashboard') {
-      // Fixed path to use the correct dashboard route format
-      const userRole = localStorage.getItem('userRole') || 'tasker';
-      navigate(userRole === 'tasker' ? '/dashboard/tasker' : '/dashboard/advertiser');
+      const role = userRole || localStorage.getItem('userRole') || 'tasker';
+      navigate(`/dashboard/${role}`);
+      return;
+    } else if (menuId === 'support') {
+      navigate('/support');
+      return;
+    } else if (menuId === 'payments') {
+      navigate('/payments');
       return;
     }
     
@@ -89,7 +110,12 @@ const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn }: Sid
             <MenuItem
               key={item.id}
               {...item}
-              isActive={activeMenu === item.id}
+              isActive={activeMenu === item.id || 
+                (item.id === 'dashboard' && location.pathname.includes('/dashboard')) ||
+                (item.id === 'profile' && location.pathname.includes('/profile')) ||
+                (item.id === 'settings' && location.pathname === '/settings') ||
+                (item.id === 'payments' && location.pathname === '/payments') ||
+                (item.id === 'support' && location.pathname === '/support')}
               onClick={handleMenuClick}
               onDepositClick={item.id === 'deposit' ? () => setDepositDialogOpen(true) : undefined}
               onWithdrawClick={item.id === 'withdraw' ? () => setWithdrawDialogOpen(true) : undefined}

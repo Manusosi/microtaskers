@@ -1,6 +1,6 @@
 
 import { Link, useNavigate } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, User, Settings, LogOut } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,6 +10,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import AdvertiserOptionsDialog from "@/components/dialogs/AdvertiserOptionsDialog";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -17,6 +25,8 @@ export const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string>('');
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const toggleMobileMenu = () => {
@@ -29,6 +39,17 @@ export const Navigation = () => {
       if (session) {
         setIsLoggedIn(true);
         setUserRole(session.user.user_metadata.role);
+        setUserName(
+          session.user.user_metadata.username || 
+          session.user.user_metadata.first_name || 
+          session.user.email?.split('@')[0] || 
+          'User'
+        );
+        
+        // Get avatar url if available
+        if (session.user.user_metadata.avatar_url) {
+          setAvatarUrl(session.user.user_metadata.avatar_url);
+        }
       }
     };
 
@@ -38,6 +59,17 @@ export const Navigation = () => {
       setIsLoggedIn(event === 'SIGNED_IN');
       if (session) {
         setUserRole(session.user.user_metadata.role);
+        setUserName(
+          session.user.user_metadata.username || 
+          session.user.user_metadata.first_name || 
+          session.user.email?.split('@')[0] || 
+          'User'
+        );
+        
+        // Get avatar url if available
+        if (session.user.user_metadata.avatar_url) {
+          setAvatarUrl(session.user.user_metadata.avatar_url);
+        }
       }
     });
 
@@ -50,6 +82,7 @@ export const Navigation = () => {
     await supabase.auth.signOut();
     setIsLoggedIn(false);
     setUserRole(null);
+    navigate('/');
   };
 
   const handleDashboardClick = () => {
@@ -91,13 +124,37 @@ export const Navigation = () => {
                 >
                   Dashboard
                 </Button>
-                <Button 
-                  variant="ghost" 
-                  onClick={handleLogout}
-                  className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                >
-                  Sign out
-                </Button>
+                
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <div className="w-10 h-10 rounded-full cursor-pointer overflow-hidden flex items-center justify-center bg-purple-100">
+                      {avatarUrl ? (
+                        <img src={avatarUrl} alt="User avatar" className="w-full h-full object-cover" />
+                      ) : (
+                        <span className="text-sm font-medium text-purple-700">
+                          {userName?.charAt(0)?.toUpperCase()}
+                        </span>
+                      )}
+                    </div>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56" align="end">
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => navigate('/profile/edit')}>
+                      <User className="mr-2 h-4 w-4" />
+                      <span>Edit Profile</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate('/settings')}>
+                      <Settings className="mr-2 h-4 w-4" />
+                      <span>Settings</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleLogout} className="text-red-600">
+                      <LogOut className="mr-2 h-4 w-4" />
+                      <span>Sign out</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </>
             ) : (
               <>
@@ -158,6 +215,20 @@ export const Navigation = () => {
                   className="w-full text-left px-4 py-2 text-purple-700 hover:bg-purple-50 rounded-lg"
                 >
                   Dashboard
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  onClick={() => navigate('/profile/edit')}
+                  className="w-full text-left px-4 py-2 text-purple-700 hover:bg-purple-50 rounded-lg"
+                >
+                  Edit Profile
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  onClick={() => navigate('/settings')}
+                  className="w-full text-left px-4 py-2 text-purple-700 hover:bg-purple-50 rounded-lg"
+                >
+                  Settings
                 </Button>
                 <Button 
                   variant="ghost" 

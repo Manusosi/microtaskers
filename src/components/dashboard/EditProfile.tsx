@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,10 +13,12 @@ import {
   SaveIcon,
   Check,
   Eye,
+  Settings
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { useNavigate } from "react-router-dom";
 
 // Country data with codes
 const countries = [
@@ -51,11 +52,11 @@ const countries = [
   { code: "AE", name: "United Arab Emirates", phoneCode: "+971", flag: "🇦🇪" },
   { code: "SA", name: "Saudi Arabia", phoneCode: "+966", flag: "🇸🇦" },
   { code: "TR", name: "Turkey", phoneCode: "+90", flag: "🇹🇷" },
-  // Can be expanded with more countries as needed
 ];
 
 export const EditProfile = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   
   // Profile information state
   const [avatar, setAvatar] = useState<File | null>(null);
@@ -499,7 +500,7 @@ export const EditProfile = () => {
           {/* Link to Settings Page */}
           <div className="bg-white p-6 rounded-lg border shadow-sm">
             <div className="flex items-center gap-2 mb-4">
-              <Shield className="text-purple-600" size={18} />
+              <Settings className="text-purple-600" size={18} />
               <h3 className="font-semibold text-gray-700">Other Settings</h3>
             </div>
             

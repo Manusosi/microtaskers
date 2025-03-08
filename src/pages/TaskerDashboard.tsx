@@ -16,7 +16,9 @@ import {
   LogOut,
   Eye,
   FileCheck,
-  ExternalLink
+  ExternalLink,
+  User,
+  Settings
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
@@ -28,6 +30,14 @@ import { DepositFundsDialog } from "@/components/dashboard/DepositFundsDialog";
 import { WithdrawFundsDialog } from "@/components/dashboard/WithdrawFundsDialog";
 import { ReferFriend } from "@/components/dashboard/ReferFriend";
 import { EditProfile } from "@/components/dashboard/EditProfile";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const TaskerDashboard = () => {
   const [activeMenu, setActiveMenu] = useState("dashboard");
@@ -36,6 +46,7 @@ const TaskerDashboard = () => {
   const [lastLogin, setLastLogin] = useState("");
   const [depositDialogOpen, setDepositDialogOpen] = useState(false);
   const [withdrawDialogOpen, setWithdrawDialogOpen] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const activityData = [
@@ -85,6 +96,11 @@ const TaskerDashboard = () => {
         // Format last login time
         const now = new Date();
         setLastLogin(`${now.toLocaleDateString()} ${now.toLocaleTimeString()}`);
+        
+        // Get avatar URL if available
+        if (session.user.user_metadata.avatar_url) {
+          setAvatarUrl(session.user.user_metadata.avatar_url);
+        }
       } else {
         navigate('/login');
       }
@@ -100,6 +116,11 @@ const TaskerDashboard = () => {
         // Format last login time
         const now = new Date();
         setLastLogin(`${now.toLocaleDateString()} ${now.toLocaleTimeString()}`);
+        
+        // Get avatar URL if available
+        if (session?.user.user_metadata.avatar_url) {
+          setAvatarUrl(session.user.user_metadata.avatar_url);
+        }
       } else if (event === 'SIGNED_OUT') {
         setIsLoggedIn(false);
         navigate('/');
@@ -173,11 +194,37 @@ const TaskerDashboard = () => {
                 <div className="hidden md:flex items-center space-x-2 bg-green-100 px-3 py-1.5 rounded-full">
                   <span className="text-sm font-bold text-green-600">US$33.20</span>
                 </div>
-                <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
-                  <span className="text-sm font-medium text-purple-700">
-                    {username?.charAt(0)?.toUpperCase() || 'U'}
-                  </span>
-                </div>
+                
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <div className="w-10 h-10 rounded-full cursor-pointer overflow-hidden flex items-center justify-center bg-purple-100">
+                      {avatarUrl ? (
+                        <img src={avatarUrl} alt="User avatar" className="w-full h-full object-cover" />
+                      ) : (
+                        <span className="text-sm font-medium text-purple-700">
+                          {username?.charAt(0)?.toUpperCase() || 'U'}
+                        </span>
+                      )}
+                    </div>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56" align="end">
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => navigate('/profile/edit')}>
+                      <User className="mr-2 h-4 w-4" />
+                      <span>Edit Profile</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate('/settings')}>
+                      <Settings className="mr-2 h-4 w-4" />
+                      <span>Settings</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleLogout} className="text-red-600">
+                      <LogOut className="mr-2 h-4 w-4" />
+                      <span>Sign out</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </>
             ) : (
               <div className="flex items-center space-x-4">
