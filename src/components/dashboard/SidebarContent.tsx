@@ -29,6 +29,7 @@ import { DepositFundsDialog } from "./DepositFundsDialog";
 import { WithdrawFundsDialog } from "./WithdrawFundsDialog";
 import { useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { UpgradeTiers } from "./UpgradeTiers";
 
 export interface SidebarContentProps {
   activeMenu: string;
@@ -123,6 +124,10 @@ const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn }: Sid
           ))}
         </nav>
       </div>
+      
+      {/* Upgrade Account Section */}
+      <UpgradeTiers />
+      
       <div className="p-4 border-t">
         <Button 
           variant="ghost" 
