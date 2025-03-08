@@ -8,7 +8,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SidebarContent from "@/components/dashboard/SidebarContent";
 import { SecuritySettings } from "@/components/dashboard/SecuritySettings";
 import { NotificationSettings } from "@/components/dashboard/NotificationSettings";
-import { Menu, Shield, Bell, User } from "lucide-react";
+import { ProfileSkillsSettings } from "@/components/dashboard/ProfileSkillsSettings";
+import { Menu, Shield, Bell, User, Code } from "lucide-react";
 
 const SettingsPage = () => {
   const [activeMenu, setActiveMenu] = useState("settings");
@@ -89,6 +90,10 @@ const SettingsPage = () => {
                   <Bell className="w-4 h-4 mr-2" />
                   Notifications
                 </TabsTrigger>
+                <TabsTrigger value="skills" className="data-[state=active]:bg-purple-50 data-[state=active]:text-purple-700">
+                  <Code className="w-4 h-4 mr-2" />
+                  Skills
+                </TabsTrigger>
                 <TabsTrigger value="profile" className="data-[state=active]:bg-purple-50 data-[state=active]:text-purple-700">
                   <User className="w-4 h-4 mr-2" />
                   Profile
@@ -101,6 +106,10 @@ const SettingsPage = () => {
               
               <TabsContent value="notifications" className="mt-0">
                 <NotificationSettings />
+              </TabsContent>
+              
+              <TabsContent value="skills" className="mt-0">
+                <ProfileSkillsSettings />
               </TabsContent>
               
               <TabsContent value="profile" className="mt-0">

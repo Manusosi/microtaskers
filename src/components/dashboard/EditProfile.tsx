@@ -5,18 +5,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
 import { 
   User, 
-  Lock, 
   Edit, 
   Camera, 
-  ExternalLink, 
-  ChevronDown, 
   Info,
   DollarSign,
   SaveIcon,
-  X,
   Check,
   Eye,
 } from "lucide-react";
@@ -90,44 +85,6 @@ export const EditProfile = () => {
     bio: "",
   });
   
-  // Password change state
-  const [passwordData, setPasswordData] = useState({
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
-  });
-  
-  // Skills state with initial data
-  const [skills, setSkills] = useState([
-    { id: "signup", label: "Sign up", checked: false },
-    { id: "clickSearch", label: "Click or Search", checked: false },
-    { id: "youtube", label: "Youtube", checked: false },
-    { id: "facebook", label: "Facebook", checked: false },
-    { id: "twitter", label: "Twitter", checked: false },
-    { id: "forums", label: "Forums", checked: false },
-    { id: "writeArticle", label: "Write an Article", checked: false },
-    { id: "writeReview", label: "Write a Review", checked: false },
-    { id: "votingRating", label: "Voting & Rating", checked: false },
-    { id: "surveys", label: "Surveys", checked: false },
-    { id: "websiteOwners", label: "Website Owners", checked: false },
-    { id: "leads", label: "Leads", checked: false },
-    { id: "dataMining", label: "Data Mining", checked: false },
-    { id: "writeComment", label: "Write a Comment", checked: false },
-    { id: "searchClick", label: "Search & Click", checked: false },
-    { id: "bookmark", label: "Bookmark", checked: false },
-    { id: "contentModeration", label: "Content Moderation", checked: false },
-    { id: "other", label: "Other", checked: false },
-  ]);
-  
-  // Email notification preferences
-  const [notifications, setNotifications] = useState([
-    { id: "newsletter", label: "I wish to receive newsletter", checked: true },
-    { id: "newJob", label: "Notify me for new job by email", checked: false },
-    { id: "jobInvitation", label: "Notify me for new job invitation", checked: false },
-    { id: "taskCompleted", label: "Notify me for task completed", checked: false },
-    { id: "newOrder", label: "Notify me for new order by email", checked: false },
-  ]);
-
   // Character count state
   const [bioCharCount, setBioCharCount] = useState(0);
   const maxBioChars = 400;
@@ -191,24 +148,6 @@ export const EditProfile = () => {
               bio: user.user_metadata.bio
             }));
             setBioCharCount(user.user_metadata.bio.length);
-          }
-          
-          // Set skills if available
-          if (user.user_metadata?.skills && Array.isArray(user.user_metadata.skills)) {
-            const userSkills = user.user_metadata.skills;
-            setSkills(skills.map(skill => ({
-              ...skill,
-              checked: userSkills.includes(skill.id)
-            })));
-          }
-          
-          // Set notification preferences if available
-          if (user.user_metadata?.notifications) {
-            const userNotifications = user.user_metadata.notifications;
-            setNotifications(notifications.map(notification => ({
-              ...notification,
-              checked: userNotifications[notification.id] || notification.id === "newsletter"
-            })));
           }
         }
       } catch (error) {
@@ -299,87 +238,6 @@ export const EditProfile = () => {
     }));
   };
   
-  // Handle password change
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setPasswordData((prev) => ({ ...prev, [name]: value }));
-  };
-  
-  // Handle skill checkbox change
-  const handleSkillChange = (id: string, checked: boolean) => {
-    setSkills(skills.map(skill => 
-      skill.id === id ? { ...skill, checked } : skill
-    ));
-  };
-  
-  // Handle notification checkbox change
-  const handleNotificationChange = (id: string, checked: boolean) => {
-    setNotifications(notifications.map(notification => 
-      notification.id === id ? { ...notification, checked } : notification
-    ));
-  };
-  
-  // Submit password change
-  const handlePasswordSubmit = async () => {
-    const { currentPassword, newPassword, confirmPassword } = passwordData;
-    
-    // Validation
-    if (!currentPassword || !newPassword || !confirmPassword) {
-      toast({
-        title: "Error",
-        description: "All password fields are required",
-        variant: "destructive",
-      });
-      return;
-    }
-    
-    if (newPassword !== confirmPassword) {
-      toast({
-        title: "Error",
-        description: "New passwords do not match",
-        variant: "destructive",
-      });
-      return;
-    }
-    
-    if (newPassword.length < 8) {
-      toast({
-        title: "Error",
-        description: "Password must be at least 8 characters long",
-        variant: "destructive",
-      });
-      return;
-    }
-    
-    try {
-      // Update password
-      const { error } = await supabase.auth.updateUser({
-        password: newPassword,
-      });
-      
-      if (error) throw error;
-      
-      toast({
-        title: "Password updated",
-        description: "Your password has been changed successfully",
-      });
-      
-      // Reset password fields
-      setPasswordData({
-        currentPassword: "",
-        newPassword: "",
-        confirmPassword: "",
-      });
-    } catch (error: any) {
-      console.error("Error updating password:", error);
-      toast({
-        title: "Error",
-        description: error.message || "Failed to update password",
-        variant: "destructive",
-      });
-    }
-  };
-  
   // Upload avatar to storage
   const uploadAvatar = async (): Promise<string | null> => {
     if (!avatar || !userId) return null;
@@ -443,16 +301,6 @@ export const EditProfile = () => {
         }
       }
       
-      // Collect the selected skills
-      const selectedSkills = skills
-        .filter(skill => skill.checked)
-        .map(skill => skill.id);
-      
-      // Collect notification preferences
-      const notificationPreferences = Object.fromEntries(
-        notifications.map(notification => [notification.id, notification.checked])
-      );
-      
       // Update user metadata
       const { error } = await supabase.auth.updateUser({
         data: {
@@ -469,8 +317,6 @@ export const EditProfile = () => {
           phone: formData.phone,
           min_job_price: formData.minJobPrice,
           bio: formData.bio,
-          skills: selectedSkills,
-          notifications: notificationPreferences,
           account_type: formData.accountType,
           ...(avatarUpdated && { avatar_url: avatarPublicUrl }),
         },
@@ -562,20 +408,6 @@ export const EditProfile = () => {
             <p className="text-gray-700">{formData.bio}</p>
           </div>
         )}
-        
-        <div className="border-t pt-4">
-          <h3 className="text-sm font-medium text-gray-500 mb-2">Skills</h3>
-          <div className="flex flex-wrap gap-2">
-            {skills.filter(skill => skill.checked).map(skill => (
-              <span key={skill.id} className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">
-                {skill.label}
-              </span>
-            ))}
-            {skills.filter(skill => skill.checked).length === 0 && (
-              <p className="text-gray-500 italic">No skills selected</p>
-            )}
-          </div>
-        </div>
       </div>
     );
   };
@@ -616,7 +448,7 @@ export const EditProfile = () => {
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Left column - Avatar and Password */}
+        {/* Left column - Avatar */}
         <div className="space-y-6">
           {/* Avatar Section */}
           <div className="bg-white p-6 rounded-lg border shadow-sm">
@@ -664,93 +496,24 @@ export const EditProfile = () => {
             </div>
           </div>
           
-          {/* Password Change Section */}
+          {/* Link to Settings Page */}
           <div className="bg-white p-6 rounded-lg border shadow-sm">
             <div className="flex items-center gap-2 mb-4">
-              <Lock className="text-purple-600" size={18} />
-              <h3 className="font-semibold text-gray-700">Change password</h3>
+              <Shield className="text-purple-600" size={18} />
+              <h3 className="font-semibold text-gray-700">Other Settings</h3>
             </div>
             
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="currentPassword" className="text-sm text-gray-600">
-                  Current Password
-                </Label>
-                <Input 
-                  id="currentPassword"
-                  name="currentPassword"
-                  type="password"
-                  value={passwordData.currentPassword}
-                  onChange={handlePasswordChange}
-                  className="border-purple-200 focus-visible:ring-purple-400"
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="newPassword" className="text-sm text-gray-600">
-                  New password
-                </Label>
-                <Input 
-                  id="newPassword"
-                  name="newPassword"
-                  type="password"
-                  value={passwordData.newPassword}
-                  onChange={handlePasswordChange}
-                  className="border-purple-200 focus-visible:ring-purple-400"
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="confirmPassword" className="text-sm text-gray-600">
-                  Confirm password
-                </Label>
-                <Input 
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type="password"
-                  value={passwordData.confirmPassword}
-                  onChange={handlePasswordChange}
-                  className="border-purple-200 focus-visible:ring-purple-400"
-                />
-              </div>
-              
+            <div className="space-y-3">
+              <p className="text-sm text-gray-600">
+                For security, notification preferences, and skills settings, please visit the settings page.
+              </p>
               <Button 
                 variant="outline" 
                 className="w-full border-purple-200 text-purple-600 hover:bg-purple-50 hover:text-purple-700"
-                onClick={handlePasswordSubmit}
-                disabled={loading}
+                onClick={() => navigate('/settings')}
               >
-                Change Password
+                Go to Settings
               </Button>
-            </div>
-          </div>
-          
-          {/* Worker Skills Section */}
-          <div className="bg-white p-6 rounded-lg border shadow-sm">
-            <div className="flex items-center gap-2 mb-4">
-              <User className="text-purple-600" size={18} />
-              <h3 className="font-semibold text-gray-700">Worker Skills</h3>
-            </div>
-            
-            <div className="space-y-2 max-h-80 overflow-y-auto">
-              {skills.map((skill) => (
-                <div key={skill.id} className="flex items-center space-x-2">
-                  <Checkbox 
-                    id={`skill-${skill.id}`}
-                    checked={skill.checked}
-                    onCheckedChange={(checked) => 
-                      handleSkillChange(skill.id, checked as boolean)
-                    }
-                    className="text-purple-600 border-purple-200 data-[state=checked]:bg-purple-600"
-                  />
-                  <Label 
-                    htmlFor={`skill-${skill.id}`}
-                    className="text-sm text-gray-600 cursor-pointer"
-                  >
-                    {skill.label}
-                  </Label>
-                </div>
-              ))}
             </div>
           </div>
         </div>
@@ -1000,37 +763,6 @@ export const EditProfile = () => {
                 />
               </div>
               
-              {/* Email Notifications */}
-              <div className="md:col-span-2 border-t pt-4 mt-4">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="text-purple-600">
-                    <Bell />
-                  </div>
-                  <h3 className="font-semibold text-gray-700">Email Notifications</h3>
-                </div>
-                
-                <div className="space-y-3">
-                  {notifications.map((notification) => (
-                    <div key={notification.id} className="flex items-center space-x-2">
-                      <Checkbox 
-                        id={`notification-${notification.id}`}
-                        checked={notification.checked}
-                        onCheckedChange={(checked) => 
-                          handleNotificationChange(notification.id, checked as boolean)
-                        }
-                        className="text-purple-600 border-purple-200 data-[state=checked]:bg-purple-600"
-                      />
-                      <Label 
-                        htmlFor={`notification-${notification.id}`}
-                        className="text-sm text-gray-600 cursor-pointer"
-                      >
-                        {notification.label}
-                      </Label>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              
               {/* Action Buttons */}
               <div className="md:col-span-2 flex justify-end gap-2 pt-4">
                 <Button 
@@ -1068,23 +800,3 @@ export const EditProfile = () => {
     </div>
   );
 };
-
-function Bell(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
-      <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
-    </svg>
-  );
-}
