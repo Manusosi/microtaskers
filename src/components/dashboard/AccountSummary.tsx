@@ -2,16 +2,27 @@
 import { Button } from "@/components/ui/button";
 import { CreditCard, AlertCircle, DollarSign, Crown, Briefcase, Trophy } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 interface AccountSummaryProps {
   balance: number;
-  accountType: string;
+  accountType?: string;
 }
 
 export const AccountSummary = ({ balance, accountType }: AccountSummaryProps) => {
+  const [tier, setTier] = useState(accountType || 'free');
+  
+  // Get the tier from localStorage if not provided via props
+  useEffect(() => {
+    if (!accountType) {
+      const savedTier = localStorage.getItem('userTier') || 'free';
+      setTier(savedTier);
+    }
+  }, [accountType]);
+  
   // Determine tier icon based on account type
   const getTierIcon = () => {
-    switch(accountType.toLowerCase()) {
+    switch(tier.toLowerCase()) {
       case 'premium':
         return <Crown className="h-5 w-5 text-amber-500" />;
       case 'standard':
@@ -20,6 +31,11 @@ export const AccountSummary = ({ balance, accountType }: AccountSummaryProps) =>
         return <Briefcase className="h-5 w-5 text-gray-600" />;
     }
   };
+  
+  // Get formatted tier name
+  const getTierName = () => {
+    return tier.charAt(0).toUpperCase() + tier.slice(1);
+  };
 
   return (
     <div className="bg-white border rounded-lg shadow-sm p-6">
@@ -27,7 +43,7 @@ export const AccountSummary = ({ balance, accountType }: AccountSummaryProps) =>
         <h3 className="text-lg font-semibold text-gray-900">Account Summary</h3>
         <div className="px-2 py-1 bg-gray-100 rounded-md flex items-center gap-1 text-sm">
           {getTierIcon()}
-          <span className="font-medium">{accountType}</span>
+          <span className="font-medium">{getTierName()}</span>
         </div>
       </div>
       

@@ -1,9 +1,12 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Crown, Briefcase, Trophy, ChevronUp, DollarSign } from "lucide-react";
+import { Crown, Briefcase, Trophy, ChevronUp, DollarSign, CreditCard, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 interface TierFeature {
   text: string;
@@ -13,7 +16,7 @@ interface TierFeature {
 interface TierProps {
   name: string;
   icon: React.ReactNode;
-  price: string;
+  price: { monthly: string; annual: string };
   features: TierFeature[];
   current?: boolean;
   buttonText: string;
@@ -22,7 +25,7 @@ interface TierProps {
 
 const Tier = ({ name, icon, price, features, current, buttonText, onSelect }: TierProps) => {
   return (
-    <div className={`border rounded-lg p-6 ${current ? 'border-purple-500 bg-purple-50' : 'border-gray-200'}`}>
+    <div className={`border rounded-lg p-4 md:p-6 ${current ? 'border-purple-500 bg-purple-50' : 'border-gray-200'} h-full flex flex-col`}>
       <div className="flex items-center space-x-3 mb-4">
         {icon}
         <h3 className="text-lg font-semibold">{name}</h3>
@@ -30,11 +33,11 @@ const Tier = ({ name, icon, price, features, current, buttonText, onSelect }: Ti
       </div>
       
       <div className="mb-4">
-        <span className="text-2xl font-bold">{price}</span>
-        {price !== "Free" && <span className="text-gray-500 text-sm">/month</span>}
+        <span className="text-2xl font-bold">{price.monthly !== "Free" ? `$${price.monthly}` : price.monthly}</span>
+        {price.monthly !== "Free" && <span className="text-gray-500 text-sm">/month</span>}
       </div>
       
-      <ul className="space-y-3 mb-6">
+      <ul className="space-y-3 mb-6 flex-grow">
         {features.map((feature, index) => (
           <li key={index} className="flex items-start">
             <span className={`mr-2 mt-0.5 ${feature.included ? 'text-green-500' : 'text-gray-400'}`}>
@@ -50,7 +53,7 @@ const Tier = ({ name, icon, price, features, current, buttonText, onSelect }: Ti
       <Button 
         onClick={onSelect}
         variant={current ? "outline" : "default"}
-        className={`w-full ${current ? 'border-purple-500 text-purple-700' : ''}`}
+        className={`w-full mt-auto ${current ? 'border-purple-500 text-purple-700' : ''}`}
       >
         {buttonText}
       </Button>
@@ -59,16 +62,24 @@ const Tier = ({ name, icon, price, features, current, buttonText, onSelect }: Ti
 };
 
 export const UpgradeTiers = () => {
-  const [open, setOpen] = React.useState(false);
-  const [currentTier, setCurrentTier] = React.useState<string>("free");
+  const [open, setOpen] = useState(false);
+  const [currentTier, setCurrentTier] = useState<string>("free");
+  const [isAnnual, setIsAnnual] = useState(false);
+  const { toast } = useToast();
   const navigate = useNavigate();
+  
+  // Calculate the discount percentage
+  const annualDiscount = 20; // 20% discount for annual plans
   
   const tiers = [
     {
       id: "free",
       name: "Free Tier",
       icon: <Briefcase className="w-5 h-5 text-gray-600" />,
-      price: "Free",
+      price: { 
+        monthly: "Free",
+        annual: "Free"
+      },
       features: [
         { text: "Access to basic jobs", included: true },
         { text: "Limited to 5 jobs/month", included: true },
@@ -84,7 +95,10 @@ export const UpgradeTiers = () => {
       id: "standard",
       name: "Standard",
       icon: <Trophy className="w-5 h-5 text-blue-600" />,
-      price: "$4.99",
+      price: { 
+        monthly: "4.99",
+        annual: "3.99"
+      },
       features: [
         { text: "Access to basic jobs", included: true },
         { text: "Unlimited jobs/month", included: true },
@@ -100,7 +114,10 @@ export const UpgradeTiers = () => {
       id: "premium",
       name: "Premium",
       icon: <Crown className="w-5 h-5 text-amber-500" />,
-      price: "$9.99",
+      price: { 
+        monthly: "9.99",
+        annual: "7.99"
+      },
       features: [
         { text: "Access to all jobs", included: true },
         { text: "Unlimited jobs/month", included: true },
@@ -114,6 +131,13 @@ export const UpgradeTiers = () => {
     }
   ];
   
+  // Set user's current tier on component mount (from localStorage or API in a real app)
+  React.useEffect(() => {
+    // For a real app, you would fetch the user's current tier from the backend
+    const savedTier = localStorage.getItem('userTier') || 'free';
+    setCurrentTier(savedTier);
+  }, []);
+  
   const handleSelectTier = (tierId: string) => {
     if (tierId === currentTier) {
       // Already on this tier
@@ -122,12 +146,14 @@ export const UpgradeTiers = () => {
     }
     
     // In a real app, here we'd process payment & upgrade
-    // For now, just simulate the upgrade
+    localStorage.setItem('userTier', tierId);
     setCurrentTier(tierId);
     setOpen(false);
     
-    // Here we would navigate to payment page in real implementation
-    // navigate('/payments/upgrade');
+    toast({
+      title: "Subscription Updated",
+      description: `Your subscription has been updated to the ${tierId.charAt(0).toUpperCase() + tierId.slice(1)} tier.`,
+    });
   };
   
   return (
@@ -138,11 +164,11 @@ export const UpgradeTiers = () => {
             variant="outline" 
             className="w-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white hover:from-purple-600 hover:to-indigo-700 border-none"
           >
-            <ChevronUp className="w-4 h-4 mr-2" />
+            <Sparkles className="w-4 h-4 mr-2" />
             Upgrade Account
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[900px]">
+        <DialogContent className="sm:max-w-[900px] max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Upgrade Your Account</DialogTitle>
             <DialogDescription>
@@ -150,13 +176,30 @@ export const UpgradeTiers = () => {
             </DialogDescription>
           </DialogHeader>
           
+          <div className="flex justify-center my-4">
+            <div className="flex items-center space-x-2">
+              <Label htmlFor="subscription-period" className={!isAnnual ? "font-bold" : ""}>Monthly</Label>
+              <Switch
+                id="subscription-period"
+                checked={isAnnual}
+                onCheckedChange={setIsAnnual}
+              />
+              <div className="flex items-center">
+                <Label htmlFor="subscription-period" className={isAnnual ? "font-bold" : ""}>Annual</Label>
+                <span className="ml-1.5 bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded-full">
+                  Save {annualDiscount}%
+                </span>
+              </div>
+            </div>
+          </div>
+          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 py-4">
             {tiers.map((tier) => (
               <Tier
                 key={tier.id}
                 name={tier.name}
                 icon={tier.icon}
-                price={tier.price}
+                price={isAnnual ? { monthly: tier.price.annual, annual: tier.price.annual } : tier.price}
                 features={tier.features}
                 current={tier.id === currentTier}
                 buttonText={tier.id === currentTier ? "Current Plan" : "Upgrade"}

@@ -1,7 +1,9 @@
+
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Badge } from "@/components/ui/badge";
 
 export interface MenuItemProps {
   icon: React.ElementType;
@@ -12,6 +14,10 @@ export interface MenuItemProps {
   onClick: (id: string) => void;
   onDepositClick?: () => void;
   onWithdrawClick?: () => void;
+  badge?: {
+    text: string;
+    variant: "default" | "secondary" | "destructive" | "outline"
+  };
 }
 
 export const MenuItem = ({ 
@@ -22,7 +28,8 @@ export const MenuItem = ({
   isActive, 
   onClick,
   onDepositClick,
-  onWithdrawClick
+  onWithdrawClick,
+  badge
 }: MenuItemProps) => {
   const navigate = useNavigate();
   const userRole = localStorage.getItem('userRole') || 'tasker';
@@ -79,7 +86,12 @@ export const MenuItem = ({
     >
       <Icon className="w-5 h-5" />
       <span className="flex-1 text-left">{label}</span>
-      {count > 0 && (
+      {badge && (
+        <Badge variant={badge.variant} className="ml-2 text-xs font-normal">
+          {badge.text}
+        </Badge>
+      )}
+      {count > 0 && !badge && (
         <span className="bg-red-500 text-white text-xs px-2 py-1 rounded-full">
           {count}
         </span>

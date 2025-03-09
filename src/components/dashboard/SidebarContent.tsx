@@ -22,6 +22,7 @@ import {
   Briefcase,
   ExternalLink,
   UserPlus,
+  Sparkles,
 } from "lucide-react";
 import { MenuItem } from "./MenuItem";
 import { useState, useEffect } from "react";
@@ -30,6 +31,7 @@ import { WithdrawFundsDialog } from "./WithdrawFundsDialog";
 import { useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { UpgradeTiers } from "./UpgradeTiers";
+import { Badge } from "@/components/ui/badge";
 
 export interface SidebarContentProps {
   activeMenu: string;
@@ -66,7 +68,13 @@ const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn }: Sid
     { icon: Headphones, label: "Support", id: "support", count: 0 },
     { icon: UserPlus, label: "Refer a Friend", id: "refer", count: 0 },
     { icon: UserCog, label: "Edit Profile", id: "profile", count: 0 },
-    { icon: Gift, label: "My Offers", id: "offers", count: 0 },
+    { 
+      icon: Gift, 
+      label: "My Offers", 
+      id: "offers", 
+      count: 0,
+      badge: { text: "Coming Soon", variant: "outline" as const }
+    },
     { icon: Briefcase, label: "Available Jobs", id: "available-jobs", count: 0 },
     { icon: CheckSquare, label: "Finished Jobs", id: "finished-jobs", count: 0 },
     { icon: MessageSquare, label: "Job Invitations", id: "invitations", count: 2 },
