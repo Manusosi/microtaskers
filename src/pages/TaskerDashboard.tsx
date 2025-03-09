@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -47,6 +47,7 @@ const TaskerDashboard = () => {
   const [depositDialogOpen, setDepositDialogOpen] = useState(false);
   const [withdrawDialogOpen, setWithdrawDialogOpen] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const sidebarRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   const activityData = [
@@ -66,7 +67,7 @@ const TaskerDashboard = () => {
       payment: 0.05, 
       date: "31 Dec 2023", 
       time: "10:34 PM", 
-      status: "paid" 
+      status: "awaiting review" 
     },
     { 
       id: 2, 
@@ -83,6 +84,30 @@ const TaskerDashboard = () => {
       date: "29 Dec 2023", 
       time: "03:22 PM", 
       status: "paid" 
+    },
+    { 
+      id: 4, 
+      title: "Instagram: Follow and comment", 
+      payment: 0.15, 
+      date: "28 Dec 2023", 
+      time: "01:45 PM", 
+      status: "submitted"
+    },
+    { 
+      id: 5, 
+      title: "Website: Register and verify email", 
+      payment: 0.08, 
+      date: "27 Dec 2023", 
+      time: "11:20 AM", 
+      status: "submitted"
+    },
+    { 
+      id: 6, 
+      title: "YouTube: Subscribe to channel", 
+      payment: 0.05, 
+      date: "26 Dec 2023", 
+      time: "09:15 AM", 
+      status: "submitted"
     },
   ];
 
@@ -157,12 +182,14 @@ const TaskerDashboard = () => {
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="w-64 p-0">
-                <SidebarContent
-                  activeMenu={activeMenu}
-                  setActiveMenu={setActiveMenu}
-                  onLogout={handleLogout}
-                  isLoggedIn={isLoggedIn}
-                />
+                <div className="overflow-y-auto h-full pb-20">
+                  <SidebarContent
+                    activeMenu={activeMenu}
+                    setActiveMenu={setActiveMenu}
+                    onLogout={handleLogout}
+                    isLoggedIn={isLoggedIn}
+                  />
+                </div>
               </SheetContent>
             </Sheet>
             <Link to="/">
@@ -242,7 +269,7 @@ const TaskerDashboard = () => {
 
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar - Desktop */}
-        <div className="hidden lg:block w-64 border-r bg-white overflow-y-auto">
+        <div ref={sidebarRef} className="hidden lg:block w-64 border-r bg-white overflow-y-auto pb-20">
           <SidebarContent
             activeMenu={activeMenu}
             setActiveMenu={setActiveMenu}
@@ -253,15 +280,17 @@ const TaskerDashboard = () => {
 
         {/* Main Content */}
         <div className="flex-1 overflow-y-auto">
-          <div className="container mx-auto p-6">
+          <div className="container mx-auto p-4 md:p-6">
             {activeMenu === "refer" ? (
               <ReferFriend />
             ) : activeMenu === "profile" ? (
-              <EditProfile />
+              <div className="max-w-4xl mx-auto">
+                <EditProfile />
+              </div>
             ) : (
-              <div className="grid grid-cols-12 gap-6">
+              <div className="grid grid-cols-12 gap-4 md:gap-6">
                 {/* Main Column */}
-                <div className="col-span-12 lg:col-span-8 space-y-6">
+                <div className="col-span-12 lg:col-span-8 space-y-4 md:space-y-6">
                   <DashboardHeader 
                     username={username} 
                     lastLogin={lastLogin} 
@@ -270,7 +299,7 @@ const TaskerDashboard = () => {
                   <DashboardStats stats={stats} />
                   
                   {/* Task Call to Action */}
-                  <div className="bg-white border rounded-lg shadow-sm p-6">
+                  <div className="bg-white border rounded-lg shadow-sm p-4 md:p-6">
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">FINISH YOUR TASKS TODAY</h3>
                     <p className="text-gray-600 mb-4">
                       Exciting update! Ads are now accessible, and you receive $0.01 for every click.
@@ -284,11 +313,11 @@ const TaskerDashboard = () => {
                 </div>
 
                 {/* Side Column */}
-                <div className="col-span-12 lg:col-span-4 space-y-6">
+                <div className="col-span-12 lg:col-span-4 space-y-4 md:space-y-6">
                   <AccountSummary balance={33.20} accountType="Standard" />
                   
                   {/* Activity Summary */}
-                  <div className="bg-white border rounded-lg shadow-sm p-6">
+                  <div className="bg-white border rounded-lg shadow-sm p-4 md:p-6">
                     <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h3>
                     <div className="space-y-4">
                       {activityData.slice(0, 3).map((activity, index) => (
