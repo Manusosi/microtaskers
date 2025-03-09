@@ -7,9 +7,44 @@ import { CreditCard, AlertCircle, Check, Bitcoin, Briefcase } from "lucide-react
 import { useToast } from "@/hooks/use-toast";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
+import { useNavigate } from "react-router-dom";
+
+// Define separate interfaces for each payment method type
+interface CardPaymentMethod {
+  enabled: boolean;
+  name: string;
+  number: string;
+  expiry: string;
+  cvv: string;
+}
+
+interface PayPalPaymentMethod {
+  enabled: boolean;
+  email: string;
+}
+
+interface MPesaPaymentMethod {
+  enabled: boolean;
+  phoneNumber: string;
+  name: string;
+}
+
+interface BitcoinPaymentMethod {
+  enabled: boolean;
+  address: string;
+}
+
+// Define the interface for all payment methods
+interface PaymentMethods {
+  card: CardPaymentMethod;
+  paypal: PayPalPaymentMethod;
+  mpesa: MPesaPaymentMethod;
+  bitcoin: BitcoinPaymentMethod;
+}
 
 export const PaymentMethodsSettings = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [userTier, setUserTier] = useState('free');
   
@@ -19,7 +54,7 @@ export const PaymentMethodsSettings = () => {
     setUserTier(savedTier);
   }, []);
   
-  const [paymentMethods, setPaymentMethods] = useState({
+  const [paymentMethods, setPaymentMethods] = useState<PaymentMethods>({
     card: {
       enabled: false,
       name: "",
@@ -48,7 +83,7 @@ export const PaymentMethodsSettings = () => {
   const canEnableMore = enabledCount < maxMethods;
   
   // Handle payment method toggle
-  const handleToggle = (method: keyof typeof paymentMethods) => {
+  const handleToggle = (method: keyof PaymentMethods) => {
     if (paymentMethods[method].enabled) {
       // If already enabled, just disable it
       setPaymentMethods(prev => ({
@@ -83,7 +118,7 @@ export const PaymentMethodsSettings = () => {
   };
   
   // Handle input change for payment methods
-  const handleInputChange = (method: keyof typeof paymentMethods, field: string, value: string) => {
+  const handleInputChange = (method: keyof PaymentMethods, field: string, value: string) => {
     setPaymentMethods(prev => ({
       ...prev,
       [method]: {
@@ -102,21 +137,42 @@ export const PaymentMethodsSettings = () => {
       let isValid = true;
       let errorMessage = "";
       
+      // Type guard functions to check which payment method type we're dealing with
+      const isCardMethod = (method: any): method is CardPaymentMethod => 
+        'name' in method && 'number' in method && 'expiry' in method && 'cvv' in method;
+      
+      const isPayPalMethod = (method: any): method is PayPalPaymentMethod => 
+        'email' in method;
+      
+      const isMPesaMethod = (method: any): method is MPesaPaymentMethod => 
+        'phoneNumber' in method && 'name' in method;
+      
+      const isBitcoinMethod = (method: any): method is BitcoinPaymentMethod => 
+        'address' in method;
+      
       // Check each enabled method has required fields filled
       Object.entries(paymentMethods).forEach(([key, method]) => {
         if (method.enabled) {
-          if (key === 'card' && (!method.name || !method.number || !method.expiry || !method.cvv)) {
-            isValid = false;
-            errorMessage = "Please fill all card details";
-          } else if (key === 'paypal' && !method.email) {
-            isValid = false;
-            errorMessage = "Please enter your PayPal email";
-          } else if (key === 'mpesa' && (!method.phoneNumber || !method.name)) {
-            isValid = false;
-            errorMessage = "Please fill all M-Pesa details";
-          } else if (key === 'bitcoin' && !method.address) {
-            isValid = false;
-            errorMessage = "Please enter your Bitcoin address";
+          if (key === 'card' && isCardMethod(method)) {
+            if (!method.name || !method.number || !method.expiry || !method.cvv) {
+              isValid = false;
+              errorMessage = "Please fill all card details";
+            }
+          } else if (key === 'paypal' && isPayPalMethod(method)) {
+            if (!method.email) {
+              isValid = false;
+              errorMessage = "Please enter your PayPal email";
+            }
+          } else if (key === 'mpesa' && isMPesaMethod(method)) {
+            if (!method.phoneNumber || !method.name) {
+              isValid = false;
+              errorMessage = "Please fill all M-Pesa details";
+            }
+          } else if (key === 'bitcoin' && isBitcoinMethod(method)) {
+            if (!method.address) {
+              isValid = false;
+              errorMessage = "Please enter your Bitcoin address";
+            }
           }
         }
       });
