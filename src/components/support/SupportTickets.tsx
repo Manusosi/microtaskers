@@ -1,6 +1,7 @@
 
-import { TicketCheck } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { TicketCheck, Plus } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 export const SupportTickets = () => {
   return (
@@ -13,9 +14,15 @@ export const SupportTickets = () => {
       </div>
       
       <Card className="shadow-sm">
-        <CardContent className="p-6">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg">Your Tickets</CardTitle>
+          <CardDescription>Track all your support requests</CardDescription>
+        </CardHeader>
+        <CardContent className="pt-1">
           <div className="text-center py-8 text-gray-500">
-            <p>If you have any question, please feel free to create support ticket.</p>
+            <TicketCheck className="h-12 w-12 mx-auto mb-4 text-gray-300" />
+            <p className="mb-2">You don't have any active support tickets.</p>
+            <p className="text-sm text-gray-400 mb-6">If you encounter any issues or have questions, feel free to create a new support ticket.</p>
           </div>
         </CardContent>
       </Card>

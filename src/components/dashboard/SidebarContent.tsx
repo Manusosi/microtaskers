@@ -43,6 +43,7 @@ export interface SidebarContentProps {
 const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn }: SidebarContentProps) => {
   const [depositDialogOpen, setDepositDialogOpen] = useState(false);
   const [withdrawDialogOpen, setWithdrawDialogOpen] = useState(false);
+  const [upgradeDialogOpen, setUpgradeDialogOpen] = useState(false);
   const [userRole, setUserRole] = useState<string | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -77,7 +78,13 @@ const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn }: Sid
     },
     { icon: Briefcase, label: "Available Jobs", id: "available-jobs", count: 0 },
     { icon: CheckSquare, label: "Finished Jobs", id: "finished-jobs", count: 0 },
-    { icon: MessageSquare, label: "Job Invitations", id: "invitations", count: 2 },
+    { 
+      icon: MessageSquare, 
+      label: "Job Invitations", 
+      id: "invitations", 
+      count: 2,
+      badge: { text: "Coming Soon", variant: "outline" as const }
+    },
     { icon: Settings, label: "Settings", id: "settings", count: 0 },
   ];
 
@@ -103,6 +110,9 @@ const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn }: Sid
       return;
     } else if (menuId === 'finished-jobs') {
       navigate('/finished-jobs');
+      return;
+    } else if (menuId === 'upgrade') {
+      setUpgradeDialogOpen(true);
       return;
     }
     
@@ -138,9 +148,18 @@ const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn }: Sid
       </div>
       
       {/* Upgrade Account Section */}
-      <UpgradeTiers />
+      <UpgradeTiers open={upgradeDialogOpen} onOpenChange={setUpgradeDialogOpen} />
       
       <div className="p-4 border-t">
+        <Button 
+          variant="outline" 
+          className="w-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white hover:from-purple-600 hover:to-indigo-700 border-none mb-4"
+          onClick={() => setUpgradeDialogOpen(true)}
+        >
+          <Sparkles className="w-4 h-4 mr-2" />
+          Upgrade Account
+        </Button>
+        
         <Button 
           variant="ghost" 
           className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50"

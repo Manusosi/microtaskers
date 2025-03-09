@@ -54,31 +54,6 @@ export const MenuItem = ({
     }
     
     onClick(id);
-    
-    // Navigate based on menu item
-    switch(id) {
-      case 'dashboard':
-        navigate(`/dashboard/${userRole}`);
-        break;
-      case 'payments':
-        navigate('/payments');
-        break;
-      case 'support':
-        navigate('/support');
-        break;
-      case 'profile':
-        navigate('/profile/edit');
-        break;
-      case 'settings':
-        navigate('/settings');
-        break;
-      case 'finished-jobs':
-        navigate('/finished-jobs');
-        break;
-      default:
-        // For items without specific pages yet
-        break;
-    }
   };
   
   return (

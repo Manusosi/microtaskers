@@ -23,6 +23,11 @@ interface TierProps {
   onSelect: () => void;
 }
 
+interface UpgradeTiersProps {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}
+
 const Tier = ({ name, icon, price, features, current, buttonText, onSelect }: TierProps) => {
   return (
     <div className={`border rounded-lg p-4 md:p-6 ${current ? 'border-purple-500 bg-purple-50' : 'border-gray-200'} h-full flex flex-col`}>
@@ -61,12 +66,21 @@ const Tier = ({ name, icon, price, features, current, buttonText, onSelect }: Ti
   );
 };
 
-export const UpgradeTiers = () => {
-  const [open, setOpen] = useState(false);
+export const UpgradeTiers = ({ open, onOpenChange }: UpgradeTiersProps) => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [currentTier, setCurrentTier] = useState<string>("free");
   const [isAnnual, setIsAnnual] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
+  
+  // Handle controlled/uncontrolled dialog state
+  const handleOpenChange = (newOpen: boolean) => {
+    if (onOpenChange) {
+      onOpenChange(newOpen);
+    } else {
+      setIsDialogOpen(newOpen);
+    }
+  };
   
   // Calculate the discount percentage
   const annualDiscount = 20; // 20% discount for annual plans
@@ -141,14 +155,14 @@ export const UpgradeTiers = () => {
   const handleSelectTier = (tierId: string) => {
     if (tierId === currentTier) {
       // Already on this tier
-      setOpen(false);
+      handleOpenChange(false);
       return;
     }
     
     // In a real app, here we'd process payment & upgrade
     localStorage.setItem('userTier', tierId);
     setCurrentTier(tierId);
-    setOpen(false);
+    handleOpenChange(false);
     
     toast({
       title: "Subscription Updated",
@@ -158,16 +172,7 @@ export const UpgradeTiers = () => {
   
   return (
     <div className="p-4 border-t">
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Button 
-            variant="outline" 
-            className="w-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white hover:from-purple-600 hover:to-indigo-700 border-none"
-          >
-            <Sparkles className="w-4 h-4 mr-2" />
-            Upgrade Account
-          </Button>
-        </DialogTrigger>
+      <Dialog open={open !== undefined ? open : isDialogOpen} onOpenChange={handleOpenChange}>
         <DialogContent className="sm:max-w-[900px] max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Upgrade Your Account</DialogTitle>
