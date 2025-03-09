@@ -1,35 +1,12 @@
 
-import { useState, useEffect, useRef } from "react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import { 
-  BellDot, 
-  Menu, 
-  Search, 
-  ArrowUpRight,
-  Download,
-  Upload,
-  Headphones,
-  Users,
-  UserCog,
-  LogOut,
-  Eye,
-  FileCheck,
-  ExternalLink,
-  User,
-  Settings
-} from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Menu, BellDot, User, LogOut, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
-import { DashboardStats } from "@/components/dashboard/DashboardStats";
-import SidebarContent from "@/components/dashboard/SidebarContent";
 import { CompletedJobsTable } from "@/components/dashboard/CompletedJobsTable";
-import { AccountSummary } from "@/components/dashboard/AccountSummary";
-import { DepositFundsDialog } from "@/components/dashboard/DepositFundsDialog";
-import { WithdrawFundsDialog } from "@/components/dashboard/WithdrawFundsDialog";
-import { ReferFriend } from "@/components/dashboard/ReferFriend";
-import { EditProfile } from "@/components/dashboard/EditProfile";
+import SidebarContent from "@/components/dashboard/SidebarContent";
+import { supabase } from "@/integrations/supabase/client";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -39,31 +16,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-interface TaskerDashboardProps {
-  activeMenu?: string;
-}
-
-const TaskerDashboard = ({ activeMenu: initialActiveMenu }: TaskerDashboardProps = {}) => {
-  const [activeMenu, setActiveMenu] = useState(initialActiveMenu || "dashboard");
+const FinishedJobsPage = () => {
+  const [activeMenu, setActiveMenu] = useState("finished-jobs");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
-  const [lastLogin, setLastLogin] = useState("");
-  const [depositDialogOpen, setDepositDialogOpen] = useState(false);
-  const [withdrawDialogOpen, setWithdrawDialogOpen] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
-  const sidebarRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
-  const activityData = [
-    { date: "19/10", clicks: 5, earnings: 0.05 },
-    { date: "18/10", clicks: 8, earnings: 0.08 },
-    { date: "17/10", clicks: 12, earnings: 0.12 },
-    { date: "16/10", clicks: 3, earnings: 0.03 },
-    { date: "15/10", clicks: 7, earnings: 0.07 },
-    { date: "14/10", clicks: 10, earnings: 0.10 },
-    { date: "13/10", clicks: 6, earnings: 0.06 },
-  ];
-
+  // Sample jobs data - in production, this would come from an API
   const jobsData = [
     { 
       id: 1, 
@@ -113,6 +73,38 @@ const TaskerDashboard = ({ activeMenu: initialActiveMenu }: TaskerDashboardProps
       time: "09:15 AM", 
       status: "submitted" as const
     },
+    { 
+      id: 7, 
+      title: "Twitter: Follow and retweet", 
+      payment: 0.07, 
+      date: "25 Dec 2023", 
+      time: "05:22 PM", 
+      status: "paid" as const
+    },
+    { 
+      id: 8, 
+      title: "Dating App: Create profile", 
+      payment: 0.20, 
+      date: "24 Dec 2023", 
+      time: "04:10 PM", 
+      status: "declined" as const
+    },
+    { 
+      id: 9, 
+      title: "Facebook: Join group", 
+      payment: 0.05, 
+      date: "23 Dec 2023", 
+      time: "11:45 AM", 
+      status: "paid" as const
+    },
+    { 
+      id: 10, 
+      title: "Product Review: Write review", 
+      payment: 0.30, 
+      date: "22 Dec 2023", 
+      time: "09:30 AM", 
+      status: "paid" as const
+    },
   ];
 
   useEffect(() => {
@@ -121,10 +113,6 @@ const TaskerDashboard = ({ activeMenu: initialActiveMenu }: TaskerDashboardProps
       if (session) {
         setIsLoggedIn(true);
         setUsername(session.user.user_metadata.username || session.user.email);
-        
-        // Format last login time
-        const now = new Date();
-        setLastLogin(`${now.toLocaleDateString()} ${now.toLocaleTimeString()}`);
         
         // Get avatar URL if available
         if (session.user.user_metadata.avatar_url) {
@@ -141,10 +129,6 @@ const TaskerDashboard = ({ activeMenu: initialActiveMenu }: TaskerDashboardProps
       if (event === 'SIGNED_IN') {
         setIsLoggedIn(true);
         setUsername(session?.user.user_metadata.username || session?.user.email || '');
-        
-        // Format last login time
-        const now = new Date();
-        setLastLogin(`${now.toLocaleDateString()} ${now.toLocaleTimeString()}`);
         
         // Get avatar URL if available
         if (session?.user.user_metadata.avatar_url) {
@@ -164,13 +148,6 @@ const TaskerDashboard = ({ activeMenu: initialActiveMenu }: TaskerDashboardProps
   const handleLogout = async () => {
     await supabase.auth.signOut();
     navigate('/');
-  };
-
-  const stats = {
-    jobsFinished: 3,
-    offers: 2,
-    offerSales: 0,
-    moneyEarned: 33.20
   };
 
   return (
@@ -273,7 +250,7 @@ const TaskerDashboard = ({ activeMenu: initialActiveMenu }: TaskerDashboardProps
 
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar - Desktop */}
-        <div ref={sidebarRef} className="hidden lg:block w-64 border-r bg-white overflow-y-auto pb-20">
+        <div className="hidden lg:block w-64 border-r bg-white overflow-y-auto pb-20">
           <SidebarContent
             activeMenu={activeMenu}
             setActiveMenu={setActiveMenu}
@@ -285,104 +262,19 @@ const TaskerDashboard = ({ activeMenu: initialActiveMenu }: TaskerDashboardProps
         {/* Main Content */}
         <div className="flex-1 overflow-y-auto">
           <div className="container mx-auto p-4 md:p-6">
-            {activeMenu === "refer" ? (
-              <ReferFriend />
-            ) : activeMenu === "profile" ? (
-              <div className="max-w-4xl mx-auto">
-                <EditProfile />
+            <div className="max-w-5xl mx-auto">
+              <div className="mb-6">
+                <h1 className="text-2xl font-bold text-gray-900 mb-2">Finished Jobs</h1>
+                <p className="text-gray-600">View all your completed tasks and their payment status.</p>
               </div>
-            ) : (
-              <div className="grid grid-cols-12 gap-4 md:gap-6">
-                {/* Main Column */}
-                <div className="col-span-12 lg:col-span-8 space-y-4 md:space-y-6">
-                  <DashboardHeader 
-                    username={username} 
-                    lastLogin={lastLogin} 
-                  />
-                  
-                  <DashboardStats stats={stats} />
-                  
-                  {/* Task Call to Action */}
-                  <div className="bg-white border rounded-lg shadow-sm p-4 md:p-6">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">FINISH YOUR TASKS TODAY</h3>
-                    <p className="text-gray-600 mb-4">
-                      Exciting update! Ads are now accessible, and you receive $0.01 for every click.
-                    </p>
-                    <Button className="bg-purple-600 hover:bg-purple-700">
-                      BEGIN WORKING
-                    </Button>
-                  </div>
-                  
-                  <div className="bg-white border rounded-lg shadow-sm p-4 md:p-6">
-                    <div className="flex justify-between items-center mb-6">
-                      <div className="flex items-center gap-2">
-                        <FileCheck className="h-6 w-6 text-purple-600" />
-                        <h3 className="text-xl font-semibold text-gray-900">Finished Jobs</h3>
-                      </div>
-                      <Button variant="outline" size="sm" asChild>
-                        <Link to="/finished-jobs" className="flex items-center">
-                          See all <ArrowUpRight className="ml-1 h-4 w-4" />
-                        </Link>
-                      </Button>
-                    </div>
-                    
-                    <div className="overflow-x-auto border rounded-lg">
-                      <CompletedJobsTable jobs={jobsData.slice(0, 5)} />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Side Column */}
-                <div className="col-span-12 lg:col-span-4 space-y-4 md:space-y-6">
-                  <AccountSummary balance={33.20} accountType="Standard" />
-                  
-                  {/* Activity Summary */}
-                  <div className="bg-white border rounded-lg shadow-sm p-4 md:p-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h3>
-                    <div className="space-y-4">
-                      {activityData.slice(0, 3).map((activity, index) => (
-                        <div key={index} className="flex justify-between items-center">
-                          <div className="flex items-center">
-                            <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center mr-3">
-                              <FileCheck className="h-4 w-4 text-purple-600" />
-                            </div>
-                            <div>
-                              <p className="text-sm font-medium">{activity.clicks} clicks</p>
-                              <p className="text-xs text-gray-500">{activity.date}</p>
-                            </div>
-                          </div>
-                          <span className="text-sm font-medium text-green-600">+${activity.earnings.toFixed(2)}</span>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="mt-4 pt-4 border-t">
-                      <Button variant="ghost" size="sm" className="text-purple-600 w-full" asChild>
-                        <Link to="#" className="flex items-center justify-center">
-                          View all activity <ArrowUpRight className="ml-1 h-4 w-4" />
-                        </Link>
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
+              
+              <CompletedJobsTable jobs={jobsData} />
+            </div>
           </div>
         </div>
       </div>
-
-      {/* Deposit Funds Dialog */}
-      <DepositFundsDialog
-        open={depositDialogOpen}
-        onOpenChange={setDepositDialogOpen}
-      />
-      
-      {/* Withdraw Funds Dialog */}
-      <WithdrawFundsDialog
-        open={withdrawDialogOpen}
-        onOpenChange={setWithdrawDialogOpen}
-      />
     </div>
   );
 };
 
-export default TaskerDashboard;
+export default FinishedJobsPage;

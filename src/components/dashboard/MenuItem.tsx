@@ -72,6 +72,9 @@ export const MenuItem = ({
       case 'settings':
         navigate('/settings');
         break;
+      case 'finished-jobs':
+        navigate('/finished-jobs');
+        break;
       default:
         // For items without specific pages yet
         break;

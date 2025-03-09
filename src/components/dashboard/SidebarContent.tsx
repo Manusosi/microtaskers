@@ -101,6 +101,9 @@ const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn }: Sid
     } else if (menuId === 'payments') {
       navigate('/payments');
       return;
+    } else if (menuId === 'finished-jobs') {
+      navigate('/finished-jobs');
+      return;
     }
     
     // Handle deposit/withdraw dialogs
@@ -113,7 +116,7 @@ const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn }: Sid
 
   return (
     <div className="flex flex-col h-full bg-white">
-      <div className="flex-1 py-6 px-4">
+      <div className="flex-1 py-6 px-4 overflow-y-auto">
         <nav className="space-y-1">
           {menuItems.map((item) => (
             <MenuItem
@@ -124,7 +127,8 @@ const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn }: Sid
                 (item.id === 'profile' && location.pathname.includes('/profile')) ||
                 (item.id === 'settings' && location.pathname === '/settings') ||
                 (item.id === 'payments' && location.pathname === '/payments') ||
-                (item.id === 'support' && location.pathname === '/support')}
+                (item.id === 'support' && location.pathname === '/support') ||
+                (item.id === 'finished-jobs' && location.pathname === '/finished-jobs')}
               onClick={handleMenuClick}
               onDepositClick={item.id === 'deposit' ? () => setDepositDialogOpen(true) : undefined}
               onWithdrawClick={item.id === 'withdraw' ? () => setWithdrawDialogOpen(true) : undefined}
