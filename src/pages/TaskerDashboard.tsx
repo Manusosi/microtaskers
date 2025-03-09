@@ -67,7 +67,7 @@ const TaskerDashboard = () => {
       payment: 0.05, 
       date: "31 Dec 2023", 
       time: "10:34 PM", 
-      status: "awaiting review" 
+      status: "awaiting review" as const
     },
     { 
       id: 2, 
@@ -75,7 +75,7 @@ const TaskerDashboard = () => {
       payment: 0.10, 
       date: "30 Dec 2023", 
       time: "08:15 PM", 
-      status: "paid" 
+      status: "paid" as const
     },
     { 
       id: 3, 
@@ -83,7 +83,7 @@ const TaskerDashboard = () => {
       payment: 0.25, 
       date: "29 Dec 2023", 
       time: "03:22 PM", 
-      status: "paid" 
+      status: "paid" as const
     },
     { 
       id: 4, 
@@ -91,7 +91,7 @@ const TaskerDashboard = () => {
       payment: 0.15, 
       date: "28 Dec 2023", 
       time: "01:45 PM", 
-      status: "submitted"
+      status: "submitted" as const
     },
     { 
       id: 5, 
@@ -99,7 +99,7 @@ const TaskerDashboard = () => {
       payment: 0.08, 
       date: "27 Dec 2023", 
       time: "11:20 AM", 
-      status: "submitted"
+      status: "submitted" as const
     },
     { 
       id: 6, 
@@ -107,7 +107,7 @@ const TaskerDashboard = () => {
       payment: 0.05, 
       date: "26 Dec 2023", 
       time: "09:15 AM", 
-      status: "submitted"
+      status: "submitted" as const
     },
   ];
 
