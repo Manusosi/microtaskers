@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
+import { Crown } from "lucide-react";
 
 export interface MenuItemProps {
   icon: React.ElementType;
@@ -33,6 +34,9 @@ export const MenuItem = ({
 }: MenuItemProps) => {
   const navigate = useNavigate();
   const userRole = localStorage.getItem('userRole') || 'tasker';
+  
+  // Special icon handling for upgrade account
+  const IconComponent = id === 'upgrade' ? Crown : Icon;
   
   const handleClick = () => {
     // Special handling for deposit funds
@@ -84,10 +88,13 @@ export const MenuItem = ({
           : "hover:bg-gray-100 text-gray-700"
       )}
     >
-      <Icon className="w-5 h-5" />
+      <IconComponent className={cn("w-5 h-5", id === 'upgrade' && "text-amber-500")} />
       <span className="flex-1 text-left">{label}</span>
       {badge && (
-        <Badge variant={badge.variant} className="ml-2 text-xs font-normal">
+        <Badge variant={badge.variant} className={cn(
+          "ml-2 text-xs font-normal",
+          badge.text === "Coming Soon" && "bg-purple-600 hover:bg-purple-700"
+        )}>
           {badge.text}
         </Badge>
       )}

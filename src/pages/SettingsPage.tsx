@@ -9,7 +9,8 @@ import SidebarContent from "@/components/dashboard/SidebarContent";
 import { SecuritySettings } from "@/components/dashboard/SecuritySettings";
 import { NotificationSettings } from "@/components/dashboard/NotificationSettings";
 import { ProfileSkillsSettings } from "@/components/dashboard/ProfileSkillsSettings";
-import { Menu, Shield, Bell, User, Code } from "lucide-react";
+import { PaymentMethodsSettings } from "@/components/dashboard/PaymentMethodsSettings";
+import { Menu, Shield, Bell, User, Code, CreditCard } from "lucide-react";
 
 const SettingsPage = () => {
   const [activeMenu, setActiveMenu] = useState("settings");
@@ -81,10 +82,14 @@ const SettingsPage = () => {
             </div>
             
             <Tabs defaultValue="security" className="space-y-6">
-              <TabsList className="bg-white border mb-6 p-1">
+              <TabsList className="bg-white border mb-6 p-1 flex flex-wrap">
                 <TabsTrigger value="security" className="data-[state=active]:bg-purple-50 data-[state=active]:text-purple-700">
                   <Shield className="w-4 h-4 mr-2" />
                   Security
+                </TabsTrigger>
+                <TabsTrigger value="payment" className="data-[state=active]:bg-purple-50 data-[state=active]:text-purple-700">
+                  <CreditCard className="w-4 h-4 mr-2" />
+                  Payment Methods
                 </TabsTrigger>
                 <TabsTrigger value="notifications" className="data-[state=active]:bg-purple-50 data-[state=active]:text-purple-700">
                   <Bell className="w-4 h-4 mr-2" />
@@ -102,6 +107,10 @@ const SettingsPage = () => {
               
               <TabsContent value="security" className="mt-0">
                 <SecuritySettings />
+              </TabsContent>
+
+              <TabsContent value="payment" className="mt-0">
+                <PaymentMethodsSettings />
               </TabsContent>
               
               <TabsContent value="notifications" className="mt-0">
