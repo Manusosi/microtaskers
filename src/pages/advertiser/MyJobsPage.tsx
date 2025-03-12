@@ -106,7 +106,7 @@ const MyJobsPage = () => {
                   <SidebarContent 
                     activeMenu={activeMenu}
                     setActiveMenu={setActiveMenu}
-                    isLoggedIn={isLoggedIn}
+                    isLoggedIn={true}
                   />
                 </SheetContent>
               </Sheet>

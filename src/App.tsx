@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
+import { Navigation } from "@/components/layout/Navigation";
 import Index from "@/pages/Index";
 import Login from "@/pages/Login";
 import Signup from "@/pages/Signup";
@@ -23,30 +24,32 @@ import "./App.css";
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup/:role" element={<Signup />} />
-        <Route path="/about" element={<AboutUs />} />
-        <Route path="/contact" element={<ContactUs />} />
-        <Route path="/faq" element={<FAQ />} />
-        <Route path="/terms" element={<Terms />} />
-        <Route path="/help" element={<HelpCenter />} />
-        <Route path="/dashboard/tasker" element={<TaskerDashboard />} />
-        <Route path="/dashboard/advertiser" element={<AdvertiserDashboard />} />
-        <Route path="/payments" element={<PaymentsPage />} />
-        <Route path="/support" element={<SupportPage />} />
-        <Route path="/settings" element={<SettingsPage />} />
-        <Route path="/finished-jobs" element={<FinishedJobsPage />} />
-        <Route path="/profile/edit" element={<TaskerDashboard activeMenu="profile" />} />
-        
-        {/* Advertiser specific routes */}
-        <Route path="/submit-job" element={<SubmitJobPage />} />
-        <Route path="/my-jobs" element={<MyJobsPage />} />
-        <Route path="/saved-offers" element={<SavedOffersPage />} />
-        <Route path="/my-workers" element={<MyWorkersPage />} />
-      </Routes>
-      <Toaster />
+      <div className="min-h-screen bg-background">
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup/:role" element={<Signup />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/contact" element={<ContactUs />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/help" element={<HelpCenter />} />
+          <Route path="/dashboard/tasker" element={<TaskerDashboard />} />
+          <Route path="/dashboard/advertiser" element={<AdvertiserDashboard />} />
+          <Route path="/payments" element={<PaymentsPage />} />
+          <Route path="/support" element={<SupportPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/finished-jobs" element={<FinishedJobsPage />} />
+          <Route path="/profile/edit" element={<TaskerDashboard activeMenu="profile" />} />
+          
+          {/* Advertiser specific routes */}
+          <Route path="/submit-job" element={<SubmitJobPage />} />
+          <Route path="/my-jobs" element={<MyJobsPage />} />
+          <Route path="/saved-offers" element={<SavedOffersPage />} />
+          <Route path="/my-workers" element={<MyWorkersPage />} />
+        </Routes>
+        <Toaster />
+      </div>
     </BrowserRouter>
   );
 }
