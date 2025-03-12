@@ -55,6 +55,8 @@ const SubmitJobPage = () => {
   // User account
   const [accountBalance, setAccountBalance] = useState(120.50);
   
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -153,39 +155,137 @@ const SubmitJobPage = () => {
   };
 
   const handleSubmitJob = async () => {
-    // Check if user has sufficient balance when using wallet
-    if (paymentMethod === "wallet" && accountBalance < totalCost) {
-      if (confirm("Your balance is insufficient. Would you like to deposit funds?")) {
-        navigate('/deposit-funds');
+    try {
+      // Check if user has sufficient balance when using wallet
+      if (paymentMethod === "wallet" && accountBalance < totalCost) {
+        if (confirm("Your balance is insufficient. Would you like to deposit funds?")) {
+          navigate('/deposit-funds');
+          return;
+        }
         return;
       }
-      return;
-    }
 
-    // Process job submission
-    // This would typically make an API call to create the job and process payment
-    console.log("Submitting job with details:", {
-      // Job details
-      jobTitle,
-      jobDescription,
-      proofFile,
-      autoRateTasks,
-      selectedCountries,
-      
-      // Budget details
-      jobType,
-      budget,
-      ratePerAction,
-      estimatedActions,
-      
-      // Payment details
-      totalCost,
-      paymentMethod
-    });
-    
-    // Navigate to success page or job dashboard
-    alert("Job submitted successfully!");
-    navigate('/advertiser/my-jobs');
+      // Start loading state
+      setIsSubmitting(true);
+
+      // Process payment based on selected method
+      let paymentResult;
+      if (paymentMethod === "wallet") {
+        // Process wallet payment
+        const { data: walletData, error: walletError } = await supabase
+          .from('user_wallets')
+          .select('balance')
+          .single();
+
+        if (walletError) throw new Error('Failed to check wallet balance');
+
+        const currentBalance = walletData.balance;
+        if (currentBalance < totalCost) {
+          throw new Error('Insufficient balance');
+        }
+
+        // Deduct amount from wallet
+        const { error: updateError } = await supabase
+          .from('user_wallets')
+          .update({ balance: currentBalance - totalCost })
+          .eq('user_id', (await supabase.auth.getUser()).data.user?.id);
+
+        if (updateError) throw new Error('Failed to process payment');
+        
+        paymentResult = { success: true, transaction_id: `wallet_${Date.now()}` };
+      } else {
+        // For card/PayPal payments, we'll just simulate success for now
+        // In production, integrate with actual payment processors
+        paymentResult = { success: true, transaction_id: `${paymentMethod}_${Date.now()}` };
+      }
+
+      if (!paymentResult.success) {
+        throw new Error('Payment failed');
+      }
+
+      // Create the job posting
+      const { data: jobData, error: jobError } = await supabase
+        .from('jobs')
+        .insert({
+          title: jobTitle,
+          description: jobDescription,
+          type: jobType,
+          budget: parseFloat(budget),
+          rate_per_action: parseFloat(ratePerAction),
+          total_actions: estimatedActions,
+          countries: selectedCountries.length > 0 ? selectedCountries : null,
+          auto_rate: autoRateTasks,
+          status: 'active',
+          is_featured: totalCost >= 100, // Jobs with budget >= $100 are featured
+          is_premium: totalCost >= 50,   // Jobs with budget >= $50 are premium
+          payment_status: 'paid',
+          payment_method: paymentMethod,
+          payment_transaction_id: paymentResult.transaction_id,
+          total_cost: totalCost,
+          advertiser_id: (await supabase.auth.getUser()).data.user?.id,
+          created_at: new Date().toISOString(),
+          available_seats: estimatedActions,
+          completed_submissions: 0
+        })
+        .select()
+        .single();
+
+      if (jobError) throw new Error('Failed to create job posting');
+
+      // If proof file exists, upload it
+      if (proofFile) {
+        const fileExt = proofFile.name.split('.').pop();
+        const fileName = `${jobData.id}_proof.${fileExt}`;
+        
+        const { error: uploadError } = await supabase.storage
+          .from('job-proofs')
+          .upload(fileName, proofFile);
+
+        if (uploadError) {
+          console.error('Failed to upload proof file:', uploadError);
+          // Don't throw error here, as the job is already created
+        }
+      }
+
+      // Create a transaction record
+      const { error: transactionError } = await supabase
+        .from('transactions')
+        .insert({
+          user_id: (await supabase.auth.getUser()).data.user?.id,
+          amount: totalCost,
+          type: 'job_posting',
+          status: 'completed',
+          payment_method: paymentMethod,
+          transaction_id: paymentResult.transaction_id,
+          job_id: jobData.id,
+          created_at: new Date().toISOString()
+        });
+
+      if (transactionError) {
+        console.error('Failed to record transaction:', transactionError);
+        // Don't throw error here, as the job is already created
+      }
+
+      // Update account balance in state
+      if (paymentMethod === "wallet") {
+        setAccountBalance(prev => prev - totalCost);
+      }
+
+      // Navigate to success page
+      navigate('/advertiser/my-jobs', { 
+        state: { 
+          success: true, 
+          message: 'Job posted successfully!',
+          jobId: jobData.id 
+        }
+      });
+
+    } catch (error) {
+      console.error('Error submitting job:', error);
+      alert(error.message || 'Failed to submit job. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Render nothing if not logged in
@@ -638,8 +738,16 @@ const SubmitJobPage = () => {
                 <Button
                   className="bg-green-600 hover:bg-green-700 px-8"
                   onClick={handleSubmitJob}
+                  disabled={isSubmitting}
                 >
-                  Pay & Post Job
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                      Processing...
+                    </>
+                  ) : (
+                    'Pay & Post Job'
+                  )}
                 </Button>
               </div>
             </div>
