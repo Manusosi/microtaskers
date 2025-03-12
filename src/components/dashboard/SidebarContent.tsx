@@ -39,21 +39,17 @@ import { Badge } from "@/components/ui/badge";
 export interface SidebarContentProps {
   activeMenu: string;
   setActiveMenu: (id: string) => void;
+  onLogout: () => void;
   isLoggedIn: boolean;
 }
 
-const SidebarContent = ({ activeMenu, setActiveMenu, isLoggedIn }: SidebarContentProps) => {
+const SidebarContent = ({ activeMenu, setActiveMenu, onLogout, isLoggedIn }: SidebarContentProps) => {
   const [depositDialogOpen, setDepositDialogOpen] = useState(false);
   const [withdrawDialogOpen, setWithdrawDialogOpen] = useState(false);
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState(false);
   const [userRole, setUserRole] = useState<string | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    navigate('/');
-  };
 
   useEffect(() => {
     const checkUserRole = async () => {
@@ -235,7 +231,7 @@ const SidebarContent = ({ activeMenu, setActiveMenu, isLoggedIn }: SidebarConten
         <Button 
           variant="ghost" 
           className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50"
-          onClick={handleLogout}
+          onClick={onLogout}
         >
           <LogOut className="w-5 h-5 mr-3" />
           Sign out

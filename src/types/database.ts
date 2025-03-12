@@ -45,8 +45,6 @@ export interface Database {
           advertiser_id: string;
           created_at: string;
           updated_at: string;
-          available_seats: number;
-          completed_submissions: number;
         };
         Insert: {
           id?: string;
@@ -68,8 +66,6 @@ export interface Database {
           advertiser_id: string;
           created_at?: string;
           updated_at?: string;
-          available_seats?: number;
-          completed_submissions?: number;
         };
         Update: {
           id?: string;
@@ -91,46 +87,35 @@ export interface Database {
           advertiser_id?: string;
           created_at?: string;
           updated_at?: string;
-          available_seats?: number;
-          completed_submissions?: number;
         };
       };
-      job_submissions: {
+      job_applications: {
         Row: {
           id: string;
           job_id: string;
           worker_id: string;
+          status: 'pending' | 'approved' | 'rejected' | 'completed';
           proof_url: string | null;
-          status: 'pending' | 'approved' | 'rejected';
-          feedback: string | null;
           created_at: string;
           updated_at: string;
-          payment_status: 'pending' | 'paid' | 'failed';
-          payment_amount: number;
         };
         Insert: {
           id?: string;
           job_id: string;
           worker_id: string;
+          status?: 'pending' | 'approved' | 'rejected' | 'completed';
           proof_url?: string | null;
-          status?: 'pending' | 'approved' | 'rejected';
-          feedback?: string | null;
           created_at?: string;
           updated_at?: string;
-          payment_status?: 'pending' | 'paid' | 'failed';
-          payment_amount: number;
         };
         Update: {
           id?: string;
           job_id?: string;
           worker_id?: string;
+          status?: 'pending' | 'approved' | 'rejected' | 'completed';
           proof_url?: string | null;
-          status?: 'pending' | 'approved' | 'rejected';
-          feedback?: string | null;
           created_at?: string;
           updated_at?: string;
-          payment_status?: 'pending' | 'paid' | 'failed';
-          payment_amount?: number;
         };
       };
       transactions: {

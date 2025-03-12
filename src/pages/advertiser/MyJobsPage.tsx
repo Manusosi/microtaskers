@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileText, PlusCircle, Menu } from "lucide-react";
+import { FileText, PlusCircle, Menu, Users } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -14,12 +14,19 @@ import {
 } from "@/components/ui/table";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import SidebarContent from "@/components/dashboard/SidebarContent";
+import { Database } from "@/types/database";
+
+type Job = Database['public']['Tables']['jobs']['Row'] & {
+  applications_count: number;
+  pending_applications: number;
+  completed_applications: number;
+};
 
 const MyJobsPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState<string | null>(null);
   const [activeMenu, setActiveMenu] = useState("my-jobs");
-  const [jobs, setJobs] = useState<any[]>([]);
+  const [jobs, setJobs] = useState<Job[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -35,19 +42,18 @@ const MyJobsPage = () => {
         if (role !== 'advertiser') {
           navigate('/dashboard/tasker');
         } else {
-          // Fetch jobs for this advertiser
+          // Fetch jobs with application counts
           const { data: jobsData, error } = await supabase
             .from('jobs')
             .select(`
               *,
-              job_submissions (
-                id,
-                worker_id,
-                status,
-                created_at
-              )
+              applications_count:job_applications(count),
+              pending_applications:job_applications(count)
+              completed_applications:job_applications(count)
             `)
             .eq('advertiser_id', session.user.id)
+            .eq('job_applications.status', 'pending')
+            .eq('job_applications.status', 'completed')
             .order('created_at', { ascending: false });
 
           if (error) {
@@ -71,7 +77,14 @@ const MyJobsPage = () => {
   };
 
   if (!isLoggedIn || userRole !== 'advertiser') {
-    return null;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-purple-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
   }
 
   const getJobStatusBadge = (status: string) => {
@@ -106,7 +119,7 @@ const MyJobsPage = () => {
                   <SidebarContent 
                     activeMenu={activeMenu}
                     setActiveMenu={setActiveMenu}
-                    isLoggedIn={true}
+                    isLoggedIn={isLoggedIn}
                   />
                 </SheetContent>
               </Sheet>
@@ -201,6 +214,7 @@ const MyJobsPage = () => {
                       <TableHead className="font-semibold">Budget</TableHead>
                       <TableHead className="font-semibold">Type</TableHead>
                       <TableHead className="font-semibold">Status</TableHead>
+                      <TableHead className="font-semibold">Applications</TableHead>
                       <TableHead className="font-semibold">Posted</TableHead>
                       <TableHead className="font-semibold">Actions</TableHead>
                     </TableRow>
@@ -230,31 +244,25 @@ const MyJobsPage = () => {
                         <TableCell className="capitalize">{job.type}</TableCell>
                         <TableCell>{getJobStatusBadge(job.status)}</TableCell>
                         <TableCell>
-                          <div className="flex flex-col">
-                            <span>{new Date(job.created_at).toLocaleDateString()}</span>
-                            <span className="text-sm text-gray-500">
-                              {job.job_submissions?.length || 0} submissions
-                            </span>
+                          <div className="flex items-center gap-2">
+                            <Users className="h-4 w-4 text-gray-500" />
+                            <div className="flex flex-col">
+                              <span className="text-sm font-medium">{job.applications_count} total</span>
+                              <span className="text-xs text-gray-500">
+                                {job.pending_applications} pending · {job.completed_applications} completed
+                              </span>
+                            </div>
                           </div>
                         </TableCell>
+                        <TableCell>{new Date(job.created_at).toLocaleDateString()}</TableCell>
                         <TableCell>
-                          <div className="flex gap-2">
-                            <Button 
-                              variant="ghost" 
-                              size="sm"
-                              onClick={() => navigate(`/advertiser/jobs/${job.id}`)}
-                            >
-                              View
-                            </Button>
-                            <Button 
-                              variant="ghost" 
-                              size="sm"
-                              onClick={() => navigate(`/advertiser/jobs/${job.id}/submissions`)}
-                              className="text-purple-600"
-                            >
-                              Submissions
-                            </Button>
-                          </div>
+                          <Button 
+                            variant="ghost" 
+                            size="sm"
+                            onClick={() => navigate(`/advertiser/jobs/${job.id}`)}
+                          >
+                            View
+                          </Button>
                         </TableCell>
                       </TableRow>
                     ))}

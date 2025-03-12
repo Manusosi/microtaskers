@@ -223,9 +223,7 @@ const SubmitJobPage = () => {
           payment_transaction_id: paymentResult.transaction_id,
           total_cost: totalCost,
           advertiser_id: (await supabase.auth.getUser()).data.user?.id,
-          created_at: new Date().toISOString(),
-          available_seats: estimatedActions,
-          completed_submissions: 0
+          created_at: new Date().toISOString()
         })
         .select()
         .single();

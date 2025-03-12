@@ -17,18 +17,25 @@ import {
   Clock,
   Globe,
   Target,
-  Users
+  Users,
+  Loader2
 } from "lucide-react";
 import SidebarContent from "@/components/dashboard/SidebarContent";
+import { Database } from "@/types/database";
+
+type Job = Database['public']['Tables']['jobs']['Row'] & {
+  applications_count: number;
+};
 
 const JobsPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [activeMenu, setActiveMenu] = useState("jobs");
-  const [jobs, setJobs] = useState<any[]>([]);
+  const [jobs, setJobs] = useState<Job[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedType, setSelectedType] = useState<string | null>(null);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,6 +43,7 @@ const JobsPage = () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
         setIsLoggedIn(true);
+        setUserId(session.user.id);
         fetchJobs();
       } else {
         navigate('/login');
@@ -50,7 +58,10 @@ const JobsPage = () => {
     try {
       let query = supabase
         .from('jobs')
-        .select('*')
+        .select(`
+          *,
+          applications_count:job_applications(count)
+        `)
         .eq('status', 'active')
         .order('is_featured', { ascending: false })
         .order('is_premium', { ascending: false })
@@ -79,8 +90,10 @@ const JobsPage = () => {
   };
 
   useEffect(() => {
-    fetchJobs();
-  }, [selectedType, selectedCountry]);
+    if (isLoggedIn) {
+      fetchJobs();
+    }
+  }, [selectedType, selectedCountry, isLoggedIn]);
 
   const filteredJobs = jobs.filter(job => 
     job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -91,6 +104,17 @@ const JobsPage = () => {
     await supabase.auth.signOut();
     navigate('/');
   };
+
+  if (!isLoggedIn) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <Loader2 className="h-8 w-8 animate-spin text-purple-600 mx-auto mb-4" />
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -220,7 +244,7 @@ const JobsPage = () => {
                         </div>
                         <div className="flex items-center text-sm text-gray-600">
                           <Users className="h-4 w-4 mr-2 text-purple-600" />
-                          {job.total_actions} seats
+                          {job.total_actions - (job.applications_count || 0)} seats left
                         </div>
                       </div>
                       <div className="grid grid-cols-2 gap-4">
