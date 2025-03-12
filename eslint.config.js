@@ -24,6 +24,29 @@ export default tseslint.config(
         { allowConstantExport: true },
       ],
       "@typescript-eslint/no-unused-vars": "off",
+      // Security rules
+      "no-eval": "error",
+      "no-implied-eval": "error",
+      "no-new-func": "error",
+      "no-script-url": "error",
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn",
+      // Best practices
+      "no-var": "error",
+      "prefer-const": "error",
+      "no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+      "no-console": ["warn", { allow: ["warn", "error"] }],
+      // Security-related practices
+      "no-unsafe-optional-chaining": "error",
+      "no-prototype-builtins": "error",
+      "no-regex-spaces": "error",
+      "no-invalid-regexp": "error",
+      "no-control-regex": "error",
+    },
+    settings: {
+      react: {
+        version: "detect",
+      },
     },
   }
 );
