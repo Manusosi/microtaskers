@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
 import Index from "@/pages/Index";
@@ -15,6 +14,10 @@ import PaymentsPage from "@/pages/PaymentsPage";
 import SupportPage from "@/pages/SupportPage";
 import SettingsPage from "@/pages/SettingsPage";
 import FinishedJobsPage from "@/pages/FinishedJobsPage";
+import SubmitJobPage from "@/pages/advertiser/SubmitJobPage";
+import MyJobsPage from "@/pages/advertiser/MyJobsPage";
+import SavedOffersPage from "@/pages/advertiser/SavedOffersPage";
+import MyWorkersPage from "@/pages/advertiser/MyWorkersPage";
 import "./App.css";
 
 function App() {
@@ -36,6 +39,12 @@ function App() {
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/finished-jobs" element={<FinishedJobsPage />} />
         <Route path="/profile/edit" element={<TaskerDashboard activeMenu="profile" />} />
+        
+        {/* Advertiser specific routes */}
+        <Route path="/submit-job" element={<SubmitJobPage />} />
+        <Route path="/my-jobs" element={<MyJobsPage />} />
+        <Route path="/saved-offers" element={<SavedOffersPage />} />
+        <Route path="/my-workers" element={<MyWorkersPage />} />
       </Routes>
       <Toaster />
     </BrowserRouter>

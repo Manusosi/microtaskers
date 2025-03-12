@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import {
   Dialog,
@@ -13,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Check, Download, AlertCircle, CreditCard, Bitcoin } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 interface WithdrawFundsDialogProps {
   open: boolean;
@@ -39,8 +39,9 @@ export const WithdrawFundsDialog = ({ open, onOpenChange }: WithdrawFundsDialogP
   const [isLoading, setIsLoading] = useState(false);
   const [savedPaymentMethods, setSavedPaymentMethods] = useState<PaymentMethods | null>(null);
   const [userTier, setUserTier] = useState('free');
+  const [userRole, setUserRole] = useState<string | null>(null);
   
-  // Load saved payment methods and user tier from localStorage
+  // Load saved payment methods, user tier, and role from localStorage and Supabase
   useEffect(() => {
     try {
       const savedMethods = localStorage.getItem('paymentMethods');
@@ -50,6 +51,23 @@ export const WithdrawFundsDialog = ({ open, onOpenChange }: WithdrawFundsDialogP
       
       const tier = localStorage.getItem('userTier') || 'free';
       setUserTier(tier);
+      
+      // Get user role from localStorage or Supabase
+      const checkUserRole = async () => {
+        const role = localStorage.getItem('userRole');
+        if (role) {
+          setUserRole(role);
+        } else {
+          const { data: { session } } = await supabase.auth.getSession();
+          if (session) {
+            const role = session.user.user_metadata.role || 'tasker';
+            setUserRole(role);
+            localStorage.setItem('userRole', role);
+          }
+        }
+      };
+      
+      checkUserRole();
     } catch (error) {
       console.error("Error loading payment methods:", error);
     }
@@ -148,13 +166,28 @@ export const WithdrawFundsDialog = ({ open, onOpenChange }: WithdrawFundsDialogP
           <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
             <Download className="h-6 w-6 text-blue-600" />
           </div>
-          <DialogTitle className="text-xl md:text-2xl">Withdraw Funds</DialogTitle>
+          <DialogTitle className="text-xl md:text-2xl">
+            {userRole === 'advertiser' ? 'Withdraw Referral Bonuses' : 'Withdraw Funds'}
+          </DialogTitle>
           <p className="text-muted-foreground mt-2">
-            Request a withdrawal from your account to your preferred payment method.
+            {userRole === 'advertiser' 
+              ? 'Request a withdrawal of your earned referral bonuses to your preferred payment method.'
+              : 'Request a withdrawal from your account to your preferred payment method.'}
           </p>
         </DialogHeader>
 
         <div className="grid gap-6 py-4">
+          {userRole === 'advertiser' && (
+            <div className="bg-amber-50 border border-amber-200 rounded-md p-3">
+              <p className="text-amber-800 text-sm flex items-start">
+                <AlertCircle className="h-4 w-4 mr-2 mt-0.5 flex-shrink-0" />
+                <span>
+                  As an advertiser, you can only withdraw referral bonuses earned from referring new users to the platform.
+                </span>
+              </p>
+            </div>
+          )}
+
           <div className="grid gap-2">
             <Label htmlFor="amount" className="text-foreground">
               Amount

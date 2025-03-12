@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -39,26 +38,67 @@ const Login = () => {
       // Check if the identifier is an email
       const isEmail = formData.identifier.includes('@');
       
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: isEmail ? formData.identifier : `${formData.identifier}@placeholder.com`,
-        password: formData.password,
-      });
+      if (!isEmail) {
+        // If using username, first get the user's email from the profiles table
+        const { data: profileData, error: profileError } = await supabase
+          .from('profiles')
+          .select('email')
+          .eq('username', formData.identifier)
+          .single();
 
-      if (error) {
-        toast({
-          variant: "destructive",
-          title: "Error signing in",
-          description: error.message,
+        if (profileError || !profileData?.email) {
+          toast({
+            variant: "destructive",
+            title: "Error signing in",
+            description: "Username not found",
+          });
+          setLoading(false);
+          return;
+        }
+
+        // Use the email from the profile to sign in
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: profileData.email,
+          password: formData.password,
         });
-        return;
-      }
 
-      if (data.user) {
-        const role = data.user.user_metadata.role;
-        // Store role in localStorage for use across the app
-        localStorage.setItem('userRole', role);
-        // Fixed navigation paths to match the routes in App.tsx
-        navigate(role === "tasker" ? "/dashboard/tasker" : "/dashboard/advertiser");
+        if (error) {
+          toast({
+            variant: "destructive",
+            title: "Error signing in",
+            description: error.message,
+          });
+          setLoading(false);
+          return;
+        }
+
+        if (data.user) {
+          const role = data.user.user_metadata.role;
+          localStorage.setItem('userRole', role);
+          navigate(role === "tasker" ? "/dashboard/tasker" : "/dashboard/advertiser");
+        }
+      } else {
+        // Regular email login
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: formData.identifier,
+          password: formData.password,
+        });
+
+        if (error) {
+          toast({
+            variant: "destructive",
+            title: "Error signing in",
+            description: error.message,
+          });
+          setLoading(false);
+          return;
+        }
+
+        if (data.user) {
+          const role = data.user.user_metadata.role;
+          localStorage.setItem('userRole', role);
+          navigate(role === "tasker" ? "/dashboard/tasker" : "/dashboard/advertiser");
+        }
       }
     } catch (error) {
       console.error("Error:", error);
