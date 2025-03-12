@@ -3,23 +3,18 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
+export default defineConfig({
   server: {
-    host: "::",
     port: 8080,
-    headers: {
-      'X-Content-Type-Options': 'nosniff',
-      'X-Frame-Options': 'DENY',
-      'X-XSS-Protection': '1; mode=block',
-      'Content-Security-Policy': "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline';",
-    },
-    hmr: {
-      clientPort: 8080,
-    },
   },
   plugins: [
     react({
-      plugins: [['@swc/plugin-emotion', {}]],
+      jsxImportSource: '@emotion/react',
+      plugins: [['@swc/plugin-emotion', {
+        sourceMap: true,
+        autoLabel: 'dev-only',
+        labelFormat: '[local]',
+      }]],
     }),
   ],
   resolve: {
@@ -28,9 +23,9 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
-    target: 'esnext',
-    minify: 'esbuild',
-    sourcemap: mode === 'development',
+    target: ['es2020', 'edge88', 'firefox78', 'chrome87', 'safari14'],
+    outDir: 'dist',
+    sourcemap: true,
     cssCodeSplit: true,
     rollupOptions: {
       output: {
@@ -67,11 +62,6 @@ export default defineConfig(({ mode }) => ({
       'react-hook-form',
       'zod',
     ],
+    exclude: [],
   },
-  css: {
-    devSourcemap: true,
-    modules: {
-      scopeBehaviour: 'local',
-    },
-  },
-}));
+});
