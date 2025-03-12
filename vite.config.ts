@@ -4,7 +4,7 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: './',
+  base: '/',
   server: {
     port: 8080,
   },
@@ -26,11 +26,19 @@ export default defineConfig({
   build: {
     target: 'es2015',
     outDir: 'dist',
-    sourcemap: false,
+    assetsDir: 'assets',
+    emptyOutDir: true,
+    sourcemap: true,
     cssCodeSplit: true,
     minify: 'esbuild',
     rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'index.html'),
+      },
       output: {
+        entryFileNames: 'assets/[name]-[hash].js',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]',
         manualChunks: {
           vendor: ['react', 'react-dom', 'react-router-dom'],
           supabase: ['@supabase/supabase-js'],
@@ -45,5 +53,6 @@ export default defineConfig({
       'react-router-dom',
       '@supabase/supabase-js',
     ],
+    force: true
   },
 });

@@ -15,15 +15,24 @@
     <meta property="og:description" content="Your platform for remote work opportunities and online micro tasks" />
     <meta property="og:image" content="/favicon.svg" />
     
+    <!-- Error handling -->
+    <script>
+      window.onerror = function(msg, url, lineNo, columnNo, error) {
+        console.error('Error: ' + msg + '\nURL: ' + url + '\nLine: ' + lineNo + '\nColumn: ' + columnNo + '\nError object: ' + JSON.stringify(error));
+        return false;
+      };
+    </script>
+    
     <!-- Preload key resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" href="/lovable-uploads/c9628198-a7de-4746-8562-b3649c93a411.png" as="image" />
+    <link rel="preconnect" href="https://vdhygfawaobokhmlvczf.supabase.co" crossorigin />
     
     <title>MicroTasker - Remote Work Solutions</title>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
   </body>
 </html>
