@@ -1,18 +1,29 @@
 import { createRoot } from 'react-dom/client'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { StrictMode } from 'react'
-import App from './App'
+import App from './App.tsx'
 import './index.css'
 
-const container = document.getElementById('root')
+// Create a client with error handling
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      refetchOnWindowFocus: false,
+      staleTime: 5 * 60 * 1000,
+    },
+  },
+})
 
-if (!container) {
-  throw new Error('Failed to find the root element')
+const rootElement = document.getElementById("root");
+if (!rootElement) {
+  throw new Error("Failed to find root element");
 }
 
-const root = createRoot(container)
-
-root.render(
+createRoot(rootElement).render(
   <StrictMode>
-    <App />
+    <QueryClientProvider client={queryClient}>
+      <App />
+    </QueryClientProvider>
   </StrictMode>
-)
+);
