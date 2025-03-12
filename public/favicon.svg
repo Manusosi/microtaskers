@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .primary { fill: #6B21A8; }
+    .secondary { fill: #9333EA; }
+    .highlight { fill: #ffffff; }
+  </style>
+  <g>
+    <!-- House outline -->
+    <path class="primary" d="M256 80l160 120v232H96V200L256 80z"/>
+    <!-- WiFi symbol -->
+    <path class="secondary" d="M256 180c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm0 20c24.3 0 44 19.7 44 44s-19.7 44-44 44-44-19.7-44-44 19.7-44 44-44z"/>
+    <!-- Briefcase -->
+    <path class="secondary" d="M352 280v72H160v-72h192zm-16 16H176v40h160v-40z"/>
+    <!-- Door -->
+    <path class="highlight" d="M208 320h32v64h-32z"/>
+  </g>
+</svg> 
