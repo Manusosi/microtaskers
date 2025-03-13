@@ -42,6 +42,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Card } from "@/components/ui/card";
+import useAuth from "@/hooks/useAuth";
+import { signOut } from "@/utils/authHelpers";
 
 interface TaskerDashboardProps {
   activeMenu?: string;
@@ -49,14 +51,12 @@ interface TaskerDashboardProps {
 
 const TaskerDashboard = ({ activeMenu: initialActiveMenu }: TaskerDashboardProps = {}) => {
   const [activeMenu, setActiveMenu] = useState(initialActiveMenu || "dashboard");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [username, setUsername] = useState("");
   const [lastLogin, setLastLogin] = useState("");
-  const [depositDialogOpen, setDepositDialogOpen] = useState(false);
-  const [withdrawDialogOpen, setWithdrawDialogOpen] = useState(false);
-  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  
+  // Use our custom auth hook
+  const { isLoading, isAuthenticated, user, error } = useAuth();
 
   const activityData = [
     { date: "19/10", clicks: 5, earnings: 0.05 },
@@ -123,17 +123,7 @@ const TaskerDashboard = ({ activeMenu: initialActiveMenu }: TaskerDashboardProps
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        setIsLoggedIn(true);
-        setUsername(session.user.user_metadata.username || session.user.email);
-        
-        // Format last login time
-        const now = new Date();
-        setLastLogin(`${now.toLocaleDateString()} ${now.toLocaleTimeString()}`);
-        
-        // Get avatar URL if available
-        if (session.user.user_metadata.avatar_url) {
-          setAvatarUrl(session.user.user_metadata.avatar_url);
-        }
+        setLastLogin(`${session.user.created_at}`);
       } else {
         navigate('/login');
       }
@@ -143,19 +133,8 @@ const TaskerDashboard = ({ activeMenu: initialActiveMenu }: TaskerDashboardProps
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_IN') {
-        setIsLoggedIn(true);
-        setUsername(session?.user.user_metadata.username || session?.user.email || '');
-        
-        // Format last login time
-        const now = new Date();
-        setLastLogin(`${now.toLocaleDateString()} ${now.toLocaleTimeString()}`);
-        
-        // Get avatar URL if available
-        if (session?.user.user_metadata.avatar_url) {
-          setAvatarUrl(session.user.user_metadata.avatar_url);
-        }
+        setLastLogin(`${session.user.created_at}`);
       } else if (event === 'SIGNED_OUT') {
-        setIsLoggedIn(false);
         navigate('/');
       }
     });
@@ -166,8 +145,12 @@ const TaskerDashboard = ({ activeMenu: initialActiveMenu }: TaskerDashboardProps
   }, [navigate]);
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
-    navigate('/');
+    const { success, error } = await signOut();
+    if (success) {
+      navigate('/');
+    } else {
+      console.error("Logout failed:", error);
+    }
   };
 
   const stats = {
@@ -176,6 +159,34 @@ const TaskerDashboard = ({ activeMenu: initialActiveMenu }: TaskerDashboardProps
     offerSales: 0,
     moneyEarned: 33.20
   };
+
+  // Early return for loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-purple-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Early return for error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto p-6">
+          <div className="text-red-600 mb-4">⚠️</div>
+          <h1 className="text-xl font-semibold text-gray-900 mb-2">Something went wrong</h1>
+          <p className="text-gray-600 mb-4">{error.message}</p>
+          <Button onClick={() => window.location.reload()} className="bg-purple-600 hover:bg-purple-700">
+            Try Again
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -195,7 +206,7 @@ const TaskerDashboard = ({ activeMenu: initialActiveMenu }: TaskerDashboardProps
                     activeMenu={activeMenu}
                     setActiveMenu={setActiveMenu}
                     onLogout={handleLogout}
-                    isLoggedIn={isLoggedIn}
+                    isLoggedIn={isAuthenticated}
                   />
                 </div>
               </SheetContent>
@@ -221,7 +232,7 @@ const TaskerDashboard = ({ activeMenu: initialActiveMenu }: TaskerDashboardProps
             </div>
           </div>
           <div className="flex items-center space-x-4">
-            {isLoggedIn ? (
+            {isAuthenticated ? (
               <>
                 <Button variant="ghost" size="icon">
                   <BellDot className="h-5 w-5" />
@@ -233,11 +244,11 @@ const TaskerDashboard = ({ activeMenu: initialActiveMenu }: TaskerDashboardProps
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <div className="w-10 h-10 rounded-full cursor-pointer overflow-hidden flex items-center justify-center bg-purple-100">
-                      {avatarUrl ? (
-                        <img src={avatarUrl} alt="User avatar" className="w-full h-full object-cover" />
+                      {user?.user_metadata.avatar_url ? (
+                        <img src={user.user_metadata.avatar_url} alt="User avatar" className="w-full h-full object-cover" />
                       ) : (
                         <span className="text-sm font-medium text-purple-700">
-                          {username?.charAt(0)?.toUpperCase() || 'U'}
+                          {user?.user_metadata.username?.charAt(0)?.toUpperCase() || 'U'}
                         </span>
                       )}
                     </div>
@@ -282,7 +293,7 @@ const TaskerDashboard = ({ activeMenu: initialActiveMenu }: TaskerDashboardProps
             activeMenu={activeMenu}
             setActiveMenu={setActiveMenu}
             onLogout={handleLogout}
-            isLoggedIn={isLoggedIn}
+            isLoggedIn={isAuthenticated}
           />
         </div>
 
@@ -300,7 +311,7 @@ const TaskerDashboard = ({ activeMenu: initialActiveMenu }: TaskerDashboardProps
                 {/* Main Column */}
                 <div className="col-span-12 lg:col-span-8 space-y-4 md:space-y-6">
                   <DashboardHeader 
-                    username={username} 
+                    username={user?.user_metadata.username || user?.email || ''} 
                     lastLogin={lastLogin} 
                   />
                   
@@ -429,14 +440,14 @@ const TaskerDashboard = ({ activeMenu: initialActiveMenu }: TaskerDashboardProps
 
       {/* Deposit Funds Dialog */}
       <DepositFundsDialog
-        open={depositDialogOpen}
-        onOpenChange={setDepositDialogOpen}
+        open={false}
+        onOpenChange={() => {}}
       />
       
       {/* Withdraw Funds Dialog */}
       <WithdrawFundsDialog
-        open={withdrawDialogOpen}
-        onOpenChange={setWithdrawDialogOpen}
+        open={false}
+        onOpenChange={() => {}}
       />
     </div>
   );

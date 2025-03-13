@@ -45,6 +45,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import useAuth from "@/hooks/useAuth";
+import { signOut } from "@/utils/authHelpers";
 
 interface Campaign {
   id: number;
@@ -60,14 +62,12 @@ interface Campaign {
 
 const AdvertiserDashboard = () => {
   const [activeMenu, setActiveMenu] = useState("dashboard");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [username, setUsername] = useState("");
   const [lastLogin, setLastLogin] = useState("");
-  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
-  const [error, setError] = useState<Error | null>(null); // Add error state
-  const [isLoading, setIsLoading] = useState(true); // Add loading state
   const sidebarRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  
+  // Use our custom auth hook
+  const { isLoading, isAuthenticated, user, error } = useAuth();
 
   // Mock campaign data
   const campaignData: Campaign[] = [
@@ -122,15 +122,7 @@ const AdvertiserDashboard = () => {
       const { data: { session } } = await supabase.auth.getSession();
       
       if (session) {
-        setIsLoggedIn(true);
-        setUsername(session.user.user_metadata.username || session.user.email);
-        
-        const now = new Date();
-        setLastLogin(`${now.toLocaleDateString()} ${now.toLocaleTimeString()}`);
-        
-        if (session.user.user_metadata.avatar_url) {
-          setAvatarUrl(session.user.user_metadata.avatar_url);
-        }
+        setLastLogin(`${session.user.created_at}`);
       } else {
         navigate('/login');
       }
@@ -140,17 +132,8 @@ const AdvertiserDashboard = () => {
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_IN' || event === 'USER_UPDATED') {
-        setIsLoggedIn(true);
-        setUsername(session?.user.user_metadata.username || session?.user.email || '');
-        
-        if (session?.user.user_metadata.avatar_url) {
-          setAvatarUrl(session.user.user_metadata.avatar_url);
-        }
-        
-        const now = new Date();
-        setLastLogin(`${now.toLocaleDateString()} ${now.toLocaleTimeString()}`);
+        setLastLogin(`${session?.user.created_at}`);
       } else if (event === 'SIGNED_OUT') {
-        setIsLoggedIn(false);
         navigate('/');
       }
     });
@@ -161,8 +144,12 @@ const AdvertiserDashboard = () => {
   }, [navigate]);
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
-    navigate('/');
+    const { success, error } = await signOut();
+    if (success) {
+      navigate('/');
+    } else {
+      console.error("Logout failed:", error);
+    }
   };
 
   const stats = {
@@ -232,7 +219,7 @@ const AdvertiserDashboard = () => {
                   activeMenu={activeMenu}
                   setActiveMenu={setActiveMenu}
                   onLogout={handleLogout}
-                  isLoggedIn={isLoggedIn}
+                  isLoggedIn={isAuthenticated}
                 />
               </SheetContent>
             </Sheet>
@@ -257,7 +244,7 @@ const AdvertiserDashboard = () => {
             </div>
           </div>
           <div className="flex items-center space-x-4">
-            {isLoggedIn ? (
+            {isAuthenticated ? (
               <>
                 <Button variant="ghost" size="icon">
                   <BellDot className="h-5 w-5" />
@@ -266,15 +253,15 @@ const AdvertiserDashboard = () => {
                   <span className="text-sm font-bold text-purple-600">Advertiser</span>
                 </div>
                 <div className="w-8 h-8 rounded-full overflow-hidden bg-purple-100 flex items-center justify-center">
-                  {avatarUrl ? (
+                  {user?.avatarUrl ? (
                     <img 
-                      src={avatarUrl} 
+                      src={user.avatarUrl} 
                       alt="Profile" 
                       className="w-full h-full object-cover"
                     />
                   ) : (
                     <span className="text-sm font-medium text-purple-700">
-                      {username?.charAt(0)?.toUpperCase() || 'U'}
+                      {user?.username?.charAt(0)?.toUpperCase() || 'U'}
                     </span>
                   )}
                 </div>
@@ -300,7 +287,7 @@ const AdvertiserDashboard = () => {
             activeMenu={activeMenu}
             setActiveMenu={setActiveMenu}
             onLogout={handleLogout}
-            isLoggedIn={isLoggedIn}
+            isLoggedIn={isAuthenticated}
           />
         </div>
 
@@ -311,9 +298,9 @@ const AdvertiserDashboard = () => {
               {/* Main Column */}
               <div className="col-span-12 lg:col-span-8 space-y-6">
                 <DashboardHeader 
-                  username={username} 
+                  username={user?.username || ''} 
                   lastLogin={lastLogin}
-                  avatarUrl={avatarUrl}
+                  avatarUrl={user?.avatarUrl || null}
                 />
                 
                 <DashboardStats stats={stats} />
