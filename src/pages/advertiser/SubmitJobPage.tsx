@@ -25,6 +25,7 @@ import {
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import SidebarContent from "@/components/dashboard/SidebarContent";
+import CountrySelector from '@/components/jobs/CountrySelector';
 
 const SubmitJobPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -464,23 +465,10 @@ const SubmitJobPage = () => {
                       </Label>
                       <div className="mt-2 p-4 border rounded-lg bg-gray-50">
                         <div className="flex flex-wrap gap-2">
-                          {["United States", "United Kingdom", "Canada", "Australia", "Germany"].map((country) => (
-                            <div
-                              key={country}
-                              onClick={() => handleCountrySelection(country)}
-                              className={`
-                                px-3 py-1.5 rounded-full text-sm cursor-pointer flex items-center gap-1.5
-                                ${selectedCountries.includes(country)
-                                  ? "bg-purple-100 text-purple-800 border border-purple-300"
-                                  : "bg-white border hover:border-purple-300"}
-                              `}
-                            >
-                              {country}
-                              {selectedCountries.includes(country) && (
-                                <span className="text-purple-600">✓</span>
-                              )}
-                            </div>
-                          ))}
+                          <CountrySelector
+                            selectedCountries={selectedCountries}
+                            onChange={setSelectedCountries}
+                          />
                         </div>
                         <p className="text-xs text-gray-500 mt-2">Leave empty to target workers worldwide</p>
                       </div>
