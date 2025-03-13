@@ -244,11 +244,11 @@ const TaskerDashboard = ({ activeMenu: initialActiveMenu }: TaskerDashboardProps
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <div className="w-10 h-10 rounded-full cursor-pointer overflow-hidden flex items-center justify-center bg-purple-100">
-                      {user?.user_metadata.avatar_url ? (
-                        <img src={user.user_metadata.avatar_url} alt="User avatar" className="w-full h-full object-cover" />
+                      {user?.avatarUrl ? (
+                        <img src={user.avatarUrl} alt="User avatar" className="w-full h-full object-cover" />
                       ) : (
                         <span className="text-sm font-medium text-purple-700">
-                          {user?.user_metadata.username?.charAt(0)?.toUpperCase() || 'U'}
+                          {user?.username?.charAt(0)?.toUpperCase() || 'U'}
                         </span>
                       )}
                     </div>
@@ -311,7 +311,7 @@ const TaskerDashboard = ({ activeMenu: initialActiveMenu }: TaskerDashboardProps
                 {/* Main Column */}
                 <div className="col-span-12 lg:col-span-8 space-y-4 md:space-y-6">
                   <DashboardHeader 
-                    username={user?.user_metadata.username || user?.email || ''} 
+                    username={user?.username || ''} 
                     lastLogin={lastLogin} 
                   />
                   
