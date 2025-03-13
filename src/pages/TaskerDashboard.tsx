@@ -360,7 +360,7 @@ const TaskerDashboard = ({ activeMenu: initialActiveMenu }: TaskerDashboardProps
                         <p className="text-gray-600 mb-4">Browse our comprehensive guides and tutorials</p>
                         <Link 
                           to="/help" 
-                          className="text-blue-500 hover:text-blue-600 font-semibold flex items-center"
+                          className="text-blue-500 hover:text-blue-600 font-semibold flex items-center no-underline"
                         >
                           Explore <ChevronRight className="h-4 w-4 ml-1" />
                         </Link>
@@ -374,7 +374,7 @@ const TaskerDashboard = ({ activeMenu: initialActiveMenu }: TaskerDashboardProps
                         <p className="text-gray-600 mb-4">Find answers to commonly asked questions</p>
                         <Link 
                           to="/faq" 
-                          className="text-green-500 hover:text-green-600 font-semibold flex items-center"
+                          className="text-green-500 hover:text-green-600 font-semibold flex items-center no-underline"
                         >
                           View FAQs <ChevronRight className="h-4 w-4 ml-1" />
                         </Link>
@@ -388,7 +388,7 @@ const TaskerDashboard = ({ activeMenu: initialActiveMenu }: TaskerDashboardProps
                         <p className="text-gray-600 mb-4">Get in touch with our support team directly</p>
                         <Link 
                           to="/contact" 
-                          className="text-purple-500 hover:text-purple-600 font-semibold flex items-center"
+                          className="text-purple-500 hover:text-purple-600 font-semibold flex items-center no-underline"
                         >
                           Contact <ChevronRight className="h-4 w-4 ml-1" />
                         </Link>
