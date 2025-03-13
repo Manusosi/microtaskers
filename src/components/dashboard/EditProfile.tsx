@@ -101,7 +101,7 @@ export const EditProfile = () => {
           const { user } = session;
           setUserId(user.id);
           
-          console.log("User metadata:", user.user_metadata);
+          
           
           // Set email from auth
           setFormData(prev => ({
@@ -261,14 +261,14 @@ export const EditProfile = () => {
         throw uploadError;
       }
       
-      console.log("Upload successful:", data);
+      
       
       // Get the public URL
       const { data: urlData } = supabase.storage
         .from('avatars')
         .getPublicUrl(fileName);
       
-      console.log("Public URL:", urlData.publicUrl);
+      
       return urlData.publicUrl;
     } catch (error) {
       console.error("Error uploading avatar:", error);
@@ -291,7 +291,7 @@ export const EditProfile = () => {
         try {
           avatarPublicUrl = await uploadAvatar();
           avatarUpdated = true;
-          console.log("Avatar uploaded successfully:", avatarPublicUrl);
+          
         } catch (error) {
           console.error("Avatar upload failed:", error);
           toast({

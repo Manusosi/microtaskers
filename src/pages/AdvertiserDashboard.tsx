@@ -59,8 +59,6 @@ interface Campaign {
 }
 
 const AdvertiserDashboard = () => {
-  console.log("AdvertiserDashboard: Component mounting"); // Debug log
-
   const [activeMenu, setActiveMenu] = useState("dashboard");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
@@ -121,30 +119,20 @@ const AdvertiserDashboard = () => {
 
   useEffect(() => {
     const checkSession = async () => {
-      try {
-        console.log("AdvertiserDashboard: Checking session"); // Debug log
       const { data: { session } } = await supabase.auth.getSession();
-        console.log("AdvertiserDashboard: Session result", session); // Debug log
-
+      
       if (session) {
         setIsLoggedIn(true);
         setUsername(session.user.user_metadata.username || session.user.email);
         
+        const now = new Date();
+        setLastLogin(`${now.toLocaleDateString()} ${now.toLocaleTimeString()}`);
+        
         if (session.user.user_metadata.avatar_url) {
           setAvatarUrl(session.user.user_metadata.avatar_url);
         }
-        
-        const now = new Date();
-        setLastLogin(`${now.toLocaleDateString()} ${now.toLocaleTimeString()}`);
       } else {
-          console.log("AdvertiserDashboard: No session found, redirecting to login"); // Debug log
         navigate('/login');
-        }
-      } catch (err) {
-        console.error("AdvertiserDashboard: Error checking session", err); // Debug log
-        setError(err as Error);
-      } finally {
-        setIsLoading(false);
       }
     };
 
@@ -155,12 +143,10 @@ const AdvertiserDashboard = () => {
         setIsLoggedIn(true);
         setUsername(session?.user.user_metadata.username || session?.user.email || '');
         
-        // Get avatar URL if it exists
         if (session?.user.user_metadata.avatar_url) {
           setAvatarUrl(session.user.user_metadata.avatar_url);
         }
         
-        // Format last login time
         const now = new Date();
         setLastLogin(`${now.toLocaleDateString()} ${now.toLocaleTimeString()}`);
       } else if (event === 'SIGNED_OUT') {

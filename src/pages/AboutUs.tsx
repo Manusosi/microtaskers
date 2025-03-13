@@ -60,14 +60,11 @@ const AboutUs = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    
     toast({
       title: "Message Sent!",
       description: "We'll get back to you as soon as possible.",
       duration: 5000,
     });
-    
     setFormData({
       name: "",
       email: "",

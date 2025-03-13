@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Link, useNavigate } from "react-router-dom";
@@ -75,14 +74,20 @@ const SupportPage = () => {
     navigate('/');
   };
 
-  const handleTicketSubmit = (ticketData) => {
-    console.log("Ticket submitted:", ticketData);
-    setCreateTicketOpen(false);
-    toast({
-      title: "Support ticket created",
-      description: "We'll get back to you shortly.",
-      variant: "default",
-    });
+  const handleSubmitTicket = async () => {
+    const ticketData = {
+      subject,
+      description,
+      urgency,
+      timestamp: new Date().toISOString(),
+      userId: session?.user.id || 'anonymous',
+      status: 'Open',
+    };
+    
+    setTicketCreated(true);
+    setSubject('');
+    setDescription('');
+    setUrgency('medium');
   };
 
   const accountBalance = 33.20;
@@ -399,7 +404,7 @@ const SupportPage = () => {
       <CreateTicketDialog
         open={createTicketOpen}
         onOpenChange={setCreateTicketOpen}
-        onSubmit={handleTicketSubmit}
+        onSubmit={handleSubmitTicket}
       />
     </div>
   );
