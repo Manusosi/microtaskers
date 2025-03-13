@@ -358,12 +358,13 @@ const TaskerDashboard = ({ activeMenu: initialActiveMenu }: TaskerDashboardProps
                           <h3 className="text-xl font-semibold">Knowledge Base</h3>
                         </div>
                         <p className="text-gray-600 mb-4">Browse our comprehensive guides and tutorials</p>
-                        <Link 
-                          to="/help" 
-                          className="text-blue-500 hover:text-blue-600 font-semibold flex items-center no-underline"
+                        <Button 
+                          variant="link" 
+                          onClick={() => navigate('/help')}
+                          className="p-0 h-auto text-blue-500 hover:text-blue-600 font-semibold flex items-center"
                         >
                           Explore <ChevronRight className="h-4 w-4 ml-1" />
-                        </Link>
+                        </Button>
                       </Card>
                       
                       <Card className="p-6 hover:shadow-md transition-shadow">
@@ -372,12 +373,13 @@ const TaskerDashboard = ({ activeMenu: initialActiveMenu }: TaskerDashboardProps
                           <h3 className="text-xl font-semibold">FAQs</h3>
                         </div>
                         <p className="text-gray-600 mb-4">Find answers to commonly asked questions</p>
-                        <Link 
-                          to="/faq" 
-                          className="text-green-500 hover:text-green-600 font-semibold flex items-center no-underline"
+                        <Button 
+                          variant="link" 
+                          onClick={() => navigate('/faq')}
+                          className="p-0 h-auto text-green-500 hover:text-green-600 font-semibold flex items-center"
                         >
                           View FAQs <ChevronRight className="h-4 w-4 ml-1" />
-                        </Link>
+                        </Button>
                       </Card>
                       
                       <Card className="p-6 hover:shadow-md transition-shadow">
@@ -386,12 +388,13 @@ const TaskerDashboard = ({ activeMenu: initialActiveMenu }: TaskerDashboardProps
                           <h3 className="text-xl font-semibold">Contact Us</h3>
                         </div>
                         <p className="text-gray-600 mb-4">Get in touch with our support team directly</p>
-                        <Link 
-                          to="/contact" 
-                          className="text-purple-500 hover:text-purple-600 font-semibold flex items-center no-underline"
+                        <Button 
+                          variant="link" 
+                          onClick={() => navigate('/contact')}
+                          className="p-0 h-auto text-purple-500 hover:text-purple-600 font-semibold flex items-center"
                         >
                           Contact <ChevronRight className="h-4 w-4 ml-1" />
-                        </Link>
+                        </Button>
                       </Card>
                     </div>
                   </div>
