@@ -2,18 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { checkAuth } from '@/utils/authHelpers';
 import { logAuthState } from '@/utils/errorTracking';
+import { getUserRole } from '@/utils/roleBasedRedirect';
 
 interface AuthGuardProps {
   children: React.ReactNode;
   redirectTo?: string;
+  requiredRole?: 'tasker' | 'advertiser';
 }
 
 export const AuthGuard: React.FC<AuthGuardProps> = ({ 
   children, 
-  redirectTo = '/login'
+  redirectTo = '/login',
+  requiredRole
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userRole, setUserRole] = useState<string | null>(null);
   const location = useLocation();
 
   useEffect(() => {
@@ -25,6 +29,7 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({
         
         if (session && user && !error) {
           setIsAuthenticated(true);
+          setUserRole(getUserRole(user));
           logAuthState({ 
             isAuthenticated: true, 
             isLoading: false,
@@ -34,6 +39,7 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({
           });
         } else {
           setIsAuthenticated(false);
+          setUserRole(null);
           logAuthState({ 
             isAuthenticated: false, 
             isLoading: false,
@@ -45,6 +51,7 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({
       } catch (err) {
         console.error('Auth guard error:', err);
         setIsAuthenticated(false);
+        setUserRole(null);
         logAuthState({ 
           isAuthenticated: false, 
           isLoading: false,
@@ -74,6 +81,13 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({
   if (!isAuthenticated) {
     // Redirect to login page with the return url
     return <Navigate to={redirectTo} state={{ from: location.pathname }} replace />;
+  }
+
+  // Handle role-based access
+  if (requiredRole && userRole !== requiredRole) {
+    // If user is authenticated but has wrong role, redirect to their appropriate dashboard
+    const correctDashboard = userRole === 'tasker' ? '/dashboard/tasker' : '/dashboard/advertiser';
+    return <Navigate to={correctDashboard} replace />;
   }
 
   return <>{children}</>;

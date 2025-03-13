@@ -76,12 +76,12 @@ const App = () => {
           
           {/* Protected Routes */}
           <Route path="/dashboard/tasker" element={
-            <AuthGuard>
+            <AuthGuard requiredRole="tasker">
               <TaskerDashboard />
             </AuthGuard>
           } />
           <Route path="/dashboard/advertiser" element={
-            <AuthGuard>
+            <AuthGuard requiredRole="advertiser">
               <AdvertiserDashboard />
             </AuthGuard>
           } />
@@ -101,7 +101,7 @@ const App = () => {
             </AuthGuard>
           } />
           <Route path="/finished-jobs" element={
-            <AuthGuard>
+            <AuthGuard requiredRole="tasker">
               <FinishedJobsPage />
             </AuthGuard>
           } />
@@ -113,22 +113,22 @@ const App = () => {
           
           {/* Advertiser specific routes */}
           <Route path="/submit-job" element={
-            <AuthGuard>
+            <AuthGuard requiredRole="advertiser">
               <SubmitJobPage />
             </AuthGuard>
           } />
           <Route path="/my-jobs" element={
-            <AuthGuard>
+            <AuthGuard requiredRole="advertiser">
               <MyJobsPage />
             </AuthGuard>
           } />
           <Route path="/saved-offers" element={
-            <AuthGuard>
+            <AuthGuard requiredRole="advertiser">
               <SavedOffersPage />
             </AuthGuard>
           } />
           <Route path="/my-workers" element={
-            <AuthGuard>
+            <AuthGuard requiredRole="advertiser">
               <MyWorkersPage />
             </AuthGuard>
           } />
