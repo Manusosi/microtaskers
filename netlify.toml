@@ -6,6 +6,7 @@
   NODE_VERSION = "20"
   NPM_FLAGS = "--legacy-peer-deps"
   VITE_SUPABASE_URL = "https://vdhygfawaobokhmlvczf.supabase.co"
+  VITE_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZkaHlnZmF3YW9ib2tobWx2Y3pmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk5NjM1MjEsImV4cCI6MjA1NTUzOTUyMX0.-EylqDeb3jWcdq-SSfn8PB0C0m_nF8_OQB_pKypoGWc"
   CI = "false"
 
 [[redirects]]
@@ -21,7 +22,7 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Content-Security-Policy = "default-src 'self' https://vdhygfawaobokhmlvczf.supabase.co; connect-src 'self' https://vdhygfawaobokhmlvczf.supabase.co; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:;"
+    Content-Security-Policy = "default-src 'self' https: data:; connect-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data: https:;"
 
 [functions]
   node_bundler = "esbuild" 
