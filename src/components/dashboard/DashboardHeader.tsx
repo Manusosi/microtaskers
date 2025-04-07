@@ -31,7 +31,7 @@ export const DashboardHeader = ({ username, lastLogin, balance, avatarUrl }: Das
               Hello, <span className="text-purple-600">{username}</span>!
             </h1>
             <p className="text-sm text-gray-500">
-              You last logged in at: {lastLogin}
+              {lastLogin ? `You last logged in at: ${lastLogin}` : 'Welcome to your dashboard!'}
             </p>
           </div>
         </div>

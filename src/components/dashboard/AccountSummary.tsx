@@ -63,10 +63,26 @@ export const AccountSummary = ({ balance, accountType }: AccountSummaryProps) =>
         </Button>
       </div>
       
-      <div className="mt-3 md:mt-4 flex items-center gap-2 text-amber-600 text-xs md:text-sm">
-        <AlertCircle className="h-4 w-4 flex-shrink-0" />
-        <span>Payments require verification</span>
-      </div>
+      {balance === 0 && (
+        <div className="mt-3 md:mt-4 flex items-center gap-2 text-amber-600 text-xs md:text-sm">
+          <AlertCircle className="h-4 w-4 flex-shrink-0" />
+          <span>Deposit funds to start advertising</span>
+        </div>
+      )}
+      
+      {balance > 0 && balance < 5 && (
+        <div className="mt-3 md:mt-4 flex items-center gap-2 text-amber-600 text-xs md:text-sm">
+          <AlertCircle className="h-4 w-4 flex-shrink-0" />
+          <span>Low balance - consider adding funds</span>
+        </div>
+      )}
+      
+      {balance >= 5 && (
+        <div className="mt-3 md:mt-4 flex items-center gap-2 text-amber-600 text-xs md:text-sm">
+          <AlertCircle className="h-4 w-4 flex-shrink-0" />
+          <span>Payments require verification</span>
+        </div>
+      )}
     </div>
   );
 };

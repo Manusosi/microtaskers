@@ -25,14 +25,14 @@ export const PaymentSummary = ({ summary }: PaymentSummaryProps) => {
           <div className="col-span-3 md:col-span-1 flex flex-col items-center">
             <span className="text-gray-600 font-medium">Total Deposit:</span>
             <span className="text-2xl font-bold text-gray-800">
-              {summary.totalDeposit}
+              ${summary.totalDeposit.toFixed(2)}
             </span>
           </div>
           
           <div className="col-span-3 md:col-span-1 flex flex-col items-end">
             <span className="text-gray-600 font-medium">Total Withdrawal:</span>
             <span className="text-2xl font-bold text-gray-800">
-              {summary.totalWithdrawal}
+              ${summary.totalWithdrawal.toFixed(2)}
             </span>
           </div>
         </div>
