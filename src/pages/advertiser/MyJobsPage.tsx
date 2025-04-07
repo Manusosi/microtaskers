@@ -155,10 +155,11 @@ const MyJobsPage = () => {
                 alt="MicroTaskers"
                 className="h-8"
                 onError={(e) => {
-                  const target = e.currentTarget;
+                  const target = e.target as HTMLImageElement;
                   target.style.display = 'none';
-                  if (target.nextSibling instanceof HTMLElement) {
-                    target.nextSibling.style.display = 'block';
+                  const nextSibling = target.nextSibling as HTMLElement;
+                  if (nextSibling) {
+                    nextSibling.style.display = 'block';
                   }
                 }}
               />
