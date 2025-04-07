@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -134,6 +135,7 @@ const JobsPage = () => {
                     activeMenu={activeMenu}
                     setActiveMenu={setActiveMenu}
                     isLoggedIn={isLoggedIn}
+                    onLogout={handleLogout}
                   />
                 </SheetContent>
               </Sheet>
@@ -275,4 +277,4 @@ const JobsPage = () => {
   );
 };
 
-export default JobsPage; 
+export default JobsPage;

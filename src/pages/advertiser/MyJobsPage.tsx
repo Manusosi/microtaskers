@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -31,6 +32,7 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import SidebarContent from "@/components/dashboard/SidebarContent";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Job {
   id: number;
@@ -121,6 +123,11 @@ const MyJobsPage = () => {
     );
   };
 
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate('/');
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Top Navigation */}
@@ -138,6 +145,7 @@ const MyJobsPage = () => {
                   activeMenu={activeMenu}
                   setActiveMenu={setActiveMenu}
                   isLoggedIn={isLoggedIn}
+                  onLogout={handleLogout}
                 />
               </SheetContent>
             </Sheet>
@@ -147,8 +155,11 @@ const MyJobsPage = () => {
                 alt="MicroTaskers"
                 className="h-8"
                 onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                  e.currentTarget.nextSibling.style.display = 'block';
+                  const target = e.currentTarget;
+                  target.style.display = 'none';
+                  if (target.nextSibling instanceof HTMLElement) {
+                    target.nextSibling.style.display = 'block';
+                  }
                 }}
               />
               <span className="text-xl font-bold text-gray-900" style={{ display: 'none' }}>
@@ -175,6 +186,7 @@ const MyJobsPage = () => {
             activeMenu={activeMenu}
             setActiveMenu={setActiveMenu}
             isLoggedIn={isLoggedIn}
+            onLogout={handleLogout}
           />
         </div>
 
@@ -339,4 +351,4 @@ const MyJobsPage = () => {
   );
 };
 
-export default MyJobsPage; 
+export default MyJobsPage;

@@ -15,7 +15,7 @@ import PaymentsPage from "@/pages/PaymentsPage";
 import SupportPage from "@/pages/SupportPage";
 import SettingsPage from "@/pages/SettingsPage";
 import FinishedJobsPage from "@/pages/FinishedJobsPage";
-import SubmitJobPage from "@/pages/advertiser/SubmitJobPage";
+import SubmitJobPage from "./pages/advertiser/SubmitJobPage";
 import MyJobsPage from "@/pages/advertiser/MyJobsPage";
 import SavedOffersPage from "@/pages/advertiser/SavedOffersPage";
 import MyWorkersPage from "@/pages/advertiser/MyWorkersPage";
@@ -59,7 +59,7 @@ class ErrorBoundary extends React.Component<
   }
 }
 
-const App = () => {
+function App() {
   return (
     <ErrorBoundary>
       <BrowserRouter>
@@ -137,6 +137,6 @@ const App = () => {
       </BrowserRouter>
     </ErrorBoundary>
   );
-};
+}
 
 export default App;
