@@ -1,3 +1,4 @@
+
 import { User } from '@supabase/supabase-js';
 
 export const getRoleBasedRedirectPath = (user: User | null): string => {
@@ -6,6 +7,8 @@ export const getRoleBasedRedirectPath = (user: User | null): string => {
   const role = user.user_metadata?.role;
   
   switch (role) {
+    case 'admin':
+      return '/admin';
     case 'tasker':
       return '/dashboard/tasker';
     case 'advertiser':
