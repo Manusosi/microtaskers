@@ -16,11 +16,9 @@ import HelpCenter from "./pages/HelpCenter";
 import Terms from "./pages/Terms";
 import SupportPage from "./pages/SupportPage";
 import JobsPage from "./pages/JobsPage";
-import AdminLogin from "./pages/AdminLogin";
 import { Toaster } from "@/components/ui/toaster";
 import AdminDashboardPage from "./pages/admin/AdminDashboardPage";
 import UsersPage from "./pages/admin/UsersPage";
-import { AuthGuard } from "@/components/guards/AuthGuard";
 import { supabase } from "@/integrations/supabase/client";
 import { getRoleBasedRedirectPath } from "@/utils/roleBasedRedirect";
 import "./App.css";
@@ -48,79 +46,30 @@ function App() {
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signup/:role" element={<Signup />} />
         
         {/* Dashboard Routes */}
-        <Route path="/dashboard/tasker" element={
-          <AuthGuard requiredRole="tasker">
-            <TaskerDashboard />
-          </AuthGuard>
-        } />
-        <Route path="/dashboard/advertiser" element={
-          <AuthGuard requiredRole="advertiser">
-            <AdvertiserDashboard />
-          </AuthGuard>
-        } />
+        <Route path="/dashboard/tasker" element={<TaskerDashboard />} />
+        <Route path="/dashboard/advertiser" element={<AdvertiserDashboard />} />
         <Route path="/dashboard" element={<Navigate to="/dashboard/tasker" replace />} />
         
         {/* Advertiser Routes */}
-        <Route path="/submit-job" element={
-          <AuthGuard requiredRole="advertiser">
-            <SubmitJobPage />
-          </AuthGuard>
-        } />
-        <Route path="/my-jobs" element={
-          <AuthGuard requiredRole="advertiser">
-            <MyJobsPage />
-          </AuthGuard>
-        } />
-        <Route path="/my-workers" element={
-          <AuthGuard requiredRole="advertiser">
-            <MyWorkersPage />
-          </AuthGuard>
-        } />
-        <Route path="/saved-offers" element={
-          <AuthGuard requiredRole="advertiser">
-            <SavedOffersPage />
-          </AuthGuard>
-        } />
+        <Route path="/submit-job" element={<SubmitJobPage />} />
+        <Route path="/my-jobs" element={<MyJobsPage />} />
+        <Route path="/my-workers" element={<MyWorkersPage />} />
+        <Route path="/saved-offers" element={<SavedOffersPage />} />
         
         {/* Admin Routes */}
-        <Route path="/admin" element={
-          <AuthGuard requiredRole="admin" redirectTo="/admin-login">
-            <AdminDashboardPage />
-          </AuthGuard>
-        } />
-        <Route path="/admin/users" element={
-          <AuthGuard requiredRole="admin" redirectTo="/admin-login">
-            <UsersPage />
-          </AuthGuard>
-        } />
+        <Route path="/admin" element={<AdminDashboardPage />} />
+        <Route path="/admin/users" element={<UsersPage />} />
         
         {/* Common Routes */}
-        <Route path="/settings" element={
-          <AuthGuard>
-            <SettingsPage />
-          </AuthGuard>
-        } />
-        <Route path="/payments" element={
-          <AuthGuard>
-            <PaymentsPage />
-          </AuthGuard>
-        } />
-        <Route path="/finished-jobs" element={
-          <AuthGuard>
-            <FinishedJobsPage />
-          </AuthGuard>
-        } />
+        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/payments" element={<PaymentsPage />} />
+        <Route path="/finished-jobs" element={<FinishedJobsPage />} />
         <Route path="/jobs" element={<JobsPage />} />
-        <Route path="/support" element={
-          <AuthGuard>
-            <SupportPage />
-          </AuthGuard>
-        } />
+        <Route path="/support" element={<SupportPage />} />
         
         {/* Informational Pages */}
         <Route path="/about" element={<AboutUs />} />
