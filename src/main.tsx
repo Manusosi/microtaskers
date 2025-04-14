@@ -1,9 +1,13 @@
+
 import { createRoot } from 'react-dom/client'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { StrictMode } from 'react'
 import App from './App.tsx'
 import './index.css'
 import { initErrorTracking } from './utils/errorTracking'
+
+// Initialize error tracking
+initErrorTracking();
 
 // Create a client with error handling
 const queryClient = new QueryClient({
