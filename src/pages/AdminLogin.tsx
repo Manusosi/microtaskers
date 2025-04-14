@@ -48,7 +48,7 @@ const AdminLogin = () => {
 
       if (data.user) {
         // Check if user has admin role
-        const role = data.user.user_metadata.role;
+        const role = data.user.user_metadata?.role;
         
         if (role !== 'admin') {
           // Sign out if not admin
@@ -124,6 +124,12 @@ const AdminLogin = () => {
             >
               {loading ? "Authenticating..." : "Sign in to Admin Panel"}
             </Button>
+            
+            <div className="text-center mt-4">
+              <a href="/" className="text-sm text-purple-600 hover:underline">
+                Return to Homepage
+              </a>
+            </div>
           </form>
         </CardContent>
       </Card>
